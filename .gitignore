@@ -1,32 +1,25 @@
-# Prerequisites
-*.d
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# build directories
+cmake-build-*/
+build/
+out/
+bin/
 
-# Precompiled Headers
-*.gch
-*.pch
+# imgui saved state
+imgui.ini
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+# Since ".obj" are ignored by default, we force them to be added
+!assets/models/**/*.obj
 
-# Fortran module files
-*.mod
-*.smod
+# Visual Studio specific files
+CMakeSettings.json
+.vs/
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+# Clion specific files
+.idea/
 
-# Executables
-*.exe
-*.out
-*.app
+# Visual Studio Code specific files
+.vscode/
+
+# Screenshots
+screenshots/
