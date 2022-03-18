@@ -34,12 +34,12 @@ echo ""
 echo "Matches: $success/$total"
 
 if [ $success -eq $total ]; then
-    echo "SUCCESS: All outputs are correct"
+    echo "SUCCESS: All outputs are correct" && sleep 2
 else
     let "failure=$total-$success"
     if [ $failure -eq 1 ]; then
-        echo "FAILURE: $failure output is incorrect"
+        echo "FAILURE: $failure output is incorrect" && sleep 2
     else
-        echo "FAILURE: $failure outputs are incorrect"
+        echo "FAILURE: $failure outputs are incorrect" && sleep 2
     fi
 fi

@@ -15,8 +15,8 @@ namespace glm {
 class FullscreenTriangleState: public our::State {
     
     our::ShaderProgram program;
-    //TODO: Add a variable in which we will store the name (ID) for a vertex array
-
+    //DONE: Add a variable in which we will store the name (ID) for a vertex array
+    GLuint ID;
     // onInitialize() function is called once before the state starts
     void onInitialize() override {
         
@@ -53,8 +53,11 @@ class FullscreenTriangleState: public our::State {
             }
         }
 
-        //TODO: Create a vertex Array
-
+        //DONE: Create a vertex Array
+        // void glGenVertexArrays(GLsizei n, GLuint *arrays);
+        // n: Specifies the number of vertex array object names to generate.
+        // arrays: Specifies an array in which the generated vertex array object names are stored.
+        glGenVertexArrays(1, &ID); // n=1 since we need to create only one Vertex Array.
         // We set the clear color to be black
         glClearColor(0.0, 0.0, 0.0, 1.0);
     }
@@ -64,12 +67,25 @@ class FullscreenTriangleState: public our::State {
         //At the start of frame we want to clear the screen. Otherwise we would still see the results from the previous frame.
         glClear(GL_COLOR_BUFFER_BIT);
 
-        //TODO: Draw a triangle using the vertex array and the program
-
+        //DONE: Draw a triangle using the vertex array and the program
+        // void glBindVertexArray(GLuint array);
+        // array: Specifies the name of the vertex array to bind.
+        glBindVertexArray(ID);
+        // void glDrawArrays(GLenum	mode, GLint first, GLsizei count);
+        // mode: Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, 
+        // GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, 
+        // GL_TRIANGLE_STRIP_ADJACENCY and GL_TRIANGLES_ADJACENCY are accepted.
+        // first: Specifies the starting index in the enabled arrays.
+        // count: Specifies the number of indices to be rendered.
+        glDrawArrays(GL_TRIANGLES, 0, 3); // first=0 since we want to start with first element in the vertex array.
     }
 
     // onInitialize() function is called once after the state ends
     void onDestroy() override {
-        //TODO: Delete the vertex Array
+        //DONE: Delete the vertex Array
+        // void glDeleteVertexArrays(GLsizei n, const GLuint *arrays);
+        // n: Specifies the number of vertex array objects to be deleted.
+        // arrays: Specifies the address of an array containing the n names of the objects to be deleted.
+        glDeleteVertexArrays(1, &ID); // n=1 since we created only one Vertex Array.
     }
 };
