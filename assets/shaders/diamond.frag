@@ -10,7 +10,7 @@ uniform vec4 outside_color = vec4(0.0, 0.0, 0.0, 1.0);
 
 void main(){
     //DONE: Write code that will draw the diamond
-    if(abs(gl_FragCoord.x-center[0])+abs(gl_FragCoord.y-center[1]) <= side_length/sqrt(2)){
+    if(abs(gl_FragCoord.x-center[0])+abs(gl_FragCoord.y-center[1]) <= side_length/2){
         frag_color = inside_color;
     } else {
         frag_color = outside_color;
