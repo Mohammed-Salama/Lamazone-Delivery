@@ -20,7 +20,7 @@
         "fragment-shader": "assets/shaders/diamond.frag",
         "uniforms":{
             "center": { "type": "vec2", "value": [256, 256] },
-            "side_length": { "type": "float", "value": 128 },
+            "side_length": { "type": "float", "value": 256 },
             "inside_color": { "type": "vec4", "value": [1.0, 0.0, 0.0, 1.0] },
             "outside_color": { "type": "vec4", "value": [0.0, 0.0, 0.0, 1.0] }
         }
