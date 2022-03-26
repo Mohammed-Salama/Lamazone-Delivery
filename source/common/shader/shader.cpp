@@ -34,14 +34,14 @@ bool our::ShaderProgram::attach(const std::string &filename, GLenum type) const 
     GLuint shaderID = glCreateShader(type);
 
     //DONE: send the source code to the shader and compile it
-    // void glShaderSource(	GLuint shader, GLsizei count, const GLchar **string, const GLint *length);
-    // shader: Specifies the handle of the shader object whose source code is to be replaced.
-    // count: Specifies the number of elements in the string and length arrays.
-    // string: Specifies an array of pointers to strings containing the source code to be loaded into the shader.
-    // length: Specifies an array of string lengths.
+    // void glShaderSource(	GLuint shader, GLsizei count, const GLchar **string, const GLint *length)
+    // shader: ID/Handle of the shader object we're assigning a source code.
+    // count: Number of elements in the string and length arrays.
+    // string: Array of pointers to strings containing the source code to be loaded into the shader.
+    // length: Array of string lengths.
     glShaderSource(shaderID, 1, &sourceCStr, NULL); // count=1 since we're loading one single shader.
-    // void glCompileShader(GLuint shader);
-    // shader: Specifies the shader object to be compiled.
+    // void glCompileShader(GLuint shader)
+    // shader: Shader object to be compiled.
     glCompileShader(shaderID);
     // Here we check for compilation errors
     //DONE: Uncomment this if block
@@ -54,12 +54,12 @@ bool our::ShaderProgram::attach(const std::string &filename, GLenum type) const 
 
     
     //DONE: attach the shader to the program then delete the shader
-    // void glAttachShader(	GLuint program, GLuint shader);
-    // program: Specifies the program object to which a shader object will be attached.
-    // shader: Specifies the shader object that is to be attached.
+    // void glAttachShader(	GLuint program, GLuint shader)
+    // program: Program object to which a shader object will be attached.
+    // shader: Shader object that is to be attached.
     glAttachShader(this->program, shaderID);
-    // void glDeleteShader(GLuint shader);
-    // shader: Specifies the shader object to be deleted.
+    // void glDeleteShader(GLuint shader)
+    // shader: Shader object to be deleted.
     glDeleteShader(shaderID);
     //We return true since the compilation succeeded
     return true;
@@ -69,8 +69,8 @@ bool our::ShaderProgram::attach(const std::string &filename, GLenum type) const 
 
 bool our::ShaderProgram::link() const {
     //DONE: call opengl to link the program identified by this->program
-    // void glLinkProgram(GLuint program);
-    // program: Specifies the handle of the program object to be linked.
+    // void glLinkProgram(GLuint program)
+    // program: ID/Handle of the program object to be linked.
     glLinkProgram(this->program);
     // Here we check for linking errors
     //DONE: Uncomment this if block

@@ -28,52 +28,52 @@ namespace our {
 
         void use() { 
             //DONE: call opengl to use the program identified by this->program
-            // void glUseProgram(GLuint program);
-            // program: Specifies the handle of the program object whose executables are to be used as part of current rendering state.
+            // void glUseProgram(GLuint program)
+            // program: ID/Handle of the program object.
             glUseProgram(this->program); 
         }
 
         GLuint getUniformLocation(const std::string &name) {
             //DONE: call opengl to get the uniform location for the uniform defined by name from this->program
-            // GLint glGetUniformLocation(GLuint program, const GLchar * name);
-            // program: Specifies the program object to be queried.
-            // name: Points to a null terminated string containing the name of the uniform variable whose location is to be queried.
+            // GLint glGetUniformLocation(GLuint program, const GLchar * name)
+            // program: Program object to be get location from.
+            // name: String of the name of the uniform variable we want to get its location.
             return  glGetUniformLocation(this->program, name.c_str());
         }
 
         void set(const std::string &uniform, GLfloat value) {
             //DONE: call opengl to set the value to the uniform defined by name
-            // void glUniform1f(GLint location, GLfloat v0);
-            // location: Specifies the location of the uniform variable to be modified.
-            // v0: specifies the new value to be used for the specified uniform variable.
+            // void glUniform1f(GLint location, GLfloat v0)
+            // location: Location of the uniform variable to be set.
+            // v0: New value for the specified uniform variable to be set.
             glUniform1f(getUniformLocation(uniform),value);
         }
 
         void set(const std::string &uniform, glm::vec2 value) {
             //DONE: call opengl to set the value to the uniform defined by name
-            // void glUniform2fv(GLint location, GLsizei count, const GLfloat * value);
-            // location: Specifies the location of the uniform variable to be modified.
-            // count: specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array.
-            // value: specifies a pointer to an array of count values that will be used to update the specified uniform variable.
+            // void glUniform2fv(GLint location, GLsizei count, const GLfloat * value)
+            // location: Location of the uniform variable to be set.
+            // count: Number of elements to set. Will be set to 1 if the uniform variable is not an array.
+            // value: Pointer to an array of count values to be used to set the located uniform variable.
             glUniform2fv(getUniformLocation(uniform), 1, (GLfloat*)&value); 
 
         }
 
         void set(const std::string &uniform, glm::vec3 value) {
             //DONE: call opengl to set the value to the uniform defined by name
-            // void glUniform3fv(GLint location, GLsizei count, const GLfloat * value);
-            // location: Specifies the location of the uniform variable to be modified.
-            // count: specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array.
-            // value: specifies a pointer to an array of count values that will be used to update the specified uniform variable.
+            // void glUniform3fv(GLint location, GLsizei count, const GLfloat * value)
+            // location: Location of the uniform variable to be set.
+            // count: Number of elements to set. Will be set to 1 if the uniform variable is not an array.
+            // value: Pointer to an array of count values to be used to set the located uniform variable.
             glUniform3fv(getUniformLocation(uniform), 1, (GLfloat*)&value);
         }
 
         void set(const std::string &uniform, glm::vec4 value) {
             //DONE: call opengl to set the value to the uniform defined by name
-            // void glUniform4fv(GLint location, GLsizei count, const GLfloat * value);
-            // location: Specifies the location of the uniform variable to be modified.
-            // count: specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array.
-            // value: specifies a pointer to an array of count values that will be used to update the specified uniform variable.
+            // void glUniform4fv(GLint location, GLsizei count, const GLfloat * value)
+            // location: Location of the uniform variable to be set.
+            // count: Number of elements to set. Will be set to 1 if the uniform variable is not an array.
+            // value: Pointer to an array of count values to be used to set the located uniform variable.
             glUniform4fv(getUniformLocation(uniform), 1, (GLfloat*)&value);
         }
 
