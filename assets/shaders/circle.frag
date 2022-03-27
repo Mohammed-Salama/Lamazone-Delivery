@@ -11,9 +11,9 @@ uniform vec4 outside_color = vec4(0.0, 0.0, 0.0, 1.0);
 
 void main(){
     //DONE: Write code that will draw the circle
-    if((gl_FragCoord.x-center[0])*(gl_FragCoord.x-center[0]) +(gl_FragCoord.y-center[1])*(gl_FragCoord.y-center[1])<= radius* radius){
+    /*if((gl_FragCoord.x-center[0])*(gl_FragCoord.x-center[0]) +(gl_FragCoord.y-center[1])*(gl_FragCoord.y-center[1])<= radius* radius){
         frag_color = inside_color;
     } else {
         frag_color = outside_color;
-    }
+    }*/
 }
