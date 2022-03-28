@@ -85,4 +85,5 @@ class FullscreenTriangleState: public our::State {
         // n: Number of vertex array objects to be deleted.
         // arrays: Address of the array containing the n objects to be deleted.
         glDeleteVertexArrays(1, &ID); // n=1 since we created only one Vertex Array.
+    }
 };
