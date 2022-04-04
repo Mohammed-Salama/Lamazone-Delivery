@@ -12,81 +12,55 @@ namespace our {
     class ShaderProgram {
 
     private:
-        //Shader Program Handle
+        //Shader Program Handle (OpenGL object name)
         GLuint program;
 
     public:
-        void create();
-        void destroy();
-
-        ShaderProgram(){ program = 0; }
-        ~ShaderProgram(){ destroy(); }
+        ShaderProgram(){ program = glCreateProgram(); }
+        ~ShaderProgram(){ if(program != 0) glDeleteProgram(program); }
 
         bool attach(const std::string &filename, GLenum type) const;
 
         bool link() const;
 
         void use() { 
-            //DONE: call opengl to use the program identified by this->program
-            // void glUseProgram(GLuint program)
-            // program: ID/Handle of the program object.
-            glUseProgram(this->program); 
+            glUseProgram(program);
         }
 
         GLuint getUniformLocation(const std::string &name) {
-            //DONE: call opengl to get the uniform location for the uniform defined by name from this->program
-            // GLint glGetUniformLocation(GLuint program, const GLchar * name)
-            // program: Program object to be get location from.
-            // name: String of the name of the uniform variable we want to get its location.
-            return  glGetUniformLocation(this->program, name.c_str());
+            return glGetUniformLocation(program, name.c_str());
         }
 
         void set(const std::string &uniform, GLfloat value) {
-            //DONE: call opengl to set the value to the uniform defined by name
-            // void glUniform1f(GLint location, GLfloat v0)
-            // location: Location of the uniform variable to be set.
-            // v0: New value for the specified uniform variable to be set.
-            glUniform1f(getUniformLocation(uniform),value);
+            glUniform1f(getUniformLocation(uniform), value);
+        }
+
+        void set(const std::string &uniform, GLuint value) {
+            glUniform1ui(getUniformLocation(uniform), value);
+        }
+
+        void set(const std::string &uniform, GLint value) {
+            glUniform1i(getUniformLocation(uniform), value);
         }
 
         void set(const std::string &uniform, glm::vec2 value) {
-            //DONE: call opengl to set the value to the uniform defined by name
-            // void glUniform2fv(GLint location, GLsizei count, const GLfloat * value)
-            // location: Location of the uniform variable to be set.
-            // count: Number of elements to set. Will be set to 1 if the uniform variable is not an array.
-            // value: Pointer to an array of count values to be used to set the located uniform variable.
-            glUniform2fv(getUniformLocation(uniform), 1, (GLfloat*)&value); 
-
+            glUniform2f(getUniformLocation(uniform), value.x, value.y);
         }
 
         void set(const std::string &uniform, glm::vec3 value) {
-            //DONE: call opengl to set the value to the uniform defined by name
-            // void glUniform3fv(GLint location, GLsizei count, const GLfloat * value)
-            // location: Location of the uniform variable to be set.
-            // count: Number of elements to set. Will be set to 1 if the uniform variable is not an array.
-            // value: Pointer to an array of count values to be used to set the located uniform variable.
-            glUniform3fv(getUniformLocation(uniform), 1, (GLfloat*)&value);
+            glUniform3f(getUniformLocation(uniform), value.x, value.y, value.z);
         }
 
         void set(const std::string &uniform, glm::vec4 value) {
-            //DONE: call opengl to set the value to the uniform defined by name
-            // void glUniform4fv(GLint location, GLsizei count, const GLfloat * value)
-            // location: Location of the uniform variable to be set.
-            // count: Number of elements to set. Will be set to 1 if the uniform variable is not an array.
-            // value: Pointer to an array of count values to be used to set the located uniform variable.
-            glUniform4fv(getUniformLocation(uniform), 1, (GLfloat*)&value);
+            glUniform4f(getUniformLocation(uniform), value.x, value.y, value.z, value.w);
         }
 
+        void set(const std::string &uniform, glm::mat4 matrix) {
+            glUniformMatrix4fv(getUniformLocation(uniform), 1, false, glm::value_ptr(matrix));
+        }
 
-        //DONE: Delete the copy constructor and assignment operator
-        ShaderProgram(const ShaderProgram&) = delete;
-        ShaderProgram& operator=(const ShaderProgram&) = delete;
-        //Question: Why do we do this? Hint: Look at the deconstructor
-        // Answer: Because the deconstructor destroys the program. So in case of enabling the copy constructor, if the object copy is terminated,
-        // the program will be deleted in the copy while the original is still using it. It results in an error since the original object can't use 
-        // a deleted program. In case of enabling the assignment operator, the object that is being assigned to will have the same program as
-        // the object assigned to it. So, if either one is terminated, an error will occur in the other that is still using it.
-        // So, to avoid all these errors it's best to disable/delete them.
+        ShaderProgram(ShaderProgram const &) = delete;
+        ShaderProgram &operator=(ShaderProgram const &) = delete;
     };
 
 }
