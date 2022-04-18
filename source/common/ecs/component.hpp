@@ -24,6 +24,8 @@ namespace our {
         virtual void deserialize(const nlohmann::json& data) = 0;
         // Returns the owner of this component
         Entity* getOwner() const { return owner; }
+        // Define a virtual destructor
+        virtual ~Component(){}
     };
 
 }

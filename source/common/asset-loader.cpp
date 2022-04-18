@@ -11,16 +11,10 @@
 
 namespace our {
 
-    // Where we define all the asset maps since static member variables must be defined in a source file
-    std::unordered_map<std::string, ShaderProgram*> AssetLoader<ShaderProgram>::assets;
-    std::unordered_map<std::string, Texture2D*> AssetLoader<Texture2D>::assets;
-    std::unordered_map<std::string, Sampler*> AssetLoader<Sampler>::assets;
-    std::unordered_map<std::string, Mesh*> AssetLoader<Mesh>::assets;
-    std::unordered_map<std::string, Material*> AssetLoader<Material>::assets;
-
     // This will load all the shaders defined in "data"
     // data must be in the form:
     //    { shader_name : { "vs" : "path/to/vertex-shader", "fs" : "path/to/fragment-shader" }, ... }
+    template<>
     void AssetLoader<ShaderProgram>::deserialize(const nlohmann::json& data) {
         if(data.is_object()){
             for(auto& [name, desc] : data.items()){
@@ -38,6 +32,7 @@ namespace our {
     // This will load all the textures defined in "data"
     // data must be in the form:
     //    { texture_name : "path/to/image", ... }
+    template<>
     void AssetLoader<Texture2D>::deserialize(const nlohmann::json& data) {
         if(data.is_object()){
             for(auto& [name, desc] : data.items()){
@@ -54,6 +49,7 @@ namespace our {
     //      The key is the parameter name, e.g. "MAG_FILTER", "MIN_FILTER", "WRAP_S", "WRAP_T" or "MAX_ANISOTROPY"
     //      The value is the parameter value, e.g. "GL_NEAREST", "GL_REPEAT"
     //  For "MAX_ANISOTROPY", the value must be a float with a value >= 1.0f
+    template<>
     void AssetLoader<Sampler>::deserialize(const nlohmann::json& data) {
         if(data.is_object()){
             for(auto& [name, desc] : data.items()){
@@ -67,6 +63,7 @@ namespace our {
     // This will load all the meshes defined in "data"
     // data must be in the form:
     //    { mesh_name : "path/to/3d-model-file", ... }
+    template<>
     void AssetLoader<Mesh>::deserialize(const nlohmann::json& data) {
         if(data.is_object()){
             for(auto& [name, desc] : data.items()){
@@ -88,6 +85,7 @@ namespace our {
     //      "pipelineState" (optional) where the value is a json object that can be read by "PipelineState::deserialize"
     //      "transparent" (optional, default=false) where the value is a boolean indicating whether the material is transparent or not
     //      ... more keys/values can be added depending on the material type (e.g. "texture", "sampler", "tint")
+    template<>
     void AssetLoader<Material>::deserialize(const nlohmann::json& data) {
         if(data.is_object()){
             for(auto& [name, desc] : data.items()){

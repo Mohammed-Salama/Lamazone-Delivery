@@ -14,7 +14,7 @@ namespace our {
     class AssetLoader {
         // This map stores a pointer to each asset identified by its name
         // All assets in this map are owned by the asset loader so it should not be deleted outside of this class
-        static std::unordered_map<std::string, T*> assets;
+        static inline std::unordered_map<std::string, T*> assets;
     public:
         // This function loads the assets defined by the given json object
         // The json object should be defined in the form: {asset_name: asset_description}
