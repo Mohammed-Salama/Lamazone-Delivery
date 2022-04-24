@@ -14,6 +14,7 @@ uniform int output_type;
 void main(){
     // We select the fragment color based on output_type
     // 0 = Position, 1 = Color, 2 = Texture Coordinates, 3 = Normal
+    //frag_color = vec4(1.0,0,0,1.0);
     switch(output_type){
         case 0:
         frag_color = vec4(0.5 * fs_in.position + 0.5, 1.0);
