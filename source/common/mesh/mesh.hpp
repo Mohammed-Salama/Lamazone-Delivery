@@ -2,7 +2,7 @@
 
 #include <glad/gl.h>
 #include "vertex.hpp"
-#include <iostream>////
+
 namespace our {
 
     #define ATTRIB_LOC_POSITION 0
@@ -37,7 +37,7 @@ namespace our {
             glGenBuffers(1, &VBO);
             glBindBuffer(GL_ARRAY_BUFFER , VBO);
             GLsizei verticesCount = GLsizei(vertices.size());
-            std::cout<<"JJJJ "<<verticesCount<<"\n";
+
             glBufferData(GL_ARRAY_BUFFER, verticesCount*sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
 
@@ -56,7 +56,7 @@ namespace our {
             glGenBuffers(1, &EBO);
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
             elementCount = GLsizei(elements.size());
-            std::cout<<"hhhh "<<elementCount<<"\n";
+
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementCount*sizeof(unsigned int), &elements[0], GL_STATIC_DRAW);
 
 
@@ -67,11 +67,8 @@ namespace our {
         void draw() 
         {
             //TODO: (Req 1) Write this function
-            //glBindVertexArray(VAO);
-            //std::cout<<"LOOOOP\n";
-            //elementCount = 3;
+            glBindVertexArray(VAO);
             glDrawElements(GL_TRIANGLES, elementCount, GL_UNSIGNED_INT, (void*)0);
-           // glDrawArrays(GL_TRIANGLES,0,3);
         }
 
         // this function should delete the vertex & element buffers and the vertex array object
