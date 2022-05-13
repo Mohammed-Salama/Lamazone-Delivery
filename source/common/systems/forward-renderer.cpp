@@ -48,14 +48,27 @@ namespace our {
 
         // Then we check if there is a postprocessing shader in the configuration
         if(config.contains("postprocess")){
-            //TODO: (Req 10) Create a framebuffer
-
-            //TODO: (Req 10) Create a color and a depth texture and attach them to the framebuffer
+            //DONE: (Req 10) Create a framebuffer
+            // GLuint postprocessFrameBuffer;
+            glGenFramebuffers(1, &this->postprocessFrameBuffer);
+            // glBindFramebuffer(GL_DRAW_FRAMEBUFFER, this->postprocessFrameBuffer);
+            //DONE: (Req 10) Create a color and a depth texture and attach them to the framebuffer
             // Hints: The color format can be (Red, Green, Blue and Alpha components with 8 bits for each channel).
             // The depth format can be (Depth component with 24 bits).
-            
-            //TODO: (Req 10) Unbind the framebuffer just to be safe
-            
+            // this->colorTarget = texture_utils::empty(GL_RGBA8,this->windowSize);
+            colorTarget = new Texture2D();
+            colorTarget->bind();
+            int levels = (int)glm::floor(glm::log2((float)glm::max(this->windowSize[0],this->windowSize[1]))) + 1;
+            glTexStorage2D(GL_TEXTURE_2D, levels, GL_RGBA8, this->windowSize[0],this->windowSize[1]);
+            // this->depthTarget = texture_utils::empty(GL_DEPTH_COMPONENT24,this->windowSize);
+            depthTarget = new Texture2D();
+            depthTarget->bind();
+            glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT24, this->windowSize[0],this->windowSize[1]);
+            glBindFramebuffer(GL_DRAW_FRAMEBUFFER, postprocessFrameBuffer);
+            // glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,  this->colorTarget->getOpenGLName(), 0);
+            // glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D,  this->depthTarget->getOpenGLName(), 0);
+            //DONE: (Req 10) Unbind the framebuffer just to be safe
+            glBindFramebuffer(GL_DRAW_FRAMEBUFFER,0);
             // Create a vertex array to use for drawing the texture
             glGenVertexArrays(1, &postProcessVertexArray);
 
@@ -73,13 +86,13 @@ namespace our {
             postprocessShader->link();
 
             // Create a post processing material
-            postprocessMaterial = new TexturedMaterial();
-            postprocessMaterial->shader = postprocessShader;
-            postprocessMaterial->texture = colorTarget;
-            postprocessMaterial->sampler = postprocessSampler;
+            this->postprocessMaterial = new TexturedMaterial();
+            this->postprocessMaterial->shader = postprocessShader;
+            this->postprocessMaterial->texture = colorTarget;
+            this->postprocessMaterial->sampler = postprocessSampler;
             // The default options are fine but we don't need to interact with the depth buffer
             // so it is more performant to disable the depth mask
-            postprocessMaterial->pipelineState.depthMask = false;
+            this->postprocessMaterial->pipelineState.depthMask = false;
         }
     }
 
@@ -169,8 +182,8 @@ namespace our {
 
         // If there is a postprocess material, bind the framebuffer
         if(postprocessMaterial){
-            //TODO: (Req 10) bind the framebuffer
-
+            //DONE: (Req 10) bind the framebuffer
+            glBindFramebuffer(GL_DRAW_FRAMEBUFFER, postprocessFrameBuffer);
         }
 
         //TODO: (Req 8) Clear the color and depth buffers
@@ -217,10 +230,12 @@ namespace our {
 
         // If there is a postprocess material, apply postprocessing
         if(postprocessMaterial){
-            //TODO: (Req 10) Return to the default framebuffer
-            
-            //TODO: (Req 10) Setup the postprocess material and draw the fullscreen triangle
-            
+            //DONE: (Req 10) Return to the default framebuffer
+            glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+            // glBindFramebuffer(GL_DRAW_FRAMEBUFFER, postprocessFrameBuffer);
+            //DONE: (Req 10) Setup the postprocess material and draw the fullscreen triangle
+            postprocessMaterial->setup();
+            postprocessMaterial->shader->use();
         }
     }
 

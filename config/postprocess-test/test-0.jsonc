@@ -17,7 +17,7 @@
     },
     "scene": {
         "renderer": {
-            "sky": "assets/textures/sky.jpg",
+            // "sky": "assets/textures/sky.jpg",
             "postprocess": "assets/shaders/postprocess/grayscale.frag"
         },
         "assets":{
