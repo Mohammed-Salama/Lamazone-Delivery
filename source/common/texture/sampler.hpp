@@ -13,7 +13,7 @@ namespace our {
     public:
         // This constructor creates an OpenGL sampler and saves its object name in the member variable "name" 
         Sampler() {
-            //TODO: (Req 5) Complete this function
+            //DONE: (Req 5) Complete this function
 
             //generate sampler object names
             //glGenSamplers(number of sampler object names, name of samplers);
@@ -22,13 +22,13 @@ namespace our {
 
         // This deconstructor deletes the underlying OpenGL sampler
         ~Sampler() { 
-            //TODO: (Req 5) Complete this function
+            //DONE: (Req 5) Complete this function
             glDeleteSamplers(1,&name);
         }
 
         // This method binds this sampler to the given texture unit
         void bind(GLuint textureUnit) const {
-            //TODO: (Req 5) Complete this function
+            //DONE: (Req 5) Complete this function
 
             
             //binding sampler to texture unit
@@ -39,7 +39,7 @@ namespace our {
 
         // This static method ensures that no sampler is bound to the given texture unit
         static void unbind(GLuint textureUnit){
-            //TODO: (Req 5) Complete this function
+            //DONE: (Req 5) Complete this function
 
             glBindSampler(textureUnit,NULL);
         }
@@ -47,7 +47,7 @@ namespace our {
         // This function sets a sampler paramter where the value is of type "GLint"
         // This can be used to set the filtering and wrapping parameters
         void set(GLenum parameter, GLint value) const {
-            //TODO: (Req 5) Complete this function
+            //DONE: (Req 5) Complete this function
 
             //set sampler parameters
             //glSamplerParameteri(name of sampler , parameter name , parameter value);
@@ -57,7 +57,7 @@ namespace our {
         // This function sets a sampler paramter where the value is of type "GLfloat"
         // This can be used to set the "GL_TEXTURE_MAX_ANISOTROPY_EXT" parameter
         void set(GLenum parameter, GLfloat value) const {
-            //TODO: (Req 5) Complete this function
+            //DONE: (Req 5) Complete this function
             glSamplerParameterf(name, parameter, value);
         }
 

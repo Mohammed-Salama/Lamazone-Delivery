@@ -23,7 +23,7 @@ namespace our {
     glm::mat4 CameraComponent::getViewMatrix() const {
         auto owner = getOwner();
         auto M = owner->getLocalToWorldMatrix();
-        //TODO: (Req 7) Complete this function
+        //DONE: (Req 7) Complete this function
         //HINT:
         // In the camera space:
         // - eye is the origin (0,0,0)
@@ -47,7 +47,7 @@ namespace our {
     // Creates and returns the camera projection matrix
     // "viewportSize" is used to compute the aspect ratio
     glm::mat4 CameraComponent::getProjectionMatrix(glm::ivec2 viewportSize) const {
-        //TODO: (Req 7) Wrtie this function
+        //DONE: (Req 7) Wrtie this function
         // NOTE: The function glm::ortho can be used to create the orthographic projection matrix
         // It takes left, right, bottom, top. Bottom is -orthoHeight/2 and Top is orthoHeight/2.
         // Left and Right are the same but after being multiplied by the aspect ratio

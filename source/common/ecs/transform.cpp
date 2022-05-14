@@ -13,7 +13,8 @@ namespace our {
         glm::mat4 sca = glm::scale(glm::mat4(1.0f), scale);
         glm::mat4 rot = glm::yawPitchRoll(rotation.y,rotation.x, rotation.z);
         glm::mat4 tra = glm::translate(glm::mat4(1.0f), position);
-        return tra*rot*sca;
+        return tra*rot*sca; // Since the transformation matrix on the right is applied first.
+        // i.e. T * R * S 
     }
 
      // Deserializes the entity data and components from a json object

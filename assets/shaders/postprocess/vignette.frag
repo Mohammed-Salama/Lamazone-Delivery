@@ -12,7 +12,7 @@ out vec4 frag_color;
 // to grab the attention of the viewer towards the center of the screen
 
 void main(){
-    //TODO: Modify this shader to apply vignette
+    //DONE: Modify this shader to apply vignette
     // To apply vignette, divide the scene color
     // by 1 + the squared length of the 2D pixel location the NDC space
     // Hint: remember that the NDC space ranges from -1 to 1
