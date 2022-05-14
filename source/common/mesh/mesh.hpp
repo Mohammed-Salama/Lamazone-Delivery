@@ -28,19 +28,32 @@ namespace our {
         // a vertex array object to define how to read the vertex & element buffer during rendering 
         Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& elements)
         {
-            //TODO: (Req 1) Write this function
+            //DONE: (Req 1) Write this function
             // remember to store the number of elements in "elementCount" since you will need it for drawing
             // For the attribute locations, use the constants defined above: ATTRIB_LOC_POSITION, ATTRIB_LOC_COLOR, etc
+
+            //Creating 1 vertex array 
+            //glGenVertexArrays(number of vertex arrays, vertex array name);
             glGenVertexArrays(1, &VAO);
+
+            //Binding the vertex array
+            //glBindVertexArray(vertex array name);
             glBindVertexArray(VAO);
 
+            //creating one vertex buffer 
+            //glGenBuffers(number of vertex buffer, vertex buffer name);
             glGenBuffers(1, &VBO);
+
+            //Binding the vertex buffer
+            //glBindVertexArray(Binding Target , vertex buffer name);
             glBindBuffer(GL_ARRAY_BUFFER , VBO);
             GLsizei verticesCount = GLsizei(vertices.size());
-
+            
+            // glBufferData(target, size,data, usage);
             glBufferData(GL_ARRAY_BUFFER, verticesCount*sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
 
-
+            // Enabling vetex atrribute
+            // glEnableVertexAttribArray(the index of the generic vertex attribute)
             glEnableVertexAttribArray(ATTRIB_LOC_POSITION);
             glVertexAttribPointer(ATTRIB_LOC_POSITION, 3, GL_FLOAT, false, sizeof(Vertex), (void*)0);
 
@@ -68,6 +81,9 @@ namespace our {
         {
             //TODO: (Req 1) Write this function
             glBindVertexArray(VAO);
+
+            //render primitives from array data
+            //glDrawElements(mode, count,type,indices)
             glDrawElements(GL_TRIANGLES, elementCount, GL_UNSIGNED_INT, (void*)0);
         }
 

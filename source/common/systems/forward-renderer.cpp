@@ -22,11 +22,15 @@ namespace our {
             //TODO: (Req 9) Pick the correct pipeline state to draw the sky.
             // Hints: the sky will be draw after the opaque objects so we would need depth testing but which depth function should we pick?
             // We will draw the sphere from the inside, so what options should we pick for the face culling.
+
             PipelineState skyPipelineState{};
+            //enabling depth testing
             skyPipelineState.depthTesting.enabled=true;
             skyPipelineState.depthTesting.function = GL_LEQUAL;
-
+            
+            //enabling face culling
             skyPipelineState.faceCulling.enabled=true;
+            //face to cull is front because we see the sphere from inside
             skyPipelineState.faceCulling.culledFace = GL_FRONT;
             skyPipelineState.faceCulling.frontFace = GL_CCW;
             
@@ -212,6 +216,15 @@ namespace our {
             
             //TODO: (Req 9) We want the sky to be drawn behind everything (in NDC space, z=1)
             // We can acheive this by multiplying by an extra matrix after the projection but what values should we put in it?
+
+            /* How this matrix makes Z = 1
+            
+            | X |       | 1 0 0 0 |     | X |  
+            | Y |       | 0 1 0 0 |     | Y |
+            | 1 |   =   | 0 0 0 1 |  x  | Z |
+            | 1 |       | 0 0 0 1 |     | 1 |
+
+            */
             glm::mat4 alwaysBehindTransform = glm::mat4(
             //  Row1, Row2, Row3, Row4
                 1.0f, 0.0f, 0.0f, 0.0f, // Column1

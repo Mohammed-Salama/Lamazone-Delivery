@@ -14,6 +14,9 @@ namespace our {
         // This constructor creates an OpenGL sampler and saves its object name in the member variable "name" 
         Sampler() {
             //TODO: (Req 5) Complete this function
+
+            //generate sampler object names
+            //glGenSamplers(number of sampler object names, name of samplers);
             glGenSamplers(1, &name);
         };
 
@@ -26,6 +29,10 @@ namespace our {
         // This method binds this sampler to the given texture unit
         void bind(GLuint textureUnit) const {
             //TODO: (Req 5) Complete this function
+
+            
+            //binding sampler to texture unit
+            //glBindSampler(index of the texture unit to which the sampler is bound , name of sampler);
             glBindSampler(textureUnit, name);
             
         }
@@ -33,6 +40,7 @@ namespace our {
         // This static method ensures that no sampler is bound to the given texture unit
         static void unbind(GLuint textureUnit){
             //TODO: (Req 5) Complete this function
+
             glBindSampler(textureUnit,NULL);
         }
 
@@ -40,6 +48,9 @@ namespace our {
         // This can be used to set the filtering and wrapping parameters
         void set(GLenum parameter, GLint value) const {
             //TODO: (Req 5) Complete this function
+
+            //set sampler parameters
+            //glSamplerParameteri(name of sampler , parameter name , parameter value);
             glSamplerParameteri(name, parameter, value);
         }
 
