@@ -8,7 +8,9 @@ namespace our {
     // This function should setup the pipeline state and set the shader to be used
     void Material::setup() const {
         //TODO: (Req 6) Write this function
+        // start setup of pipeline
         pipelineState.setup();
+        // to use shader
         shader->use();
     }
 
@@ -27,7 +29,9 @@ namespace our {
     // set the "tint" uniform to the value in the member variable tint 
     void TintedMaterial::setup() const {
         //TODO: (Req 6) Write this function
+        // setup material
        Material::setup();
+       // set tint for shader
        shader->set("tint",tint);
     }
 
@@ -43,9 +47,13 @@ namespace our {
     // Then it should bind the texture and sampler to a texture unit and send the unit number to the uniform variable "tex" 
     void TexturedMaterial::setup() const {
         //TODO: (Req 6) Write this function
+        // call tint setup to add  tint to shadder
         TintedMaterial::setup();
+        // set threshold
         shader->set("alphaThreshold",alphaThreshold);
+        // set texture to shadder
         shader->set("tex",0);
+        // bind texture & sampler
         texture->bind();
         sampler->bind(0);
         
