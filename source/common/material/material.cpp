@@ -67,5 +67,33 @@ namespace our {
         texture = AssetLoader<Texture2D>::get(data.value("texture", ""));
         sampler = AssetLoader<Sampler>::get(data.value("sampler", ""));
     }
+    void LitMaterial::setup() const {
+
+       // if i call setup of material , i will miss color , if i call tint  , i will also miss color
+       // if i call texture , i will get color & tint
+       // but not sure by 100%
+       TexturedMaterial::setup();
+       //  i should send some values to its shader?
+      // Does we need to add sampler here with 0,1,2 ...etc??
+       // bind textures of light
+       albedo->bind();
+       specular->bind();
+       ambient_occlusion->bind();
+       roughness->bind();
+       emissive->bind();
+
+    }
+
+        // This function read the material data from a json object
+        // i didn't do json object so this is not completed
+    void LitMaterial::deserialize(const nlohmann::json& data){
+        Material::deserialize(data);
+        if(!data.is_object()) return;
+        albedo = AssetLoader<Texture2D>::get(data.value("albedo", ""));
+        specular = AssetLoader<Texture2D>::get(data.value("specular", ""));
+        roughness = AssetLoader<Texture2D>::get(data.value("roughness", ""));
+        specular = AssetLoader<Texture2D>::get(data.value("specular", ""));
+        emissive = AssetLoader<Texture2D>::get(data.value("emissive", ""));
+    }
 
 }

@@ -37,6 +37,26 @@ namespace our {
             // Load the sky texture (note that we don't need mipmaps since we want to avoid any unnecessary blurring while rendering the sky)
             std::string skyTextureFile = config.value<std::string>("sky", "");
             Texture2D* skyTexture = texture_utils::loadImage(skyTextureFile, false);
+              
+            // Load the albedo texture (note that we don't need mipmaps since we want to avoid any unnecessary blurring while rendering the albedo)
+            std::string albedoTextureFile = config.value<std::string>("albedo", "");
+            Texture2D* albedoTexture = texture_utils::loadImage(albedoTextureFile, false);  
+            
+            // Load the ambient_occlusion texture (note that we don't need mipmaps since we want to avoid any unnecessary blurring while rendering the ambient_occlusion)
+            std::string ambient_occlusionTextureFile = config.value<std::string>("ambient_occlusion", "");
+            Texture2D* ambient_occlusionTexture = texture_utils::loadImage(ambient_occlusionTextureFile, false);
+           
+            // Load the emissive texture (note that we don't need mipmaps since we want to avoid any unnecessary blurring while rendering the emissive)
+            std::string emissiveTextureFile = config.value<std::string>("emissive", "");
+            Texture2D* emissiveTexture = texture_utils::loadImage(emissiveTextureFile, false);
+            
+            // Load the roughness texture (note that we don't need mipmaps since we want to avoid any unnecessary blurring while rendering the roughness)
+            std::string roughnessTextureFile = config.value<std::string>("roughness", "");
+            Texture2D* roughnessTexture = texture_utils::loadImage(roughnessTextureFile, false);
+            
+             // Load the roughness texture (note that we don't need mipmaps since we want to avoid any unnecessary blurring while rendering the specular)
+            std::string specularTextureFile = config.value<std::string>("specular", "");
+            Texture2D* specularTexture = texture_utils::loadImage(specularTextureFile, false);
 
             // Setup a sampler for the sky 
             Sampler* skySampler = new Sampler();
@@ -46,7 +66,7 @@ namespace our {
             skySampler->set(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
             // Combine all the aforementioned objects (except the mesh) into a material. 
-            this->skyMaterial = new TexturedMaterial();
+            this->skyMaterial = new LitMaterial();
             this->skyMaterial->shader = skyShader;
             this->skyMaterial->texture = skyTexture;
             this->skyMaterial->sampler = skySampler;
@@ -54,6 +74,11 @@ namespace our {
             this->skyMaterial->tint = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
             this->skyMaterial->alphaThreshold = 1.0f;
             this->skyMaterial->transparent = false;
+            this->skyMaterial->albedo = albedoTexture;
+            this->skyMaterial->specular = specularTexture;
+            this->skyMaterial ->ambient_occlusion = ambient_occlusionTexture;
+            this->skyMaterial-> roughness = roughnessTexture;
+            this->skyMaterial-> emissive = emissiveTexture;
         }
 
         // Then we check if there is a postprocessing shader in the configuration
@@ -88,6 +113,7 @@ namespace our {
             postprocessShader->link();
 
             // Create a post processing material
+            //should this change to be Lit????
             postprocessMaterial = new TexturedMaterial();
             postprocessMaterial->shader = postprocessShader;
             postprocessMaterial->texture = colorTarget;
@@ -105,6 +131,11 @@ namespace our {
             delete skyMaterial->shader;
             delete skyMaterial->texture;
             delete skyMaterial->sampler;
+            delete skyMaterial->albedo;
+            delete skyMaterial->specular;
+            delete skyMaterial->ambient_occlusion;
+            delete skyMaterial->roughness;
+            delete skyMaterial->emissive;
             delete skyMaterial;
         }
         // Delete all objects related to post processing
@@ -115,6 +146,13 @@ namespace our {
             delete depthTarget;
             delete postprocessMaterial->sampler;
             delete postprocessMaterial->shader;
+            delete postprocessMaterial->texture;
+            // does we need light with postpreprocessoing????
+            // delete postprocessMaterial->albedo;
+            // delete postprocessMaterial->specular;
+            // delete postprocessMaterial->ambient_occlusion;
+            // delete postprocessMaterial->roughness;
+            // delete postprocessMaterial->emissive;
             delete postprocessMaterial;
         }
     }

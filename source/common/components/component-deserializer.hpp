@@ -2,6 +2,7 @@
 
 #include "../ecs/entity.hpp"
 #include "camera.hpp"
+#include "light.hpp"
 #include "mesh-renderer.hpp"
 #include "free-camera-controller.hpp"
 #include "movement.hpp"
@@ -21,6 +22,10 @@ namespace our {
             component = entity->addComponent<FreeCameraControllerComponent>();
         } else if (type == MovementComponent::getID()) {
             component = entity->addComponent<MovementComponent>();
+        }
+        // i think we need to add its json file to work without errors
+        else if(type == LightComponent::getID()){
+            // component = entity->addComponent<LightComponent>();
         }
         if(component) component->deserialize(data);
     }

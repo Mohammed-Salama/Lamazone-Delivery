@@ -35,10 +35,11 @@ namespace our
         std::vector<RenderCommand> transparentCommands;
         // Objects used for rendering a skybox
         Mesh* skySphere;
-        TexturedMaterial* skyMaterial;
+        LitMaterial* skyMaterial;
         // Objects used for Postprocessing
         GLuint postprocessFrameBuffer, postProcessVertexArray;
         Texture2D *colorTarget, *depthTarget;
+        // Does is this must be Lit??
         TexturedMaterial* postprocessMaterial;
     public:
         // Initialize the renderer including the sky and the Postprocessing objects.
