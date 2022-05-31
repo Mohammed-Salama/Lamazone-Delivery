@@ -12,7 +12,7 @@
     "screenshots":{
         "directory": "screenshots/postprocess-test",
         "requests": [
-            { "file": "test-3.png", "frame":  1 }
+            { "file": "test-4.png", "frame":  1 }
         ]
     },
     "scene": {
