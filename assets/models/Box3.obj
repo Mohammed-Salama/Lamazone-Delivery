@@ -1,5 +1,6 @@
 # This file uses centimeters as units for non-parametric coordinates.
 
+mtllib assets/models/Box3.mtl
 g default
 v -1.000000 0.000000 -3.144734
 v -0.500000 0.000000 -3.144734
