@@ -49,6 +49,7 @@
                 "package4":"assets/models/Box4.obj",
                 "battery":"assets/models/battery.obj",
                 "arrow":"assets/models/arrow.obj"
+                //,"truck": "assets/models/truck.obj"
             },
             "samplers":{
                 "default":{},
@@ -226,7 +227,6 @@
                     "tint": [1, 1, 1, 1],
                     "texture": "arrow",
                     "sampler": "default"
-                },
                 }
             }
         },
@@ -254,8 +254,36 @@
                             }
                         ]
                     }
+                    // ,
+                    // {
+                    //     "position": [1, -1, -1],
+                    //     "rotation": [45, 45, 0],
+                    //     "scale": [0.1, 0.1, 1.0],
+                    //     "components": [
+                    //         {
+                    //             "type": "Mesh Renderer",
+                    //             "mesh": "truck",
+                    //             "material": "tire"
+                    //         }
+                    //     ]
+                    // }
                 ]
             },
+            // {
+            //     "rotation": [-45, 0, 0],
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "monkey",
+            //             "material": "monkey"
+            //         },
+            //         {
+            //             "type": "Movement",
+            //             "linearVelocity": [0, 0.1, 0],
+            //             "angularVelocity": [0, 45, 0]
+            //         }
+            //     ]
+            // },
             {
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
@@ -301,6 +329,30 @@
                         "type": "Mesh Renderer",
                         "mesh": "package4",
                         "material": "box4"
+                    }
+                ]
+            },
+            {
+                "position": [5, 5, 5],
+                "rotation": [0, 0, 0],
+                "scale": [1, 1, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "battery",
+                        "material": "battery"
+                    }
+                ]
+            },
+            {
+                "position": [0, 5, 0],
+                "rotation": [0, 0, 0],
+                "scale": [10, 10, 10],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "arrow",
+                        "material": "arrow"
                     }
                 ]
             },
