@@ -98,6 +98,23 @@ namespace our
             // A & D moves the player left or right 
             if(app->getKeyboard().isPressed(GLFW_KEY_D)) position += right * (deltaTime * current_sensitivity.x);
             if(app->getKeyboard().isPressed(GLFW_KEY_A)) position -= right * (deltaTime * current_sensitivity.x);
+
+            // Add movement through right & left arrows
+            if(app->getKeyboard().isPressed(GLFW_KEY_LEFT))
+            {
+                position += front * glm::vec3(0.2, 0.2, 0.2);
+                if(rotation.y == 0) rotation.y = glm::half_pi<float>() / 90.0;
+                else rotation.y += glm::half_pi<float>() / 90.0 ;// The x-axis controls the yaw
+                rotation.y = glm::wrapAngle(rotation.y);
+            }
+            if(app->getKeyboard().isPressed(GLFW_KEY_RIGHT))
+            {
+                position += front * glm::vec3(0.2, 0.2, 0.2);
+                if(rotation.y == 0) rotation.y = - glm::half_pi<float>() / 90.0;
+                else rotation.y -= glm::half_pi<float>() / 90.0 ;// The x-axis controls the yaw
+                rotation.y = glm::wrapAngle(rotation.y);
+            }
+
         }
 
         // When the state exits, it should call this function to ensure the mouse is unlocked
