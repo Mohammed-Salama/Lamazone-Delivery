@@ -2,7 +2,7 @@
     "start-scene": "main",
     "window":
     {
-        "title":"Default Game Window",
+        "title":"Lamazone Delivery Service",
         "size":{
             "width":1280,
             "height":720
@@ -30,13 +30,21 @@
                 "grass": "assets/textures/grass_ground_d.jpg",
                 "wood": "assets/textures/wood.jpg",
                 "glass": "assets/textures/glass-panels.png",
-                "monkey": "assets/textures/monkey.png"
+                "monkey": "assets/textures/monkey.png",
+                "package1": "assets/textures/Box01.png",
+                "package2": "assets/textures/Box02.png",
+                "package3": "assets/textures/Box03.png",
+                "package4": "assets/textures/Box04.png"
             },
             "meshes":{
                 "cube": "assets/models/cube.obj",
                 "monkey": "assets/models/monkey.obj",
                 "plane": "assets/models/plane.obj",
-                "sphere": "assets/models/sphere.obj"
+                "sphere": "assets/models/sphere.obj",
+                "package1":"assets/models/Box1.obj",
+                "package2":"assets/models/Box2.obj",
+                "package3":"assets/models/Box3.obj",
+                "package4":"assets/models/Box4.obj"
             },
             "samplers":{
                 "default":{},
@@ -124,6 +132,66 @@
                     "tint": [1, 1, 1, 1],
                     "texture": "moon",
                     "sampler": "default"
+                },
+                "box1":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "package1",
+                    "sampler": "default"
+                },
+                "box2":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "package2",
+                    "sampler": "default"
+                },
+                "box3":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "package3",
+                    "sampler": "default"
+                },
+                "box4":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "package4",
+                    "sampler": "default"
                 }
             }
         },
@@ -154,17 +222,50 @@
                 ]
             },
             {
-                "rotation": [-45, 0, 0],
+                "position": [10, 10, 10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
                 "components": [
                     {
                         "type": "Mesh Renderer",
-                        "mesh": "monkey",
-                        "material": "monkey"
-                    },
+                        "mesh": "package1",
+                        "material": "box1"
+                    }
+                ]
+            },
+            {
+                "position": [10, 10, 10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "components": [
                     {
-                        "type": "Movement",
-                        "linearVelocity": [0, 0.1, 0],
-                        "angularVelocity": [0, 45, 0]
+                        "type": "Mesh Renderer",
+                        "mesh": "package2",
+                        "material": "box2"
+                    }
+                ]
+            },
+            {
+                "position": [10, 10, 10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "package3",
+                        "material": "box3"
+                    }
+                ]
+            },
+            {
+                "position": [10, 10, 10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "package4",
+                        "material": "box4"
                     }
                 ]
             },
@@ -239,23 +340,24 @@
                         "material": "glass"
                     }
                 ]
-            },
-            {
-                "position": [0, 10, 0],
-                "rotation": [45, 45, 0],
-                "scale": [5, 5, 5],
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "sphere",
-                        "material": "moon"
-                    },
-                    {
-                        "type": "Movement",
-                        "angularVelocity": [0, 90, 0]
-                    }
-                ]
             }
+            //,
+            // {
+            //     "position": [0, 10, 0],
+            //     "rotation": [45, 45, 0],
+            //     "scale": [5, 5, 5],
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "sphere",
+            //             "material": "moon"
+            //         },
+            //         {
+            //             "type": "Movement",
+            //             "angularVelocity": [0, 90, 0]
+            //         }
+            //     ]
+            // }
         ]
     }
 }
