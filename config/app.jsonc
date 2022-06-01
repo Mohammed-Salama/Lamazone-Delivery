@@ -34,7 +34,9 @@
                 "package1": "assets/textures/Box01.png",
                 "package2": "assets/textures/Box02.png",
                 "package3": "assets/textures/Box03.png",
-                "package4": "assets/textures/Box04.png"
+                "package4": "assets/textures/Box04.png",
+                "battery": "assets/textures/battery.jpg",
+                "arrow": "assets/textures/arrowAlbedo.png"
             },
             "meshes":{
                 "cube": "assets/models/cube.obj",
@@ -44,7 +46,10 @@
                 "package1":"assets/models/Box1.obj",
                 "package2":"assets/models/Box2.obj",
                 "package3":"assets/models/Box3.obj",
-                "package4":"assets/models/Box4.obj"
+                "package4":"assets/models/Box4.obj",
+                "battery":"assets/models/battery.obj",
+                "arrow":"assets/models/arrow.obj"
+                //,"truck": "assets/models/truck.obj"
             },
             "samplers":{
                 "default":{},
@@ -192,6 +197,36 @@
                     "tint": [1, 1, 1, 1],
                     "texture": "package4",
                     "sampler": "default"
+                },
+                "battery":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "battery",
+                    "sampler": "default"
+                },
+                "arrow":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "arrow",
+                    "sampler": "default"
                 }
             }
         },
@@ -219,8 +254,36 @@
                             }
                         ]
                     }
+                    // ,
+                    // {
+                    //     "position": [1, -1, -1],
+                    //     "rotation": [45, 45, 0],
+                    //     "scale": [0.1, 0.1, 1.0],
+                    //     "components": [
+                    //         {
+                    //             "type": "Mesh Renderer",
+                    //             "mesh": "truck",
+                    //             "material": "tire"
+                    //         }
+                    //     ]
+                    // }
                 ]
             },
+            // {
+            //     "rotation": [-45, 0, 0],
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "monkey",
+            //             "material": "monkey"
+            //         },
+            //         {
+            //             "type": "Movement",
+            //             "linearVelocity": [0, 0.1, 0],
+            //             "angularVelocity": [0, 45, 0]
+            //         }
+            //     ]
+            // },
             {
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
@@ -266,6 +329,30 @@
                         "type": "Mesh Renderer",
                         "mesh": "package4",
                         "material": "box4"
+                    }
+                ]
+            },
+            {
+                "position": [5, 5, 5],
+                "rotation": [0, 0, 0],
+                "scale": [1, 1, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "battery",
+                        "material": "battery"
+                    }
+                ]
+            },
+            {
+                "position": [0, 5, 0],
+                "rotation": [0, 0, 0],
+                "scale": [10, 10, 10],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "arrow",
+                        "material": "arrow"
                     }
                 ]
             },
