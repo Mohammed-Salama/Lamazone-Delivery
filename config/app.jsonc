@@ -34,7 +34,9 @@
                 "package1": "assets/textures/Box01.png",
                 "package2": "assets/textures/Box02.png",
                 "package3": "assets/textures/Box03.png",
-                "package4": "assets/textures/Box04.png"
+                "package4": "assets/textures/Box04.png",
+                "battery": "assets/textures/battery.jpg",
+                "arrow": "assets/textures/arrowAlbedo.png"
             },
             "meshes":{
                 "cube": "assets/models/cube.obj",
@@ -44,7 +46,9 @@
                 "package1":"assets/models/Box1.obj",
                 "package2":"assets/models/Box2.obj",
                 "package3":"assets/models/Box3.obj",
-                "package4":"assets/models/Box4.obj"
+                "package4":"assets/models/Box4.obj",
+                "battery":"assets/models/battery.obj",
+                "arrow":"assets/models/arrow.obj"
             },
             "samplers":{
                 "default":{},
@@ -192,6 +196,37 @@
                     "tint": [1, 1, 1, 1],
                     "texture": "package4",
                     "sampler": "default"
+                },
+                "battery":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "battery",
+                    "sampler": "default"
+                },
+                "arrow":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "arrow",
+                    "sampler": "default"
+                },
                 }
             }
         },
