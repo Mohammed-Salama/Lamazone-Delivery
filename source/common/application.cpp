@@ -1,4 +1,6 @@
 #include "application.hpp"
+#include "../states/play-state.hpp"
+#include "..//states/intro-state.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -237,8 +239,20 @@ int our::Application::run(int run_for_frames) {
     double last_frame_time = glfwGetTime();
     int current_frame = 0;
 
+
+    float intro_time = 1;
+    float intro_start = glfwGetTime();
+    bool entered = false;
+
     //Game loop
     while(!glfwWindowShouldClose(window)){
+
+        // if true , end intro and go the game start menu.
+        if(glfwGetTime()-intro_start>intro_time && !entered ){
+            changeState("play-scene");
+            entered = true;
+        }
+
         if(run_for_frames != 0 && current_frame >= run_for_frames) break;
         glfwPollEvents(); // Read all the user events and call relevant callbacks.
 
