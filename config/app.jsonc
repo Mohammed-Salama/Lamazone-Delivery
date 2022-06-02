@@ -49,8 +49,8 @@
                 "package3":"assets/models/Box3.obj",
                 "package4":"assets/models/Box4.obj",
                 "battery":"assets/models/battery.obj",
-                "arrow":"assets/models/arrow.obj",
-                "truck": "assets/models/truck.obj"
+                "arrow":"assets/models/arrow.obj"//,
+                // "truck": "assets/models/truck.obj"
             },
             "samplers":{
                 "default":{},
@@ -228,27 +228,28 @@
                     "tint": [1, 1, 1, 1],
                     "texture": "arrow",
                     "sampler": "default"
-                },
-                "truck":{
-                    "type": "textured",
-                    "shader": "textured",
-                    "pipelineState": {
-                        "faceCulling":{
-                            "enabled": false
-                        },
-                        "depthTesting":{
-                            "enabled": true
-                        }
-                    },
-                    "tint": [1, 1, 1, 1],
-                    "texture": "truck",
-                    "sampler": "default"
-                }
+                }//,
+                // "truck":{
+                //     "type": "textured",
+                //     "shader": "textured",
+                //     "pipelineState": {
+                //         "faceCulling":{
+                //             "enabled": false
+                //         },
+                //         "depthTesting":{
+                //             "enabled": true
+                //         }
+                //     },
+                //     "tint": [1, 1, 1, 1],
+                //     "texture": "truck",
+                //     "sampler": "default"
+                // }
             }
         },
         "world":[
             {
                 "position": [0, 0, 10],
+                // "materialName":"player",
                 "components": [
                     {
                         "type": "Camera"
@@ -270,17 +271,43 @@
                     //         }
                     //     ]
                     // },
+                //    {
+                //         "position": [0, -1, -4],
+                //         "rotation": [0, 0, 0],
+                //         "scale": [2, 2, 2],
+                //         "materialName": "box1",
+                //         "components": [
+                //             {
+                //                 "type": "Mesh Renderer",
+                //                 "mesh": "package1",
+                //                 "material": "box1"                               
+                //             }
+                //         ]
+                //     }
+                    // {
+                    //     "position": [0, -1, -4],
+                    //     "rotation": [0, 180, 0],
+                    //     "scale": [0.1, 0.1, 0.1],
+                    //     "components": [
+                    //         {
+                    //             "type": "Mesh Renderer",
+                    //             "mesh": "truck",
+                    //             "material": "truck"
+                    //         }
+                    //     ]
+                    // }
+                ]
+            },
+            {
+                "position": [0, -1, -4],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "materialName": "player",
+                "components": [
                     {
-                        "position": [0, -1, -4],
-                        "rotation": [0, 180, 0],
-                        "scale": [0.1, 0.1, 0.1],
-                        "components": [
-                            {
-                                "type": "Mesh Renderer",
-                                "mesh": "truck",
-                                "material": "truck"
-                            }
-                        ]
+                        "type": "Mesh Renderer",
+                        "mesh": "package1",
+                        "material": "box1"                               
                     }
                 ]
             },
@@ -299,18 +326,18 @@
             //         }
             //     ]
             // },
-            {
-                "position": [10, 10, 10],
-                "rotation": [0, 0, 0],
-                "scale": [2, 2, 2],
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "package1",
-                        "material": "box1"
-                    }
-                ]
-            },
+            // {
+            //     "position": [10, 10, 10],
+            //     "rotation": [0, 0, 0],
+            //     "scale": [2, 2, 2],
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "package1",
+            //             "material": "box1"
+            //         }
+            //     ]
+            // },
             {
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
@@ -348,9 +375,10 @@
                 ]
             },
             {
-                "position": [5, 5, 5],
+                "position": [10, 0, 0],
                 "rotation": [0, 0, 0],
                 "scale": [1, 1, 1],
+                "materialName":"battery",
                 "components": [
                     {
                         "type": "Mesh Renderer",
