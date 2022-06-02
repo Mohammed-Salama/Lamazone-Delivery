@@ -26,6 +26,11 @@ namespace our {
         if(!data.is_object()) return;
         name = data.value("name", name);
         localTransform.deserialize(data);
+        if(data.contains("materialName")){
+        materialName = data["materialName"].get<std::string>();
+        }
+        else materialName = "NULL"; 
+        // materialName = "NULL"; 
         if(data.contains("components")){
             if(const auto& components = data["components"]; components.is_array()){
                 for(auto& component: components){

@@ -18,6 +18,27 @@ namespace our {
         // We need to remember the number of elements that will be draw by glDrawElements 
         GLsizei elementCount;
     public:
+        double raduis =0;
+
+       double calculateRadius(const std::vector<Vertex>& vertices)
+      {
+               for(int i=0;i<vertices.size();i++)
+               {
+                   for(int j=i+1;j<vertices.size();j++)
+                   {
+                        double x ,y,z;
+                        x= vertices[i].position.x-vertices[j].position.x;
+                        y= vertices[i].position.y-vertices[j].position.y;
+                        z = vertices[i].position.z-vertices[j].position.z;
+                        double value = sqrt((x*x)+(y*y)+(z*z));
+                        value/=2;
+                        raduis = raduis > value ? raduis : value;
+                   }
+               }
+               return raduis;
+       }
+      
+
 
         // The constructor takes two vectors:
         // - vertices which contain the vertex data.
@@ -28,6 +49,8 @@ namespace our {
         // a vertex array object to define how to read the vertex & element buffer during rendering 
         Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& elements)
         {
+
+             calculateRadius(vertices);
             //DONE: (Req 1) Write this function
             // remember to store the number of elements in "elementCount" since you will need it for drawing
             // For the attribute locations, use the constants defined above: ATTRIB_LOC_POSITION, ATTRIB_LOC_COLOR, etc
