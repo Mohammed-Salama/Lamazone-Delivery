@@ -72,15 +72,18 @@ namespace our {
        // if i call setup of material , i will miss color , if i call tint  , i will also miss color
        // if i call texture , i will get color & tint
        // but not sure by 100%
-       TexturedMaterial::setup();
-       //  i should send some values to its shader?
-      // Does we need to add sampler here with 0,1,2 ...etc??
-       // bind textures of light
+      
+       Material::setup();
        albedo->bind();
+       light->bind(0);
        specular->bind();
+       light->bind(1);
        ambient_occlusion->bind();
+       light->bind(2);
        roughness->bind();
+       light->bind(3);
        emissive->bind();
+       light->bind(4);
 
     }
 

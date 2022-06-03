@@ -10,8 +10,11 @@ namespace our {
         std::string lightTypeStr = data.value("lightType", "DIRECTIONAL");
         if(lightTypeStr == "DIRECTIONAL"){
             lightType = LightType::DIRECTIONAL;
-        } else {
+        } else if(lightTypeStr == "SPOT") {
             lightType = LightType::SPOT;
+        }
+        else{
+            lightType =LightType::POINT;
         }
         // i should add values here
     }

@@ -52,7 +52,7 @@ namespace our {
         void setup() const override;
         void deserialize(const nlohmann::json& data) override;
     };
-    class LitMaterial : public TexturedMaterial
+    class LitMaterial : public Material
     {
         public:
         Texture2D* albedo;
@@ -60,6 +60,7 @@ namespace our {
         Texture2D * ambient_occlusion;
         Texture2D* roughness;
         Texture2D* emissive;
+        Sampler *light;
         void setup() const override;
         void deserialize(const nlohmann::json& data) override;
     };

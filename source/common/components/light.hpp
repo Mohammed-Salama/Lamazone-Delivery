@@ -9,7 +9,8 @@ namespace our {
     // An enum that defines the type of the Light (SPOT or DIRECTIONAL) 
     enum class LightType {
         DIRECTIONAL,
-        SPOT
+        SPOT,
+        POINT
         
     };
 
