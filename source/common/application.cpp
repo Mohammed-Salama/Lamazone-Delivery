@@ -280,7 +280,11 @@ int our::Application::run(int run_for_frames) {
         glEnable(GL_DEBUG_OUTPUT);
         glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 #endif
-
+        // Moving from main menu to game
+        if(keyboard.justPressed(GLFW_KEY_F11)  ){
+            //TODO: check that current state is main menu
+            this->changeState("main");
+        }
         // If F12 is pressed, take a screenshot
         if(keyboard.justPressed(GLFW_KEY_F12)){
             glViewport(0, 0, frame_buffer_size.x, frame_buffer_size.y);

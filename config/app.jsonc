@@ -1,5 +1,5 @@
 {
-    "start-scene": "main",
+    "start-scene": "main-menu",
     "window":
     {
         "title":"Lamazone Delivery Service",
@@ -8,6 +8,9 @@
             "height":720
         },
         "fullscreen": false
+    },
+    "menu-scene":{
+
     },
     "scene": {
         "renderer":{
