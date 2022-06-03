@@ -150,6 +150,7 @@ namespace our {
 
         //DONE: (Req 8) Modify the following line such that "cameraForward" contains a vector pointing the camera forward direction
         // HINT: See how you wrote the CameraComponent::getViewMatrix, it should help you solve this one
+        // Transfrom from the local space to the world space.
         glm::mat4 M = camera->getOwner()->getLocalToWorldMatrix();
         glm::vec3 cameraPos    = glm::vec3(M * glm::vec4(0, 0, 0, 1 ));
         glm::vec3 cameraForward = glm::vec3(M * glm::vec4(0, 0,-1, 1 )) - glm::vec3(M * glm::vec4(0, 0, 0, 1 ));    //forward_vector = center - pos
@@ -157,7 +158,7 @@ namespace our {
             //DONE: (Req 8) Finish this function
             // HINT: the following return should return true "first" should be drawn before "second".
             //First we calculate the the projection of each component on the cameraForward vector to compare the distance.
-            // proj(a on b) = (a.b)/(|b|)^2  since |b| is constant we can eliminate it.
+            // Proj(a on b) = (a.b)/(|b|)^2  since |b| is constant we can eliminate it.
             double firstDistance  =  glm::abs(glm::dot(first.center-cameraPos,cameraForward));
             double secondDistance =  glm::abs(glm::dot(second.center-cameraPos,cameraForward));
             if(firstDistance>secondDistance)
