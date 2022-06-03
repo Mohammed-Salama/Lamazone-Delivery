@@ -5,6 +5,7 @@
 #include <ecs/world.hpp>
 #include <systems/forward-renderer.hpp>
 #include <systems/free-camera-controller.hpp>
+#include <systems/game-logic-controller.hpp>
 #include <systems/movement.hpp>
 #include <asset-loader.hpp>
 
@@ -14,6 +15,7 @@ class Playstate: public our::State {
     our::World world;
     our::ForwardRenderer renderer;
     our::FreeCameraControllerSystem cameraController;
+    our::GameLogicControllerSystem gameController;
     our::MovementSystem movementSystem;
 
     void onInitialize() override {
@@ -46,6 +48,8 @@ class Playstate: public our::State {
 
         cameraController.update(&world, (float)deltaTime);
 
+        gameController.update(&world, (float)deltaTime);
+
         // And finally we use the renderer system to draw the scene
         renderer.render(&world);
     }
@@ -57,6 +61,8 @@ class Playstate: public our::State {
 
         // On exit, we call exit for the camera controller system to make sure that the mouse is unlocked
         cameraController.exit();
+
+        gameController.exit();
 
         // and we delete all the loaded assets to free memory on the RAM and the VRAM
         our::clearAllAssets();

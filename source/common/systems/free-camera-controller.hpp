@@ -129,62 +129,18 @@ namespace our
             // Add movement through right & left arrows
             if(app->getKeyboard().isPressed(GLFW_KEY_LEFT))
             {
-                position += front * glm::vec3(0.2, 0.2, 0.2);
+                // position += front * glm::vec3(0.2, 0.2, 0.2);
                 if(rotation.y == 0) rotation.y = glm::half_pi<float>() / 90.0;
                 else rotation.y += glm::half_pi<float>() / 90.0 ;// The x-axis controls the yaw
                 rotation.y = glm::wrapAngle(rotation.y);
             }
             if(app->getKeyboard().isPressed(GLFW_KEY_RIGHT))
             {
-                position += front * glm::vec3(0.2, 0.2, 0.2);
+                // position += front * glm::vec3(0.2, 0.2, 0.2);
                 if(rotation.y == 0) rotation.y = - glm::half_pi<float>() / 90.0;
                 else rotation.y -= glm::half_pi<float>() / 90.0 ;// The x-axis controls the yaw
                 rotation.y = glm::wrapAngle(rotation.y);
             }
-            // entity->localTransform.position= position;
-            // std::cout<<entity->localTransform.position.x<<" "<<entity->localTransform.position.y<<" "<<entity->localTransform.position.z<<std::endl;
-            // world->detectCollision();
-            if (player != NULL)
-            for(auto detected : world->getEntities())
-               {
-                //    std::cout<<entity->name<<std::endl;
-               
-                    //    std::string entitymaterialName =entity->getComponent<MeshRendererComponent>()->material;
-                     if(detected->materialName=="battery")
-                       {    //  check collision logic
-                            // if(world->collisionlogic(entity,detected))
-                            // {
-                             std::cout<<"I am here"<<std::endl;
-                        //        // add value for energy
-                            // }  
-                            double dx,dy,dz;
-                            dx= player->localTransform.position.x + entity->localTransform.position.x - detected->localTransform.position.x;
-                            dy = player->localTransform.position.y + entity->localTransform.position.y - detected->localTransform.position.y;
-                            dz = player->localTransform.position.z + entity->localTransform.position.z - detected->localTransform.position.z;
-                            std::cout<<player->localTransform.position.x<<" "<<player->localTransform.position.y<<" "<<player->localTransform.position.z<<std::endl;
-                            std::cout<<detected->localTransform.position.x<<" "<<detected->localTransform.position.y<<" "<<detected->localTransform.position.z<<std::endl;
-                            double distance = sqrt(dx*dx + dy*dy + dz*dz);
-                            double radiusx=0, raduisy=0;
-                            Mesh *meshx;
-                            Mesh *meshy;
-                          //  entity->getComponent<>()
-                            meshx = player->getComponent<MeshRendererComponent>()->mesh;
-                            meshy = detected->getComponent<MeshRendererComponent>()->mesh;
-                            double scale1 = std::max({player->localTransform.scale.x, player->localTransform.scale.y, player->localTransform.scale.z});
-                            double scale2 = std::max({detected->localTransform.scale.x, detected->localTransform.scale.y, detected->localTransform.scale.z});
-                            radiusx = meshx->raduis * scale1;
-                            raduisy = meshy->raduis * scale2;
-                            if(distance <=radiusx+raduisy)
-                            {
-                                std::cout<<"Collision!!";  
-                                world->markForRemoval(detected);
-                            }
-                            std::cout<<"radiusx"<<radiusx<<"raduisy"<<raduisy<<"distance"<<distance<<std::endl;
-                            // return distance <=radiusx+raduisy;
-                       }
-                   
-               }
-                world->deleteMarkedEntities();
         }
 
         // When the state exits, it should call this function to ensure the mouse is unlocked

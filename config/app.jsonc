@@ -249,7 +249,7 @@
         },
         "world":[
             {
-                "position": [0, 0, 10],
+                "position": [0, 0, 0],
                 // "materialName":"player",
                 "components": [
                     {
@@ -269,7 +269,13 @@
                             {
                                 "type": "Mesh Renderer",
                                 "mesh": "package1",
-                                "material": "box1"                               
+                                "material": "box1"                           
+                            },
+                            {
+                                "type": "Game Logic Controller",
+                                "maxEnergy": 100,
+                                "maxSpeed": 20,
+                                "energyDecrementValue": 1
                             }
                         ]
                     }
@@ -389,9 +395,9 @@
                 ]
             },
             {
-                "position": [10, 0, 0],
+                "position": [10, -1, 0],
                 "rotation": [0, 0, 0],
-                "scale": [2, 2, 2],
+                "scale": [1, 1, 1],
                 "materialName":"battery",
                 "components": [
                     {
