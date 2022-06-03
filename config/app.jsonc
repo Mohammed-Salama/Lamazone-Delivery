@@ -260,6 +260,19 @@
                     }
                 ],
                 "children": [
+                    {
+                        "position": [0, -1, -4],
+                        "rotation": [0, 0, 0],
+                        "scale": [2, 2, 2],
+                        "materialName": "player",
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "package1",
+                                "material": "box1"                               
+                            }
+                        ]
+                    }
                     // {
                     //     "position": [1, -1, -1],
                     //     "rotation": [45, 45, 0],
@@ -299,19 +312,19 @@
                     // }
                 ]
             },
-            {
-                "position": [0, -1, -4],
-                "rotation": [0, 0, 0],
-                "scale": [2, 2, 2],
-                "materialName": "player",
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "package1",
-                        "material": "box1"                               
-                    }
-                ]
-            },
+            // {
+            //     "position": [0, -1, -4],
+            //     "rotation": [0, 0, 0],
+            //     "scale": [2, 2, 2],
+            //     "materialName": "player",
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "package1",
+            //             "material": "box1"                               
+            //         }
+            //     ]
+            // },
             // {
             //     "rotation": [-45, 0, 0],
             //     "components": [
@@ -378,7 +391,7 @@
             {
                 "position": [10, 0, 0],
                 "rotation": [0, 0, 0],
-                "scale": [1, 1, 1],
+                "scale": [2, 2, 2],
                 "materialName":"battery",
                 "components": [
                     {

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include "../ecs/world.hpp"
 #include "../components/camera.hpp"
 #include "../components/free-camera-controller.hpp"
@@ -104,12 +105,12 @@ namespace our
             if(app->getKeyboard().isPressed(GLFW_KEY_W)) 
             {
                 position += front * (deltaTime * current_sensitivity.z);
-                positionPlayer += front * (deltaTime * current_sensitivity.z);
+                // positionPlayer += front * (deltaTime * current_sensitivity.z);
             }    
             if(app->getKeyboard().isPressed(GLFW_KEY_S))
             {
                 position -= front * (deltaTime * current_sensitivity.z);
-                positionPlayer -= front * (deltaTime * current_sensitivity.z);
+                // positionPlayer -= front * (deltaTime * current_sensitivity.z);
             }
             // Q & E moves the player up and down
             if(app->getKeyboard().isPressed(GLFW_KEY_Q)) position += up * (deltaTime * current_sensitivity.y);
@@ -118,12 +119,12 @@ namespace our
             if(app->getKeyboard().isPressed(GLFW_KEY_D)) 
             {
             position += right * (deltaTime * current_sensitivity.x);
-            positionPlayer += right * (deltaTime * current_sensitivity.x);
+            // positionPlayer += right * (deltaTime * current_sensitivity.x);
             }
             if(app->getKeyboard().isPressed(GLFW_KEY_A)) 
             {
                 position -= right * (deltaTime * current_sensitivity.x);
-                positionPlayer -= right * (deltaTime * current_sensitivity.x);
+                // positionPlayer -= right * (deltaTime * current_sensitivity.x);
             }
             // Add movement through right & left arrows
             if(app->getKeyboard().isPressed(GLFW_KEY_LEFT))
@@ -157,9 +158,9 @@ namespace our
                         //        // add value for energy
                             // }  
                             double dx,dy,dz;
-                            dx= player->localTransform.position.x - detected->localTransform.position.x;
-                            dy = player->localTransform.position.y - detected->localTransform.position.y;
-                            dz = player->localTransform.position.z - detected->localTransform.position.z;
+                            dx= player->localTransform.position.x + entity->localTransform.position.x - detected->localTransform.position.x;
+                            dy = player->localTransform.position.y + entity->localTransform.position.y - detected->localTransform.position.y;
+                            dz = player->localTransform.position.z + entity->localTransform.position.z - detected->localTransform.position.z;
                             std::cout<<player->localTransform.position.x<<" "<<player->localTransform.position.y<<" "<<player->localTransform.position.z<<std::endl;
                             std::cout<<detected->localTransform.position.x<<" "<<detected->localTransform.position.y<<" "<<detected->localTransform.position.z<<std::endl;
                             double distance = sqrt(dx*dx + dy*dy + dz*dz);
@@ -169,8 +170,10 @@ namespace our
                           //  entity->getComponent<>()
                             meshx = player->getComponent<MeshRendererComponent>()->mesh;
                             meshy = detected->getComponent<MeshRendererComponent>()->mesh;
-                            radiusx = meshx->raduis;
-                            raduisy = meshy->raduis;
+                            double scale1 = std::max({player->localTransform.scale.x, player->localTransform.scale.y, player->localTransform.scale.z});
+                            double scale2 = std::max({detected->localTransform.scale.x, detected->localTransform.scale.y, detected->localTransform.scale.z});
+                            radiusx = meshx->raduis * scale1;
+                            raduisy = meshy->raduis * scale2;
                             if(distance <=radiusx+raduisy)
                             {
                                 std::cout<<"Collision!!";  
