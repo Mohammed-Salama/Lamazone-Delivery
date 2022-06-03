@@ -249,6 +249,7 @@ int our::Application::run(int run_for_frames) {
 
         // if true , end intro and go the game start menu.
         if(glfwGetTime()-intro_start>intro_time && !entered ){
+            std::cout<<"main menu time has come\n";
             changeState("main-menu");
             entered = true;
         }

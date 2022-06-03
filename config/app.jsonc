@@ -567,5 +567,66 @@
         ]
     },
     "menu-scene": {
+        "renderer":{
+        },
+        "assets":{
+            "shaders":{
+                "textured":{
+                    "vs":"assets/shaders/textured.vert",
+                    "fs":"assets/shaders/textured.frag"
+                },
+                "tinted":{
+                    "vs":"assets/shaders/tinted.vert",
+                    "fs":"assets/shaders/tinted.frag"
+                }
+            },
+            "textures":{
+                "main-menu-photo": "assets/textures/main-menu.png"
+            },
+            "meshes":{
+                "plane": "assets/models/plane.obj"
+            },
+            "samplers":{
+                "default":{}
+            },
+            "materials":{
+                "main-menu-photo":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "texture": "main-menu-photo",
+                    "sampler": "default"
+                }
+            }
+        },
+        "world":[
+            {
+                "position": [0, 0, 10],
+                "components": [
+                    {
+                        "type": "Camera"
+                    }
+                ]
+            },
+            {
+                "position": [2, -1, 0],
+                "rotation": [0, 0, 0],
+                "scale": [20, 11, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "main-menu-photo"
+                    }
+                ]
+            }
+        ]
     }
 }
