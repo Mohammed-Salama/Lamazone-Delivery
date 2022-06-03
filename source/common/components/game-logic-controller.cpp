@@ -14,6 +14,8 @@ namespace our {
         maxSpeed = data.value("maxSpeed", maxSpeed);
         speed = maxSpeed;
         energyDecrementValue = data.value("energyDecrementValue", energyDecrementValue);
+        pointsPerPackage = data.value("pointsPerPackage", pointsPerPackage);
+        totalScore = 0.0f;
         lastDecrementTime = std::chrono::system_clock::now();
     }
 }

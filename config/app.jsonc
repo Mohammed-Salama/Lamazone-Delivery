@@ -275,7 +275,8 @@
                                 "type": "Game Logic Controller",
                                 "maxEnergy": 100,
                                 "maxSpeed": 20,
-                                "energyDecrementValue": 1
+                                "energyDecrementValue": 1,
+                                "pointsPerPackage": 25
                             }
                         ]
                     }
@@ -362,6 +363,7 @@
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
+                "materialName": "package",
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -374,6 +376,7 @@
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
+                "materialName": "package",
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -386,6 +389,7 @@
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
+                "materialName": "package",
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -419,10 +423,23 @@
                     }
                 ]
             },
+            // {
+            //     "position": [0, -1, 0],
+            //     "rotation": [-90, 0, 0],
+            //     "scale": [10, 10, 1],
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "plane",
+            //             "material": "grass"
+            //         }
+            //     ]
+            // },
             {
-                "position": [0, -1, 0],
+                "position": [40, -1, 0],
                 "rotation": [-90, 0, 0],
-                "scale": [10, 10, 1],
+                "scale": [10, 10, 5],
+                "materialName": "deliveryZone",
                 "components": [
                     {
                         "type": "Mesh Renderer",

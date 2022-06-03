@@ -18,6 +18,10 @@ namespace our {
         float maxSpeed = 5.0f;              // The maximum speed the entity can move with. 
         float speed = 3.0f;                 // The current speed the entity is moving with.
         float energyDecrementValue=1.0f;    // The value by which the energy decrease each second.
+        float totalScore=0.0f;              // The total score achieved by the player this turn.
+        float pointsPerPackage=10.0f;       // The number added to the total score once a package is delivered.
+        bool deliveryInProgress=false;      // Indicates whether the player is already delivering a package or not.
+        
         // The last time the energy was decremented.
         std::chrono::time_point<std::chrono::system_clock> lastDecrementTime;
 
