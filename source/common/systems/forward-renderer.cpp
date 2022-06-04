@@ -264,12 +264,15 @@ namespace our {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
        if(this->wallMaterial){
-        //Draw city:
+
+        wallMaterial->setup();
+        glm::mat4 M = camera->getOwner()->getLocalToWorldMatrix();
+
         int dist = 100;
-            wallMaterial->setup();
-            glm::mat4 M = camera->getOwner()->getLocalToWorldMatrix();
+        
         for(int i=0;i<10;i++){
 
+            // street model
             glm::mat4 model = toMat4(glm::vec3(50,50,50),glm::vec3(glm::radians(90.0),0,0),glm::vec3(0,0,-1*i*dist));
 
             glm::mat4 VP = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
@@ -279,10 +282,63 @@ namespace our {
             wallPlane->draw();
         }
 
+        dist = 30;
+        for(int i=0;i<30;i++){
 
-        for(int i=0;i<10;i++){
 
-            glm::mat4 model = toMat4(glm::vec3(25,50,50),glm::vec3(0,glm::radians(90.0),glm::radians(90.0)),glm::vec3(25,15,-1*i*dist));
+            if(i%10==0){
+
+            // model3 : intersection wall (right)
+ 
+            glm::mat4 model3 = toMat4(glm::vec3(50,20,5),glm::vec3(0,glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(95,15,-1*(i*dist+15)));
+
+            glm::mat4 VP3 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+        
+            wallMaterial->shader->set("transform",  VP3  * model3 );//* model);
+
+            wallPlane->draw();
+
+
+            // model4 : intersection wall (left)
+
+            glm::mat4 model4 = toMat4(glm::vec3(50,20,5),glm::vec3(0,glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(-95,15,-1*(i*dist+15)));
+
+            glm::mat4 VP4 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+        
+            wallMaterial->shader->set("transform",  VP4  * model4 );//* model);
+
+            wallPlane->draw();
+
+
+            // model5 : intersection street (right)
+
+            glm::mat4 model5 = toMat4(glm::vec3(50,20,5),glm::vec3(glm::radians(-90.0),glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(100,0,-1*(i*dist)));
+
+            glm::mat4 VP5 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+        
+            wallMaterial->shader->set("transform",  VP5  * model5 );//* model);
+
+            wallPlane->draw();
+
+
+            // model6 : intersection street (left)
+
+            glm::mat4 model6 = toMat4(glm::vec3(50,20,5),glm::vec3(glm::radians(-90.0),glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(-100,0,-1*(i*dist)));
+
+            glm::mat4 VP6 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+        
+            wallMaterial->shader->set("transform",  VP6  * model6 );//* model);
+
+            wallPlane->draw();
+
+
+
+                continue;
+            }
+
+            // street walls (right)
+
+            glm::mat4 model = toMat4(glm::vec3(15,20,5),glm::vec3(0,glm::radians(-90.0),glm::radians(-180.0)),glm::vec3(45,15,-1*i*dist));
 
             glm::mat4 VP = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
         
@@ -290,8 +346,9 @@ namespace our {
 
             wallPlane->draw();
 
+             // street walls (left)
 
-            glm::mat4 model2 = toMat4(glm::vec3(25,50,50),glm::vec3(0,glm::radians(90.0),glm::radians(90.0)),glm::vec3(-25,15,-1*i*dist));
+            glm::mat4 model2 = toMat4(glm::vec3(15,20,5),glm::vec3(0,glm::radians(-90.0),glm::radians(-180.0)),glm::vec3(-45,15,-1*i*dist));
 
             glm::mat4 VP2 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
         
