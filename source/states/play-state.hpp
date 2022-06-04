@@ -67,4 +67,9 @@ class Playstate: public our::State {
         // and we delete all the loaded assets to free memory on the RAM and the VRAM
         our::clearAllAssets();
     }
+
+public:
+    bool checkIfLost() {
+        return gameController.gameOver;
+    }
 };
