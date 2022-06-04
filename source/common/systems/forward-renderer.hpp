@@ -53,7 +53,7 @@ namespace our
         // This function should be called every frame to draw the given world
         void render(World* world);
 
-        glm::mat4 ForwardRenderer::toMat4(glm::vec3 scale,glm::vec3 rotation,glm::vec3 position);
+        glm::mat4 toMat4(glm::vec3 scale,glm::vec3 rotation,glm::vec3 position);
 
 
     };

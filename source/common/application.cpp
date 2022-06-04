@@ -254,6 +254,12 @@ int our::Application::run(int run_for_frames) {
             entered = true;
         }
 
+        if(states["play-scene"] && currentState == states["play-scene"]){
+            Playstate * checker = dynamic_cast<Playstate*> (states["play-scene"]);
+            if(checker->checkIfLost())
+                changeState("gameover-scene");
+        }
+
         if(run_for_frames != 0 && current_frame >= run_for_frames) break;
         glfwPollEvents(); // Read all the user events and call relevant callbacks.
 
