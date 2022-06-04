@@ -91,6 +91,9 @@ namespace our
             
             if(!(player && game)) return;
 
+            // Player already lost.
+            if(game->lost) return;
+
             float maxSpeed = game->maxSpeed;
             float maxEnergy = game->maxEnergy;
             float &speed = game->speed;
@@ -98,12 +101,30 @@ namespace our
             float decrement = game->energyDecrementValue;
             float &totalScore = game->totalScore;
             float pointsPerPackage = game->pointsPerPackage;
+            float energyLostPerHit = game->energyLostPerHit;
+            float cooldownTime = game->cooldownTime;
             bool &deliveryInProgress = game->deliveryInProgress;
+            bool &wasHit = game->wasHit;
+
             std::chrono::time_point<std::chrono::system_clock> &lastDecrementTime = game->lastDecrementTime;
+            std::chrono::time_point<std::chrono::system_clock> &lastHitTime = game->lastHitTime;
 
             std::chrono::time_point<std::chrono::system_clock> timeNow = std::chrono::system_clock::now();
-            std::chrono::duration<double> elapsed_seconds = timeNow-lastDecrementTime;
-            if(elapsed_seconds.count()> 1)
+            std::chrono::duration<double> elapsed_seconds_normal = timeNow-lastDecrementTime;
+            std::chrono::duration<double> elapsed_seconds_hit;
+            if(wasHit)
+            {
+                elapsed_seconds_hit = timeNow-lastHitTime;
+                // std::cout<<"Elapsed Time="<<elapsed_seconds_hit.count()<<std::endl;
+                if(elapsed_seconds_hit.count()> cooldownTime)
+                {
+                    wasHit = false;
+                    std::cout<<"Cooldown Finshed!!!"<<std::endl;
+                }
+            }
+
+
+            if(elapsed_seconds_normal.count()> 1)
             {
                 std::cout<<"Current Energy="<<energy<<" Speed ="<<speed<<std::endl;
                 energy -= decrement;
@@ -132,13 +153,23 @@ namespace our
                {
                     if(detected->materialName=="building" || detected->materialName=="car")
                     {   
-                            // std::cout<<"I am here"<<std::endl;
                             if(collision_detection(entity, player, detected))
                             {
-                                std::cout<<"Collision!!";  
-                                energy -= decrement;
-                                std::cout<<"Energy"<<energy<<std::endl;
-  
+                                if(!wasHit){
+                                    wasHit = true;
+                                    lastHitTime = std::chrono::system_clock::now();
+                                     std::cout<<"Cooldown Started!"<<std::endl;
+                                    //  std::cout<<"Hit at time="<<lastHitTime<<std::endl;
+                                    energy -= energyLostPerHit;
+                                    if(energy <= 0)
+                                    {
+                                        energy = 0;
+                                        game->lost = true;
+                                        return;
+                                    }
+                                    
+                                    std::cout<<"Energy"<<energy<<std::endl;
+                                }
                             }
                     }
 

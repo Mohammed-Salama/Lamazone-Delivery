@@ -273,10 +273,12 @@
                             },
                             {
                                 "type": "Game Logic Controller",
-                                "maxEnergy": 100,
+                                "maxEnergy": 200,
                                 "maxSpeed": 20,
                                 "energyDecrementValue": 1,
-                                "pointsPerPackage": 25
+                                "pointsPerPackage": 25,
+                                "energyLostPerHit": 10,
+                                "cooldownTime": 5
                             }
                         ]
                     }
@@ -339,6 +341,20 @@
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
                 "materialName": "package",
+                // "children":[
+                //     {
+                //         "position": [0, 5, -4],
+                //         "rotation": [0, 0, 0],
+                //         "scale": [10, 10, 10],
+                //         "components": [
+                //             {
+                //                 "type": "Mesh Renderer",
+                //                 "mesh": "arrow",
+                //                 "material": "arrow"
+                //             }
+                //         ]
+                //     }
+                // ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -390,6 +406,7 @@
                 "position": [0, 5, 0],
                 "rotation": [0, 0, 0],
                 "scale": [10, 10, 10],
+                "materialName":"car",
                 "components": [
                     {
                         "type": "Mesh Renderer",
