@@ -13,7 +13,9 @@
     "play-scene": {
         "renderer":{
             "sky": "assets/textures/sky.jpg",
-            "postprocess": "assets/shaders/postprocess/vignette.frag"
+            "postprocess": "assets/shaders/postprocess/vignette.frag",
+            "wall" : "assets/textures/wall2.jpg",
+            "wall-mesh" : "assets/models/plane.obj"
         },
         "assets":{
             "shaders":{
@@ -28,7 +30,7 @@
             },
             "textures":{
                 "moon": "assets/textures/moon.jpg",
-                "grass": "assets/textures/grass_ground_d.jpg",
+                "grass": "assets/textures/wall2.jpg",
                 "wood": "assets/textures/wood.jpg",
                 "glass": "assets/textures/glass-panels.png",
                 "monkey": "assets/textures/monkey.png",
@@ -110,6 +112,21 @@
                     "texture": "grass",
                     "sampler": "default"
                 },
+                // "wall":{
+                //     "type": "textured",
+                //     "shader": "textured",
+                //     "pipelineState": {
+                //         "faceCulling":{
+                //             "enabled": false
+                //         },
+                //         "depthTesting":{
+                //             "enabled": true
+                //         }
+                //     },
+                //     "tint": [1, 1, 1, 1],
+                //     "texture": "wall",
+                //     "sampler": "default"
+                // },
                 "monkey":{
                     "type": "textured",
                     "shader": "textured",
