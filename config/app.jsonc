@@ -9,7 +9,6 @@
         },
         "fullscreen": false
     },
-
     "play-scene": {
         "renderer":{
             "sky": "assets/textures/sky.jpg",
@@ -291,7 +290,7 @@
                             },
                             {
                                 "type": "Game Logic Controller",
-                                "maxEnergy": 200,
+                                "maxEnergy": 50,
                                 "maxSpeed": 20,
                                 "energyDecrementValue": 1,
                                 "pointsPerPackage": 25,
@@ -505,6 +504,69 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "intro-photo"
+                    }
+                ]
+            }
+        ]
+    },
+    "gameover-scene": {
+        "renderer":{
+        },
+        "assets":{
+            "shaders":{
+                "textured":{
+                    "vs":"assets/shaders/textured.vert",
+                    "fs":"assets/shaders/textured.frag"
+                },
+                "tinted":{
+                    "vs":"assets/shaders/tinted.vert",
+                    "fs":"assets/shaders/tinted.frag"
+                }
+            },
+            "textures":{
+                "gameover-photo": "assets/textures/gameover.jpg"
+            },
+            "meshes":{
+                "plane": "assets/models/plane.obj"
+            },
+            "samplers":{
+                "default":{}
+            },
+            "materials":{
+                "gameover-photo":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "texture": "gameover-photo",
+                    "sampler": "default"
+                }
+            }
+        },
+        "world":[
+            {
+                "position": [0, 0, 10],
+                "components": [
+                    {
+                        "type": "Camera"
+                    }
+                ]
+            },
+            {
+                "position": [0, -1, 0],
+                "rotation": [0, 0, 0],
+                "scale": [19, 11, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "gameover-photo"
                     }
                 ]
             }
