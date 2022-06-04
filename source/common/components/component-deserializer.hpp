@@ -5,6 +5,7 @@
 #include "mesh-renderer.hpp"
 #include "free-camera-controller.hpp"
 #include "game-logic-controller.hpp"
+#include "bar-renderer.hpp"
 #include "movement.hpp"
 
 namespace our {
@@ -24,6 +25,8 @@ namespace our {
             component = entity->addComponent<MovementComponent>();
         } else if (type == GameLogicControllerComponent::getID()) {
             component = entity->addComponent<GameLogicControllerComponent>();
+        } else if (type == BarRendererComponent::getID()) {
+            component = entity->addComponent<BarRendererComponent>();
         }
         if(component) component->deserialize(data);
     }

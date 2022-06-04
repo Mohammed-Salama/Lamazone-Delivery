@@ -1,4 +1,5 @@
 #include "forward-renderer.hpp"
+#include "../components/bar-renderer.hpp"
 #include "../mesh/mesh-utils.hpp"
 #include "../texture/texture-utils.hpp"
 #include<iostream>
@@ -449,6 +450,7 @@ namespace our {
             model.mesh->draw();
         }
 
+
         // If there is a postprocess material, apply postprocessing
         if(postprocessMaterial){
             //DONE: (Req 10) Return to the default framebuffer
@@ -458,6 +460,18 @@ namespace our {
             postprocessMaterial->setup();
             glBindVertexArray(postProcessVertexArray);
             glDrawArrays(GL_TRIANGLES, 0, 3);
+        }
+        
+        Entity* player = nullptr;
+        BarRendererComponent *healthBar = nullptr;
+        for(auto detected : world->getEntities()){
+            if(detected->materialName == "player"){
+                player = detected;
+                healthBar = player->getComponent<BarRendererComponent>();
+                if(healthBar)
+                    healthBar->bar->draw();
+                break;
+            }
         }
     }
 

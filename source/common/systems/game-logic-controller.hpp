@@ -4,6 +4,7 @@
 #include "../components/camera.hpp"
 #include "../components/free-camera-controller.hpp"
 #include "../components/game-logic-controller.hpp"
+#include "../components/bar-renderer.hpp"
 
 #include "../application.hpp"
 
@@ -81,15 +82,17 @@ namespace our
             // NOT Assume that the first child in the player entity is the car/truck.
             Entity* player = nullptr;
             GameLogicControllerComponent *game = nullptr;
+            BarRendererComponent *healthBar = nullptr;
             for(auto detected : world->getEntities()){
                 if(detected->materialName == "player"){
                     player = detected;
                     game = player->getComponent<GameLogicControllerComponent>();
+                    healthBar = player->getComponent<BarRendererComponent>();
                     break;
                 }
             }
             
-            if(!(player && game)) return;
+            if(!(player && game && healthBar)) return;
 
             // Player already lost.
             if(game->lost) return;
@@ -105,6 +108,8 @@ namespace our
             float cooldownTime = game->cooldownTime;
             bool &deliveryInProgress = game->deliveryInProgress;
             bool &wasHit = game->wasHit;
+
+            healthBar->bar->updateWidth(energy, maxEnergy);
 
             std::chrono::time_point<std::chrono::system_clock> &lastDecrementTime = game->lastDecrementTime;
             std::chrono::time_point<std::chrono::system_clock> &lastHitTime = game->lastHitTime;

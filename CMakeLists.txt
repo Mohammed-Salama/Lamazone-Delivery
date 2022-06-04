@@ -45,6 +45,7 @@ set(COMMON_SOURCES
 
         source/common/mesh/vertex.hpp
         source/common/mesh/mesh.hpp
+        source/common/mesh/bar.hpp
         source/common/mesh/mesh-utils.hpp
         source/common/mesh/mesh-utils.cpp
 
@@ -73,6 +74,8 @@ set(COMMON_SOURCES
         source/common/components/camera.cpp
         source/common/components/mesh-renderer.hpp
         source/common/components/mesh-renderer.cpp
+        source/common/components/bar-renderer.hpp
+        source/common/components/bar-renderer.cpp
         source/common/components/free-camera-controller.hpp
         source/common/components/free-camera-controller.cpp
         source/common/components/game-logic-controller.hpp
