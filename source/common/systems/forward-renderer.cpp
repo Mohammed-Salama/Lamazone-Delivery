@@ -15,7 +15,9 @@ namespace our {
         return tra*rot*sca; // Since the transformation matrix on the right is applied first.
         // i.e. T * R * S 
     }
-
+    glm::vec3 skyTop = glm::vec3(0,0,0);
+    glm::vec3 skyBottom = glm::vec3(0,0,0);
+    glm::vec3 skyMiddle = glm::vec3(0,0,0);
     void ForwardRenderer::initialize(glm::ivec2 windowSize, const nlohmann::json& config){
         // First, we store the window size for later use
         this->windowSize = windowSize;
@@ -24,7 +26,9 @@ namespace our {
         if(config.contains("sky")){
             // First, we create a sphere which will be used to draw the sky
             this->skySphere = mesh_utils::sphere(glm::ivec2(16, 16));
-            
+            skyTop =config.value("skyTop", "");
+            // skyBottom = glm::vec3(config["skyMiddle"]);
+            // skyMiddle = glm::vec3(config["skyBottom"]);
             // We can draw the sky using the same shader used to draw textured objects
             ShaderProgram* skyShader = new ShaderProgram();
             skyShader->attach("assets/shaders/textured.vert", GL_VERTEX_SHADER);
@@ -417,9 +421,9 @@ namespace our {
                 int n = lights.size();
                 std::cout<<n<<"\n";
                 model.material->shader->set("light_count",n);
-                model.material->shader->set("sky.top",glm::vec3(0, 0, 0));
-                model.material->shader->set("sky.middle",glm::vec3(0, 0, 0));
-                model.material->shader->set("sky.bottom",glm::vec3(0, 0, 0.0));
+                model.material->shader->set("sky.top",skyTop);
+                model.material->shader->set("sky.middle",skyMiddle);
+                model.material->shader->set("sky.bottom",skyBottom);
                
                 for (int i = 0 ; i < n;i++){
                     model.material->shader->set("lights["+std::to_string(i)+"].type", float(lights[i]->lightType));
