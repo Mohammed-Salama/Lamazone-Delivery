@@ -292,7 +292,7 @@
             },
             {
                 "name" : "name1",
-                "position": [0, 2, 0],
+                "position": [0, 5, 0],
                 // "materialName":"player",
                 "components": [
                     {

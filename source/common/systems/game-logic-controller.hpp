@@ -148,7 +148,19 @@ namespace our
             glm::vec3 front = glm::vec3(matrix * glm::vec4(0, 0, -1, 0));
             glm::vec3 current_sensitivity = controller->positionSensitivity;
             entity->localTransform.position += front * (deltaTime * speed);
-
+            std::cout<<"y"<<entity->localTransform.position .y<<std::endl;
+            //std::cout<<"entity->localTransform.y"<<entity->localTransform.position.y <<std::endl;
+               if(entity->localTransform.position.x>32){
+                  entity->localTransform.position.x=32;
+            }
+            else if(entity->localTransform.position.x<-32)
+        {
+            entity->localTransform.position.x=-32;
+        }
+         if(entity->localTransform.position.y!=6)
+         {
+             entity->localTransform.position.y=6;
+         }
 
             for(auto detected : world->getEntities())
                {

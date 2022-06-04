@@ -69,8 +69,8 @@ namespace our
             glm::vec3& positionPlayer = player->localTransform.position;
             glm::vec3& rotationPlayer = player->localTransform.rotation;
 
-            // If the left mouse button is pressed, we get the change in the mouse location
-            // and use it to update the camera rotation
+            //If the left mouse button is pressed, we get the change in the mouse location
+            //and use it to update the camera rotation
             if(app->getMouse().isPressed(GLFW_MOUSE_BUTTON_1)){
                 glm::vec2 delta = app->getMouse().getMouseDelta();
                 rotation.x -= delta.y * controller->rotationSensitivity; // The y-axis controls the pitch
