@@ -1,6 +1,7 @@
 #include "application.hpp"
 #include "../states/play-state.hpp"
-#include "..//states/intro-state.hpp"
+#include "../states/intro-state.hpp"
+#include "../states/gameover-state.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -18,7 +19,6 @@
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD2
 #include <imgui_impl/imgui_impl_glfw.h>
 #include <imgui_impl/imgui_impl_opengl3.h>
-
 #if !defined(NDEBUG)
 // If NDEBUG (no debug) is not defined, enable OpenGL debug messages
 #define ENABLE_OPENGL_DEBUG_MESSAGES
@@ -204,7 +204,27 @@ int our::Application::run(int run_for_frames) {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
-    ImGui::StyleColorsDark();
+    ImFont *font =io.Fonts->AddFontFromFileTTF("assets\\fonts\\Roboto-Black.ttf",80);
+    ImFont *font2 =io.Fonts->AddFontFromFileTTF("assets\\fonts\\Roboto-Italic.ttf",30);
+
+    ImGuiStyle* style =&ImGui::GetStyle();
+    ImVec4* colors = style->Colors;
+
+    colors[ImGuiCol_Text]                   = ImVec4(10.0f, 13.0f, 0.0f, 1.0f); // 245, 90, 0
+    colors[ImGuiCol_TextDisabled]           = ImVec4(16.0f, 30.0f, 16.0f, 1.00f);
+    colors[ImGuiCol_WindowBg]               = ImVec4(0.00f, 0.00f, 0.00f, 0.70f);
+    colors[ImGuiCol_ChildBg]                = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+    colors[ImGuiCol_PopupBg]                = ImVec4(0.11f, 0.11f, 0.14f, 0.92f);
+    colors[ImGuiCol_Border]                 = ImVec4(0.50f, 0.50f, 0.50f, 0.50f);
+    colors[ImGuiCol_BorderShadow]           = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
+    colors[ImGuiCol_Button]                 = ImVec4(0.5f, 0.7f, 0.8f, 1.0f);  //255, 208, 0
+    colors[ImGuiCol_ButtonHovered]          = ImVec4(0.50f, 0.6f,0.02f, 1.0f); //209, 172, 6
+    colors[ImGuiCol_ButtonActive]           = ImVec4(0.0f, 0.f, 0.0f, 1.00f);
+                
+    style->ItemSpacing=ImVec2(10.0f,50.0f);
+    ImGuiIO* inOut=&ImGui::GetIO();
+    style->WindowPadding= ImVec2(50.0f,50.0f);
+    //ImGui::StyleColorsDark();
 
     // Initialize ImGui for GLFW and OpenGL
     ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -255,6 +275,12 @@ int our::Application::run(int run_for_frames) {
             entered = true;
         }
 
+        if(states["play-scene"] && currentState == states["play-scene"]){
+            Playstate * checker = dynamic_cast<Playstate*> (states["play-scene"]);
+            if(checker->checkIfLost())
+                changeState("gameover-scene");
+        }
+
         if(run_for_frames != 0 && current_frame >= run_for_frames) break;
         glfwPollEvents(); // Read all the user events and call relevant callbacks.
 
@@ -269,6 +295,48 @@ int our::Application::run(int run_for_frames) {
         // For example, if you're focusing on an input and writing "W", the keyboard object shouldn't record this event.
         keyboard.setEnabled(!io.WantCaptureKeyboard, window);
         mouse.setEnabled(!io.WantCaptureMouse, window);
+         if(currentState == states["gameover-scene"])
+        {
+           
+            ImGui::Begin("Game Over",false, ImGuiWindowFlags_NoBackground |
+            ImGuiWindowFlags_NoMove| ImGuiWindowFlags_NoDecoration);
+            ImGui::SetWindowSize(ImVec2(win_config.size.x,win_config.size.y));
+    
+            ImGui::SetCursorScreenPos(ImVec2(win_config.size.x/3+20,win_config.size.y/2-50));   
+    
+            ImGui::Text("Game Over");
+             ImGui::PushFont(font2);
+             ImGui::SetCursorScreenPos(ImVec2(win_config.size.x/3+50,win_config.size.y/2+80));   
+             if(ImGui::Button("Okay",ImVec2(win_config.size.x/6,win_config.size.y/6)))
+            {
+                this->changeState("main-menu");
+            }
+            ImGui::PopFont();
+            ImGui::End();
+          
+        }
+
+        if(currentState ==states["main-menu"])
+        {
+           // ImGui::Begin("Main Menu");
+            ImGui::Begin("Main Menu",false, ImGuiWindowFlags_NoBackground |
+             ImGuiWindowFlags_NoMove| ImGuiWindowFlags_NoDecoration);
+            ImGui::SetWindowSize(ImVec2(win_config.size.x,win_config.size.y));
+            ImGui::PushFont(font2);
+            ImGui::SetCursorScreenPos(ImVec2(win_config.size.x/2,win_config.size.y/2-80));   
+            if(ImGui::Button("New Game",ImVec2(win_config.size.x/6,win_config.size.y/6)))
+            {
+                this->changeState("play-scene");
+            }
+            ImGui::SetCursorScreenPos(ImVec2(win_config.size.x/2,win_config.size.y/2+80));   
+            if ( ImGui::Button("Exit Game",ImVec2(win_config.size.x/6,win_config.size.y/6)))
+            {
+                break;
+            }
+            ImGui::PopFont();
+            ImGui::End();
+        }
+       
 
         // Render the ImGui commands we called (this doesn't actually draw to the screen yet.
         ImGui::Render();
@@ -299,9 +367,10 @@ int our::Application::run(int run_for_frames) {
         // Moving from main menu to game
         if(keyboard.justPressed(GLFW_KEY_F11) && !game_started ){
             //TODO: check that current state is main menu
-            game_started = true;
-            this->changeState("play-scene");
+            this->changeState("gameover-scene");
+
         }
+       
         // If F12 is pressed, take a screenshot
         if(keyboard.justPressed(GLFW_KEY_F12)){
             glViewport(0, 0, frame_buffer_size.x, frame_buffer_size.y);

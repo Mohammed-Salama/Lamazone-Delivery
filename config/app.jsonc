@@ -9,11 +9,13 @@
         },
         "fullscreen": false
     },
-
     "play-scene": {
         "renderer":{
             "sky": "assets/textures/sky.jpg",
-            "postprocess": "assets/shaders/postprocess/vignette.frag"
+            "postprocess": "assets/shaders/postprocess/vignette.frag",
+            "wall" : "assets/textures/wall2.jpg",
+            "wall-mesh" : "assets/models/plane.obj",
+            "ground" : "assets/textures/ground.jpg"
         },
         "assets":{
             "shaders":{
@@ -32,7 +34,7 @@
             },
             "textures":{
                 "moon": "assets/textures/moon.jpg",
-                "grass": "assets/textures/grass_ground_d.jpg",
+                "grass": "assets/textures/wall2.jpg",
                 "wood": "assets/textures/wood.jpg",
                 "glass": "assets/textures/glass-panels.png",
                 "monkey": "assets/textures/monkey.png",
@@ -296,42 +298,30 @@
                     {
                         "type": "Free Camera Controller"
                     }
-                ] ,
-               "children": [
-                {
-                    "position": [0, -1, -4],
-                    "rotation": [0, 0, 0],
-                    "scale": [2, 2, 2],
-                    "materialName": "player",
-                    "components": [
-                        {
-                            "type": "Mesh Renderer",
-                            "mesh": "package1",
-                            "material": "box1"                           
-                        }
-                       /* {
-                            "type": "Game Logic Controller",
-                            "maxEnergy": 200,
-                            "maxSpeed": 20,
-                            "energyDecrementValue": 1,
-                            "pointsPerPackage": 25,
-                            "energyLostPerHit": 10,
-                            "cooldownTime": 5
-                        }*/
-                    ]
-                }
-                    // {
-                    //     "position": [1, -1, -1],
-                    //     "rotation": [45, 45, 0],
-                    //     "scale": [0.1, 0.1, 1.0],
-                    //     "components": [
-                    //         {
-                    //             "type": "Mesh Renderer",
-                    //             "mesh": "cube",
-                    //             "material": "metal"
-                    //         }
-                    //     ]
-                    // },
+                ],
+                "children": [
+                    {
+                        "position": [0, -1, -4],
+                        "rotation": [0, 0, 0],
+                        "scale": [2, 2, 2],
+                        "materialName": "player",
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "monkey",
+                                "material": "monkey"                           
+                            },
+                            {
+                                "type": "Game Logic Controller",
+                                "maxEnergy": 50,
+                                "maxSpeed": 20,
+                                "energyDecrementValue": 1,
+                                "pointsPerPackage": 25,
+                                "energyLostPerHit": 10,
+                                "cooldownTime": 5
+                            }
+                        ]
+                    }
                 //    {
                 //         "position": [0, -1, -4],
                 //         "rotation": [0, 0, 0],
@@ -360,19 +350,6 @@
                 ]
             },
             // {
-            //     "position": [0, -1, -4],
-            //     "rotation": [0, 0, 0],
-            //     "scale": [2, 2, 2],
-            //     "materialName": "player",
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "package1",
-            //             "material": "box1"                               
-            //         }
-            //     ]
-            // },
-            // {
             //     "rotation": [-45, 0, 0],
             //     "components": [
             //         {
@@ -400,10 +377,25 @@
             //     ]
             // },
             {
-                "name" : "name2",
+                "name" : "box",
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
+                "materialName": "package",
+                // "children":[
+                //     {
+                //         "position": [0, 5, -4],
+                //         "rotation": [0, 0, 0],
+                //         "scale": [10, 10, 10],
+                //         "components": [
+                //             {
+                //                 "type": "Mesh Renderer",
+                //                 "mesh": "arrow",
+                //                 "material": "arrow"
+                //             }
+                //         ]
+                //     }
+                // ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -413,9 +405,11 @@
                 ]
             },
             {
+                "name":"box",
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
+                "materialName": "package",
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -425,9 +419,11 @@
                 ]
             },
             {
+                "name":"box",
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
-                "scale": [2,2,2],
+                "scale": [2, 2, 2],
+                "materialName": "package",
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -437,6 +433,7 @@
                 ]
             },
             {
+                "name":"battery",
                 "position": [10, -1, 0],
                 "rotation": [0, 0, 0],
                 "scale": [1, 1, 1],
@@ -450,9 +447,11 @@
                 ]
             },
             {
+                "name":"arrow",
                 "position": [0, 5, 0],
-                "rotation": [0, 0, 0],
-                "scale": [10, 10, 10],
+                "rotation": [0, -180, -90],
+                "scale": [30, 30, 30],
+                "materialName":"car",
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -460,109 +459,7 @@
                         "material": "arrow"
                     }
                 ]
-            },
-            {
-                "position": [0, -1, 0],
-                "rotation": [-90, 0, 0],
-                "scale": [10, 10, 1],
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "plane",
-                        "material": "grass"
-                    }
-                ]
-            }//,
-            // {
-            //     "position": [0, -1, 0],
-            //     "rotation": [0, 180, 0],
-            //     "scale": [0.2, 0.2, 0.2],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "truck",
-            //             "material": "truck"
-            //         }
-            //     ]
-            // }
-            //,
-            // {
-            //     "position": [0, 1, 2],
-            //     "rotation": [0, 0, 0],
-            //     "scale": [2, 2, 2],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "plane",
-            //             "material": "glass"
-            //         }
-            //     ]
-            // },
-            // {
-            //     "position": [0, 1, -2],
-            //     "rotation": [0, 0, 0],
-            //     "scale": [2, 2, 2],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "plane",
-            //             "material": "glass"
-            //         }
-            //     ]
-            // },
-            // {
-            //     "position": [2, 1, 0],
-            //     "rotation": [0, 90, 0],
-            //     "scale": [2, 2, 2],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "plane",
-            //             "material": "glass"
-            //         }
-            //     ]
-            // },
-            // {
-            //     "position": [-2, 1, 0],
-            //     "rotation": [0, 90, 0],
-            //     "scale": [2, 2, 2],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "plane",
-            //             "material": "glass"
-            //         }
-            //     ]
-            // },
-            // {
-            //     "position": [0, 3, 0],
-            //     "rotation": [90, 0, 0],
-            //     "scale": [2, 2, 2],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "plane",
-            //             "material": "glass"
-            //         }
-            //     ]
-            // }
-            //,
-            // {
-            //     "position": [0, 10, 0],
-            //     "rotation": [45, 45, 0],
-            //     "scale": [5, 5, 5],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "sphere",
-            //             "material": "moon"
-            //         },
-            //         {
-            //             "type": "Movement",
-            //             "angularVelocity": [0, 90, 0]
-            //         }
-            //     ]
-            // }
+            }
         ]
     },"intro-scene": {
         "renderer":{
@@ -622,6 +519,69 @@
                         "type": "Mesh Renderer",
                         "mesh": "plane",
                         "material": "intro-photo"
+                    }
+                ]
+            }
+        ]
+    },
+    "gameover-scene": {
+        "renderer":{
+        },
+        "assets":{
+            "shaders":{
+                "textured":{
+                    "vs":"assets/shaders/textured.vert",
+                    "fs":"assets/shaders/textured.frag"
+                },
+                "tinted":{
+                    "vs":"assets/shaders/tinted.vert",
+                    "fs":"assets/shaders/tinted.frag"
+                }
+            },
+            "textures":{
+                "gameover-photo": "assets/textures/gameover.jpg"
+            },
+            "meshes":{
+                "plane": "assets/models/plane.obj"
+            },
+            "samplers":{
+                "default":{}
+            },
+            "materials":{
+                "gameover-photo":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "texture": "gameover-photo",
+                    "sampler": "default"
+                }
+            }
+        },
+        "world":[
+            {
+                "position": [0, 0, 10],
+                "components": [
+                    {
+                        "type": "Camera"
+                    }
+                ]
+            },
+            {
+                "position": [0, -1, 0],
+                "rotation": [0, 0, 0],
+                "scale": [19, 11, 1],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "gameover-photo"
                     }
                 ]
             }

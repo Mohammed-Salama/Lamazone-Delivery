@@ -18,8 +18,17 @@ namespace our {
         float maxSpeed = 5.0f;              // The maximum speed the entity can move with. 
         float speed = 3.0f;                 // The current speed the entity is moving with.
         float energyDecrementValue=1.0f;    // The value by which the energy decrease each second.
-        // The last time the energy was decremented.
+        float totalScore=0.0f;              // The total score achieved by the player this turn.
+        float pointsPerPackage=10.0f;       // The number added to the total score once a package is delivered.
+        bool deliveryInProgress=false;      // Indicates whether the player is already delivering a package or not.
+        float energyLostPerHit=10.0f;       // The value subtracted from the current energy on hitting a car or a building.
+        float cooldownTime=2.0f;            // Cooldown time, as in the time after which the player can lose energy again.
+        bool wasHit=false;                  // Indicates whether cooldown is ongoing or not.
+        
+        // The last time the energy was decremented naturally by passing time.
         std::chrono::time_point<std::chrono::system_clock> lastDecrementTime;
+        // The last time the player hit a car or a building. Used in hit cooldown logic.
+        std::chrono::time_point<std::chrono::system_clock> lastHitTime;
 
         bool lost = false;                  // Indicates whether a player has lost or not.
 

@@ -14,6 +14,11 @@ namespace our {
         maxSpeed = data.value("maxSpeed", maxSpeed);
         speed = maxSpeed;
         energyDecrementValue = data.value("energyDecrementValue", energyDecrementValue);
+        pointsPerPackage = data.value("pointsPerPackage", pointsPerPackage);
+        energyLostPerHit = data.value("energyLostPerHit", energyLostPerHit);
+        cooldownTime = data.value("cooldownTime", cooldownTime);
+        totalScore = 0.0f;
         lastDecrementTime = std::chrono::system_clock::now();
+        wasHit = false;
     }
 }

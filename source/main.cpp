@@ -8,6 +8,7 @@
 #include "states/play-state.hpp"
 #include "states/main-menu.hpp"
 #include "states/intro-state.hpp"
+#include "states/gameover-state.hpp"
 int main(int argc, char** argv) {
     flags::args args(argc, argv); // Parse the command line arguments
     // config_path is the path to the json file containing the application configuration
@@ -35,6 +36,7 @@ int main(int argc, char** argv) {
     app.registerState<IntroState>("intro-scene");
     app.registerState<Playstate>("play-scene");
     app.registerState<Menustate>("main-menu"); 
+    app.registerState<GameoverState>("gameover-scene");
     // Then choose the state to run based on the option "start-scene" in the config
     if(app_config.contains(std::string{"start-scene"})){
         app.changeState(app_config["start-scene"].get<std::string>());

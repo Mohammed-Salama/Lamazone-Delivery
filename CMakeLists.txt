@@ -108,6 +108,7 @@ set(STATES_SOURCES
         source/states/play-state.hpp
         source/states/main-menu.hpp
         source/states/intro-state.hpp
+        source/states/gameover-state.hpp
 )
 
 # For each example, we add an executable target
