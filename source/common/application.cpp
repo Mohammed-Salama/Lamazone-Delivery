@@ -204,6 +204,9 @@ int our::Application::run(int run_for_frames) {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
+    ImFont *font =io.Fonts->AddFontFromFileTTF("assets\\fonts\\Roboto-Black.ttf",80);
+    ImFont *font2 =io.Fonts->AddFontFromFileTTF("assets\\fonts\\Roboto-Italic.ttf",30);
+
     ImGuiStyle* style =&ImGui::GetStyle();
     ImVec4* colors = style->Colors;
 
@@ -294,8 +297,20 @@ int our::Application::run(int run_for_frames) {
          if(currentState == states["gameover-scene"])
         {
            
-            //ImGui::Begin("kk");
+            ImGui::Begin("Game Over",false, ImGuiWindowFlags_NoBackground |
+            ImGuiWindowFlags_NoMove| ImGuiWindowFlags_NoDecoration);
+            ImGui::SetWindowSize(ImVec2(win_config.size.x,win_config.size.y));
+    
+            ImGui::SetCursorScreenPos(ImVec2(win_config.size.x/3+20,win_config.size.y/2-50));   
+    
             ImGui::Text("Game Over");
+             ImGui::PushFont(font2);
+             if(ImGui::Button("Okay",ImVec2(win_config.size.x/6,win_config.size.y/6)))
+            {
+                this->changeState("main-menu");
+            }
+            ImGui::PopFont();
+            ImGui::End();
           
         }
 
@@ -305,16 +320,18 @@ int our::Application::run(int run_for_frames) {
             ImGui::Begin("Main Menu",false, ImGuiWindowFlags_NoBackground |
              ImGuiWindowFlags_NoMove| ImGuiWindowFlags_NoDecoration);
             ImGui::SetWindowSize(ImVec2(win_config.size.x,win_config.size.y));
-        
+            ImGui::PushFont(font2);
+            ImGui::SetCursorScreenPos(ImVec2(win_config.size.x/2,win_config.size.y/2-80));   
             if(ImGui::Button("New Game",ImVec2(win_config.size.x/6,win_config.size.y/6)))
             {
                 this->changeState("play-scene");
             }
-         
+            ImGui::SetCursorScreenPos(ImVec2(win_config.size.x/2,win_config.size.y/2+80));   
             if ( ImGui::Button("Exit Game",ImVec2(win_config.size.x/6,win_config.size.y/6)))
             {
                 break;
             }
+            ImGui::PopFont();
             ImGui::End();
         }
        
