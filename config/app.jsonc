@@ -280,18 +280,6 @@
                             }
                         ]
                     }
-                    // {
-                    //     "position": [1, -1, -1],
-                    //     "rotation": [45, 45, 0],
-                    //     "scale": [0.1, 0.1, 1.0],
-                    //     "components": [
-                    //         {
-                    //             "type": "Mesh Renderer",
-                    //             "mesh": "cube",
-                    //             "material": "metal"
-                    //         }
-                    //     ]
-                    // },
                 //    {
                 //         "position": [0, -1, -4],
                 //         "rotation": [0, 0, 0],
@@ -319,19 +307,6 @@
                     // }
                 ]
             },
-            // {
-            //     "position": [0, -1, -4],
-            //     "rotation": [0, 0, 0],
-            //     "scale": [2, 2, 2],
-            //     "materialName": "player",
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "package1",
-            //             "material": "box1"                               
-            //         }
-            //     ]
-            // },
             // {
             //     "rotation": [-45, 0, 0],
             //     "components": [
@@ -423,18 +398,6 @@
                     }
                 ]
             },
-            // {
-            //     "position": [0, -1, 0],
-            //     "rotation": [-90, 0, 0],
-            //     "scale": [10, 10, 1],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "plane",
-            //             "material": "grass"
-            //         }
-            //     ]
-            // },
             {
                 "position": [40, -1, 0],
                 "rotation": [-90, 0, 0],
@@ -447,97 +410,7 @@
                         "material": "grass"
                     }
                 ]
-            }//,
-            // {
-            //     "position": [0, -1, 0],
-            //     "rotation": [0, 180, 0],
-            //     "scale": [0.2, 0.2, 0.2],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "truck",
-            //             "material": "truck"
-            //         }
-            //     ]
-            // }
-            //,
-            // {
-            //     "position": [0, 1, 2],
-            //     "rotation": [0, 0, 0],
-            //     "scale": [2, 2, 2],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "plane",
-            //             "material": "glass"
-            //         }
-            //     ]
-            // },
-            // {
-            //     "position": [0, 1, -2],
-            //     "rotation": [0, 0, 0],
-            //     "scale": [2, 2, 2],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "plane",
-            //             "material": "glass"
-            //         }
-            //     ]
-            // },
-            // {
-            //     "position": [2, 1, 0],
-            //     "rotation": [0, 90, 0],
-            //     "scale": [2, 2, 2],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "plane",
-            //             "material": "glass"
-            //         }
-            //     ]
-            // },
-            // {
-            //     "position": [-2, 1, 0],
-            //     "rotation": [0, 90, 0],
-            //     "scale": [2, 2, 2],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "plane",
-            //             "material": "glass"
-            //         }
-            //     ]
-            // },
-            // {
-            //     "position": [0, 3, 0],
-            //     "rotation": [90, 0, 0],
-            //     "scale": [2, 2, 2],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "plane",
-            //             "material": "glass"
-            //         }
-            //     ]
-            // }
-            //,
-            // {
-            //     "position": [0, 10, 0],
-            //     "rotation": [45, 45, 0],
-            //     "scale": [5, 5, 5],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "sphere",
-            //             "material": "moon"
-            //         },
-            //         {
-            //             "type": "Movement",
-            //             "angularVelocity": [0, 90, 0]
-            //         }
-            //     ]
-            // }
+            }
         ]
     },"intro-scene": {
         "renderer":{
