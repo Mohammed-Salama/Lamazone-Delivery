@@ -2,7 +2,19 @@
 #include "../mesh/mesh-utils.hpp"
 #include "../texture/texture-utils.hpp"
 #include<iostream>
+
+#include <glm/gtx/euler_angles.hpp>
 namespace our {
+
+
+    glm::mat4 ForwardRenderer::toMat4(glm::vec3 scale,glm::vec3 rotation,glm::vec3 position) {
+        //DONE: (Req 2) Write this function
+        glm::mat4 sca = glm::scale(glm::mat4(1.0f), scale);
+        glm::mat4 rot = glm::yawPitchRoll(rotation.y,rotation.x, rotation.z);
+        glm::mat4 tra = glm::translate(glm::mat4(1.0f), position);
+        return tra*rot*sca; // Since the transformation matrix on the right is applied first.
+        // i.e. T * R * S 
+    }
 
     void ForwardRenderer::initialize(glm::ivec2 windowSize, const nlohmann::json& config){
         // First, we store the window size for later use
@@ -56,6 +68,57 @@ namespace our {
             this->skyMaterial->transparent = false;
         }
 
+
+         // Then we check if there is a sky texture in the configuration
+        if(config.contains("wall")){
+            // First, we create a sphere which will be used to draw the sky
+            this->wallPlane = mesh_utils::loadOBJ(config.value<std::string>("wall-mesh", ""));
+            
+            // We can draw the sky using the same shader used to draw textured objects
+            ShaderProgram* cityShader = new ShaderProgram();
+            cityShader->attach("assets/shaders/textured.vert", GL_VERTEX_SHADER);
+            cityShader->attach("assets/shaders/textured.frag", GL_FRAGMENT_SHADER);
+            cityShader->link();
+            
+            //DONE: (Req 9) Pick the correct pipeline state to draw the sky.
+            // Hints: the sky will be draw after the opaque objects so we would need depth testing but which depth function should we pick?
+            // We will draw the sphere from the inside, so what options should we pick for the face culling.
+
+            PipelineState cityPipelineState{};
+            //enabling depth testing
+            cityPipelineState.depthTesting.enabled=true;
+            cityPipelineState.depthTesting.function = GL_LEQUAL;
+            
+            // //enabling face culling
+            // cityPipelineState.faceCulling.enabled=true;
+            // //face to cull is front because we see the sphere from inside
+            // cityPipelineState.faceCulling.culledFace = GL_FRONT;
+            // cityPipelineState.faceCulling.frontFace = GL_CCW;
+            
+            // Load the sky texture (note that we don't need mipmaps since we want to avoid any unnecessary blurring while rendering the sky)
+            std::string wallTextureFile = config.value<std::string>("wall", "");
+            Texture2D* wallTexture = texture_utils::loadImage(wallTextureFile, false);
+
+            // Setup a sampler for the sky 
+            Sampler* wallSampler = new Sampler();
+            wallSampler->set(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            wallSampler->set(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            wallSampler->set(GL_TEXTURE_WRAP_S, GL_REPEAT);
+            wallSampler->set(GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+            // Combine all the aforementioned objects (except the mesh) into a material. 
+            this->wallMaterial = new TexturedMaterial();
+            this->wallMaterial->shader = cityShader;
+            this->wallMaterial->texture = wallTexture;
+            this->wallMaterial->sampler = wallSampler;
+            this->wallMaterial->pipelineState = cityPipelineState;
+            this->wallMaterial->tint = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+            this->wallMaterial->alphaThreshold = 1.0f;
+            this->wallMaterial->transparent = false;
+        }
+
+
+
         // Then we check if there is a postprocessing shader in the configuration
         if(config.contains("postprocess")){
             //DONE: (Req 10) Create a framebuffer
@@ -106,6 +169,13 @@ namespace our {
             delete skyMaterial->texture;
             delete skyMaterial->sampler;
             delete skyMaterial;
+        }
+        if(wallMaterial){
+            delete wallPlane;
+            delete wallMaterial->shader;
+            delete wallMaterial->texture;
+            delete wallMaterial->sampler;
+            delete wallMaterial;
         }
         // Delete all objects related to post processing
         if(postprocessMaterial){
@@ -193,6 +263,47 @@ namespace our {
         //DONE: (Req 8) Clear the color and depth buffers
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
+       if(this->wallMaterial){
+        //Draw city:
+        int dist = 100;
+            wallMaterial->setup();
+            glm::mat4 M = camera->getOwner()->getLocalToWorldMatrix();
+        for(int i=0;i<10;i++){
+
+            glm::mat4 model = toMat4(glm::vec3(50,50,50),glm::vec3(glm::radians(90.0),0,0),glm::vec3(0,0,-1*i*dist));
+
+            glm::mat4 VP = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+        
+            wallMaterial->shader->set("transform",  VP  * model );//* model);
+
+            wallPlane->draw();
+        }
+
+
+        for(int i=0;i<10;i++){
+
+            glm::mat4 model = toMat4(glm::vec3(25,50,50),glm::vec3(0,glm::radians(90.0),glm::radians(90.0)),glm::vec3(25,15,-1*i*dist));
+
+            glm::mat4 VP = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+        
+            wallMaterial->shader->set("transform",  VP  * model );//* model);
+
+            wallPlane->draw();
+
+
+            glm::mat4 model2 = toMat4(glm::vec3(25,50,50),glm::vec3(0,glm::radians(90.0),glm::radians(90.0)),glm::vec3(-25,15,-1*i*dist));
+
+            glm::mat4 VP2 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+        
+            wallMaterial->shader->set("transform",  VP2  * model2 );//* model);
+
+            wallPlane->draw();
+
+        }
+        
+       
+       }
+       
         //DONE: (Req 8) Draw all the opaque commands
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
         for(auto& model:opaqueCommands){

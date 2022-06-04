@@ -36,6 +36,9 @@ namespace our
         // Objects used for rendering a skybox
         Mesh* skySphere;
         TexturedMaterial* skyMaterial;
+        //Objects used for rendiering a city
+        Mesh* wallPlane;
+        TexturedMaterial* wallMaterial;
         // Objects used for Postprocessing
         GLuint postprocessFrameBuffer, postProcessVertexArray;
         Texture2D *colorTarget, *depthTarget;
@@ -48,6 +51,8 @@ namespace our
         void destroy();
         // This function should be called every frame to draw the given world
         void render(World* world);
+
+        glm::mat4 ForwardRenderer::toMat4(glm::vec3 scale,glm::vec3 rotation,glm::vec3 position);
 
 
     };
