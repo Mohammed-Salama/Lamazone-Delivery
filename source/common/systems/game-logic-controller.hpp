@@ -12,7 +12,7 @@
 #include <glm/trigonometric.hpp>
 #include <glm/gtx/fast_trigonometry.hpp>
 
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
 #include <chrono>
 #include <ctime>
 
@@ -130,6 +130,18 @@ namespace our
 
             for(auto detected : world->getEntities())
                {
+                    if(detected->materialName=="building" || detected->materialName=="car")
+                    {   
+                            // std::cout<<"I am here"<<std::endl;
+                            if(collision_detection(entity, player, detected))
+                            {
+                                std::cout<<"Collision!!";  
+                                energy -= decrement;
+                                std::cout<<"Energy"<<energy<<std::endl;
+  
+                            }
+                    }
+
                     if(detected->materialName=="battery")
                     {   
                             // std::cout<<"I am here"<<std::endl;
