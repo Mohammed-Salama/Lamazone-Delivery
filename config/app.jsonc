@@ -113,21 +113,6 @@
                     "texture": "grass",
                     "sampler": "default"
                 },
-                // "wall":{
-                //     "type": "textured",
-                //     "shader": "textured",
-                //     "pipelineState": {
-                //         "faceCulling":{
-                //             "enabled": false
-                //         },
-                //         "depthTesting":{
-                //             "enabled": true
-                //         }
-                //     },
-                //     "tint": [1, 1, 1, 1],
-                //     "texture": "wall",
-                //     "sampler": "default"
-                // },
                 "monkey":{
                     "type": "textured",
                     "shader": "textured",
@@ -286,8 +271,8 @@
                         "components": [
                             {
                                 "type": "Mesh Renderer",
-                                "mesh": "package1",
-                                "material": "box1"                           
+                                "mesh": "monkey",
+                                "material": "monkey"                           
                             },
                             {
                                 "type": "Game Logic Controller",
@@ -355,6 +340,7 @@
             //     ]
             // },
             {
+                "name" : "box",
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -382,6 +368,7 @@
                 ]
             },
             {
+                "name":"box",
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -395,6 +382,7 @@
                 ]
             },
             {
+                "name":"box",
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -408,6 +396,7 @@
                 ]
             },
             {
+                "name":"battery",
                 "position": [10, -1, 0],
                 "rotation": [0, 0, 0],
                 "scale": [1, 1, 1],
@@ -421,28 +410,16 @@
                 ]
             },
             {
+                "name":"arrow",
                 "position": [0, 5, 0],
-                "rotation": [0, 0, 0],
-                "scale": [10, 10, 10],
+                "rotation": [0, -180, -90],
+                "scale": [30, 30, 30],
                 "materialName":"car",
                 "components": [
                     {
                         "type": "Mesh Renderer",
                         "mesh": "arrow",
                         "material": "arrow"
-                    }
-                ]
-            },
-            {
-                "position": [40, -1, 0],
-                "rotation": [-90, 0, 0],
-                "scale": [10, 10, 5],
-                "materialName": "deliveryZone",
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "plane",
-                        "material": "grass"
                     }
                 ]
             }
