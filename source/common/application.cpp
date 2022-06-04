@@ -305,6 +305,7 @@ int our::Application::run(int run_for_frames) {
     
             ImGui::Text("Game Over");
              ImGui::PushFont(font2);
+             ImGui::SetCursorScreenPos(ImVec2(win_config.size.x/3+50,win_config.size.y/2+80));   
              if(ImGui::Button("Okay",ImVec2(win_config.size.x/6,win_config.size.y/6)))
             {
                 this->changeState("main-menu");
