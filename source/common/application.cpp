@@ -301,8 +301,9 @@ int our::Application::run(int run_for_frames) {
 
         if(currentState ==states["main-menu"])
         {
-            ImGui::Begin("Main Menu",false, ImGuiWindowFlags_NoBackground |
-            ImGuiWindowFlags_NoMove| ImGuiWindowFlags_NoDecoration);
+            ImGui::Begin("Main Menu");
+            // ImGui::Begin("Main Menu",false, ImGuiWindowFlags_NoBackground |
+            // ImGuiWindowFlags_NoMove| ImGuiWindowFlags_NoDecoration);
             ImGui::SetWindowSize(ImVec2(win_config.size.x,win_config.size.y));
         
             if(ImGui::Button("New Game",ImVec2(win_config.size.x/6,win_config.size.y/6)))
