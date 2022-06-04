@@ -218,12 +218,7 @@
                         }
                     },
                     "tint": [1, 1, 1, 1],
-                    /*"albedo": "monkey-albedo",
-                    "specular": "monkey-specular",
-                    "ambient_occlusion": "monkey-ambient_occlusion",
-                    "roughness": "monkey-roughness",
-                    "emissive": "monkey-emissive",*/
-                    "texture": "monkey",
+                    "texture": "package4",
                     "sampler": "default"
                 },
                 "battery":{
@@ -255,22 +250,7 @@
                     "tint": [1, 1, 1, 1],
                     "texture": "arrow",
                     "sampler": "default"
-                }//,
-                // "truck":{
-                //     "type": "textured",
-                //     "shader": "textured",
-                //     "pipelineState": {
-                //         "faceCulling":{
-                //             "enabled": false
-                //         },
-                //         "depthTesting":{
-                //             "enabled": true
-                //         }
-                //     },
-                //     "tint": [1, 1, 1, 1],
-                //     "texture": "truck",
-                //     "sampler": "default"
-                // }
+                }
             }
         },
         "world":[
@@ -293,7 +273,6 @@
             {
                 "name" : "name1",
                 "position": [0, 5, 0],
-                // "materialName":"player",
                 "components": [
                     {
                         "type": "Camera"
@@ -325,99 +304,19 @@
                             }
                         ]
                     }
-                //    {
-                //         "position": [0, -1, -4],
-                //         "rotation": [0, 0, 0],
-                //         "scale": [2, 2, 2],
-                //         "materialName": "box1",
-                //         "components": [
-                //             {
-                //                 "type": "Mesh Renderer",
-                //                 "mesh": "package1",
-                //                 "material": "box1"                               
-                //             }
-                //         ]
-                //     }
-                    // {
-                    //     "position": [0, -1, -4],
-                    //     "rotation": [0, 180, 0],
-                    //     "scale": [0.1, 0.1, 0.1],
-                    //     "components": [
-                    //         {
-                    //             "type": "Mesh Renderer",
-                    //             "mesh": "truck",
-                    //             "material": "truck"
-                    //         }
-                    //     ]
-                    // }
                 ]
             },
-            // {
-            //     "rotation": [-45, 0, 0],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "monkey",
-            //             "material": "monkey"
-            //         },
-            //         {
-            //             "type": "Movement",
-            //             "linearVelocity": [0, 0.1, 0],
-            //             "angularVelocity": [0, 45, 0]
-            //         }
-            //     ]
-            // },
-            // {
-            //     "position": [10, 10, 10],
-            //     "rotation": [0, 0, 0],
-            //     "scale": [2, 2, 2],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "package1",
-            //             "material": "box1"
-            //         }
-            //     ]
-            // },
             {
                 "name" : "box",
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
                 "materialName": "package",
-                // "children":[
-                //     {
-                //         "position": [0, 5, -4],
-                //         "rotation": [0, 0, 0],
-                //         "scale": [10, 10, 10],
-                //         "components": [
-                //             {
-                //                 "type": "Mesh Renderer",
-                //                 "mesh": "arrow",
-                //                 "material": "arrow"
-                //             }
-                //         ]
-                //     }
-                // ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
                         "mesh": "package2",
                         "material": "box2"
-                    }
-                ]
-            },
-            {
-                "name":"box",
-                "position": [10, 10, 10],
-                "rotation": [0, 0, 0],
-                "scale": [2, 2, 2],
-                "materialName": "package",
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "monkey",
-                        "material": "monkey"
                     }
                 ]
             },
@@ -436,6 +335,34 @@
                 ]
             },
             {
+                "name":"box",
+                "position": [10, 10, 10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "materialName": "package",
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "package3",
+                        "material": "box3"
+                    }
+                ]
+            },
+            {
+                "name":"box",
+                "position": [10, 10, 10],
+                "rotation": [0, 0, 0],
+                "scale": [2, 2, 2],
+                "materialName": "package",
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "package1",
+                        "material": "box1"
+                    }
+                ]
+            },
+            {
                 "name":"battery",
                 "position": [10, -1, 0],
                 "rotation": [0, 0, 0],
@@ -449,6 +376,7 @@
                     }
                 ]
             },
+            
             {
                 "name":"arrow",
                 "position": [0, 5, 0],
