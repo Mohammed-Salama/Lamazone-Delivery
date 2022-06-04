@@ -50,7 +50,7 @@
                 "monkey-ambient_occlusion": "assets/textures/ambient_occlusion.jpg",
                 "monkey-roughness": "assets/textures/roughness.jpg",
                 "monkey-emissive": "assets/textures/emissive.jpg",
-
+                "metallic" : "assets/textures/metallic.jpg",
                 "truck": "assets/textures/truck_body_albedo.jpg"
             },
             "meshes":{
@@ -63,6 +63,7 @@
                 "package3":"assets/models/Box3.obj",
                 "package4":"assets/models/Box4.obj",
                 "battery":"assets/models/battery.obj",
+                "car":"assets/models/Cadillac.obj",
                 "arrow":"assets/models/arrow.obj"//,
                 // "truck": "assets/models/truck.obj"
             },
@@ -74,8 +75,8 @@
             },
             "materials":{
                 "metal":{
-                    "type": "tinted",
-                    "shader": "tinted",
+                    "type": "textured",
+                    "shader": "textured",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -84,7 +85,9 @@
                             "enabled": true
                         }
                     },
-                    "tint": [0.45, 0.4, 0.5, 1]
+                    "tint": [1, 1, 1, 1],
+                    "texture": "metallic",
+                    "sampler": "default"
                 },
                 "glass":{
                     "type": "textured",
@@ -289,7 +292,7 @@
             },
             {
                 "name" : "name1",
-                "position": [0, 0, 0],
+                "position": [0, 2, 0],
                 // "materialName":"player",
                 "components": [
                     {
@@ -301,14 +304,14 @@
                 ],
                 "children": [
                     {
-                        "position": [0, -1, -4],
-                        "rotation": [0, 0, 0],
-                        "scale": [2, 2, 2],
+                        "position": [0, -3, -7],
+                        "rotation": [0, 180, 0],
+                        "scale": [0.014, 0.012, 0.012],
                         "materialName": "player",
                         "components": [
                             {
                                 "type": "Mesh Renderer",
-                                "mesh": "monkey",
+                                "mesh": "car",
                                 "material": "monkey"                           
                             },
                             {
