@@ -16,7 +16,7 @@
             "skyBottom" : [1,0,0],
             "sky": "assets/textures/sky.jpg",
             "postprocess": "assets/shaders/postprocess/vignette.frag",
-            "wall" : "assets/textures/wall2.jpg",
+            "wall" : "assets/textures/redBuilding.jpg",
             "wall-mesh" : "assets/models/plane.obj",
             "ground" : "assets/textures/ground.jpg"
         },
@@ -292,7 +292,7 @@
             },
             {
                 "name" : "name1",
-                "position": [0, 0, 0],
+                "position": [0, 5, 0],
                 // "materialName":"player",
                 "components": [
                     {
