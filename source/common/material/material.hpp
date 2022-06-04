@@ -7,7 +7,7 @@
 
 #include <glm/vec4.hpp>
 #include <json/json.hpp>
-
+#include<iostream>
 namespace our {
 
     // This is the base class for all the materials
@@ -24,6 +24,7 @@ namespace our {
         
         // This function does 2 things: setup the pipeline state and set the shader program to be used
         virtual void setup() const;
+        virtual std::string getType();
         // This function read a material from a json object
         virtual void deserialize(const nlohmann::json& data);
     };
@@ -33,7 +34,7 @@ namespace our {
     class TintedMaterial : public Material {
     public:
         glm::vec4 tint;
-
+        std::string getType();
         void setup() const override;
         void deserialize(const nlohmann::json& data) override;
     };
@@ -49,6 +50,23 @@ namespace our {
         Sampler* sampler;
         float alphaThreshold;
 
+        std::string getType();
+        void setup() const override;
+        void deserialize(const nlohmann::json& data) override;
+    };
+
+
+     class LitMaterial : public TintedMaterial
+    {
+        public:
+        Texture2D* albedo;
+        Texture2D * specular;
+        Texture2D * ambient_occlusion;
+        Texture2D* roughness;
+        Texture2D* emissive;
+        Sampler *light;
+
+        std::string getType();
         void setup() const override;
         void deserialize(const nlohmann::json& data) override;
     };
@@ -59,7 +77,10 @@ namespace our {
             return new TintedMaterial();
         } else if(type == "textured"){
             return new TexturedMaterial();
-        } else {
+        } else if (type == "lighted"){
+            return new LitMaterial();
+        } 
+        else {
             return new Material();
         }
     }

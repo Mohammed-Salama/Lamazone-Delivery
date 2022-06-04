@@ -24,6 +24,10 @@
                 "textured":{
                     "vs":"assets/shaders/textured.vert",
                     "fs":"assets/shaders/textured.frag"
+                },
+                "lighted":{
+                    "vs":"assets/shaders/lighted.vert",
+                    "fs":"assets/shaders/lighted.frag"
                 }
             },
             "textures":{
@@ -38,6 +42,13 @@
                 "package4": "assets/textures/Box04.png",
                 "battery": "assets/textures/battery.jpg",
                 "arrow": "assets/textures/arrowAlbedo.png",
+
+                "monkey-albedo": "assets/textures/albedo.jpg",
+                "monkey-specular": "assets/textures/specular.jpg",
+                "monkey-ambient_occlusion": "assets/textures/ambient_occlusion.jpg",
+                "monkey-roughness": "assets/textures/roughness.jpg",
+                "monkey-emissive": "assets/textures/emissive.jpg",
+
                 "truck": "assets/textures/truck_body_albedo.jpg"
             },
             "meshes":{
@@ -111,8 +122,8 @@
                     "sampler": "default"
                 },
                 "monkey":{
-                    "type": "textured",
-                    "shader": "textured",
+                    "type": "lighted",
+                    "shader": "lighted",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -122,7 +133,12 @@
                         }
                     },
                     "tint": [1, 1, 1, 1],
-                    "texture": "monkey",
+                    "albedo": "monkey-albedo",
+                    "specular": "monkey-specular",
+                    "ambient_occlusion": "monkey-ambient_occlusion",
+                    "roughness": "monkey-roughness",
+                    "emissive": "monkey-emissive",
+                    //"texture": "monkey",
                     "sampler": "default"
                 },
                 "moon":{
@@ -197,7 +213,12 @@
                         }
                     },
                     "tint": [1, 1, 1, 1],
-                    "texture": "package4",
+                    /*"albedo": "monkey-albedo",
+                    "specular": "monkey-specular",
+                    "ambient_occlusion": "monkey-ambient_occlusion",
+                    "roughness": "monkey-roughness",
+                    "emissive": "monkey-emissive",*/
+                    "texture": "monkey",
                     "sampler": "default"
                 },
                 "battery":{
@@ -249,6 +270,23 @@
         },
         "world":[
             {
+                "name":"first light",
+                "position":[0,0,0],
+                "components":[
+                    {
+                        "type":"Light",
+                        "lightType": "DIRECTIONAL",
+                        "diffuse": [1, 1 , 1],
+                        "specular": [1,1,1],
+                        "attenuation" :[0,0,0],
+                        "cone_angles":[0,0],
+                        "position" : [0,2,0],
+                        "direction" : [0,-1,0]
+                    }
+                ]
+            },
+            {
+                "name" : "name1",
                 "position": [0, 0, 0],
                 // "materialName":"player",
                 "components": [
@@ -258,27 +296,30 @@
                     {
                         "type": "Free Camera Controller"
                     }
-                ],
-                "children": [
-                    {
-                        "position": [0, -1, -4],
-                        "rotation": [0, 0, 0],
-                        "scale": [2, 2, 2],
-                        "materialName": "player",
-                        "components": [
-                            {
-                                "type": "Mesh Renderer",
-                                "mesh": "package1",
-                                "material": "box1"                           
-                            },
-                            {
-                                "type": "Game Logic Controller",
-                                "maxEnergy": 100,
-                                "maxSpeed": 20,
-                                "energyDecrementValue": 1
-                            }
-                        ]
-                    }
+                ] ,
+               "children": [
+                {
+                    "position": [0, -1, -4],
+                    "rotation": [0, 0, 0],
+                    "scale": [2, 2, 2],
+                    "materialName": "player",
+                    "components": [
+                        {
+                            "type": "Mesh Renderer",
+                            "mesh": "package1",
+                            "material": "box1"                           
+                        }
+                       /* {
+                            "type": "Game Logic Controller",
+                            "maxEnergy": 200,
+                            "maxSpeed": 20,
+                            "energyDecrementValue": 1,
+                            "pointsPerPackage": 25,
+                            "energyLostPerHit": 10,
+                            "cooldownTime": 5
+                        }*/
+                    ]
+                }
                     // {
                     //     "position": [1, -1, -1],
                     //     "rotation": [45, 45, 0],
@@ -359,6 +400,7 @@
             //     ]
             // },
             {
+                "name" : "name2",
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -377,15 +419,15 @@
                 "components": [
                     {
                         "type": "Mesh Renderer",
-                        "mesh": "package3",
-                        "material": "box3"
+                        "mesh": "monkey",
+                        "material": "monkey"
                     }
                 ]
             },
             {
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
-                "scale": [2, 2, 2],
+                "scale": [2,2,2],
                 "components": [
                     {
                         "type": "Mesh Renderer",

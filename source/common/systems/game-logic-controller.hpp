@@ -12,7 +12,7 @@
 #include <glm/trigonometric.hpp>
 #include <glm/gtx/fast_trigonometry.hpp>
 
-#include <bits/stdc++.h>
+//#include <bits/stdc++.h>
 #include <chrono>
 #include <ctime>
 
@@ -97,14 +97,14 @@ namespace our
                {
                      if(detected->materialName=="battery")
                        {   
-                            std::cout<<"I am here"<<std::endl;
+                            //std::cout<<"I am here"<<std::endl;
                             // add value for energy
                             double dx,dy,dz;
                             dx= player->localTransform.position.x + entity->localTransform.position.x - detected->localTransform.position.x;
                             dy = player->localTransform.position.y + entity->localTransform.position.y - detected->localTransform.position.y;
                             dz = player->localTransform.position.z + entity->localTransform.position.z - detected->localTransform.position.z;
-                            std::cout<<player->localTransform.position.x<<" "<<player->localTransform.position.y<<" "<<player->localTransform.position.z<<std::endl;
-                            std::cout<<detected->localTransform.position.x<<" "<<detected->localTransform.position.y<<" "<<detected->localTransform.position.z<<std::endl;
+                            //std::cout<<player->localTransform.position.x<<" "<<player->localTransform.position.y<<" "<<player->localTransform.position.z<<std::endl;
+                            //std::cout<<detected->localTransform.position.x<<" "<<detected->localTransform.position.y<<" "<<detected->localTransform.position.z<<std::endl;
                             double distance = sqrt(dx*dx + dy*dy + dz*dz)/2;
                             double radiusx=0, raduisy=0;
                             Mesh *meshx;
@@ -125,11 +125,11 @@ namespace our
                                 if(energy > game->maxEnergy) energy = game->maxEnergy;
                                 std::cout<<"Energy Boosted by "<<energyBoost<<std::endl;
                             }
-                            std::cout<<"radiusx"<<radiusx<<"raduisy"<<raduisy<<"distance"<<distance<<std::endl;
+                            //std::cout<<"radiusx"<<radiusx<<"raduisy"<<raduisy<<"distance"<<distance<<std::endl;
                         }
                 
                 }
-                std::cout<<"Current Energy="<<energy<<" Speed ="<<speed<<std::endl;
+                //std::cout<<"Current Energy="<<energy<<" Speed ="<<speed<<std::endl;
                 world->deleteMarkedEntities();
         }
 

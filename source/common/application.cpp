@@ -243,6 +243,7 @@ int our::Application::run(int run_for_frames) {
     float intro_time = 1;
     float intro_start = glfwGetTime();
     bool entered = false;
+    bool game_started = false;
 
     //Game loop
     while(!glfwWindowShouldClose(window)){
@@ -296,8 +297,9 @@ int our::Application::run(int run_for_frames) {
         glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 #endif
         // Moving from main menu to game
-        if(keyboard.justPressed(GLFW_KEY_F11)  ){
+        if(keyboard.justPressed(GLFW_KEY_F11) && !game_started ){
             //TODO: check that current state is main menu
+            game_started = true;
             this->changeState("play-scene");
         }
         // If F12 is pressed, take a screenshot

@@ -122,11 +122,17 @@ namespace our {
     void ForwardRenderer::render(World* world){
         // First of all, we search for a camera and for all the mesh renderers
         CameraComponent* camera = nullptr;
+        std::vector<LightComponent*> lights;
         opaqueCommands.clear();
         transparentCommands.clear();
         for(auto entity : world->getEntities()){
             // If we hadn't found a camera yet, we look for a camera in this entity
             if(!camera) camera = entity->getComponent<CameraComponent>();
+
+            if(auto lightRenderer = entity->getComponent<LightComponent>(); lightRenderer){
+                lights.push_back(lightRenderer);
+            }
+
             // If this entity has a mesh renderer component
             if(auto meshRenderer = entity->getComponent<MeshRendererComponent>(); meshRenderer){
                 // We construct a command from it
@@ -143,6 +149,8 @@ namespace our {
                     opaqueCommands.push_back(command);
                 }
             }
+
+            
         }
 
         // If there is no camera, we return (we cannot render without a camera)
@@ -196,9 +204,36 @@ namespace our {
         //DONE: (Req 8) Draw all the opaque commands
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
         for(auto& model:opaqueCommands){
-            glm::mat4 MVP = VP * model.localToWorld;
+            glm::mat4 M = model.localToWorld;
+            glm::mat4 MVP = VP * M;
+            glm::mat4 M_IT = glm::transpose(glm::inverse(M));
             model.material->setup();
-            model.material->shader->set("transform", MVP);
+            if (model.material->getType()=="lighted"){
+                model.material->shader->set("eye", cameraPos);
+                model.material->shader->set("VP", VP);
+                model.material->shader->set("M", M);
+                model.material->shader->set("M_IT",M_IT);
+
+                int n = lights.size();
+                std::cout<<n<<"\n";
+                model.material->shader->set("light_count",n);
+                model.material->shader->set("sky.top",glm::vec3(0, 0, 0));
+                model.material->shader->set("sky.middle",glm::vec3(0, 0, 0));
+                model.material->shader->set("sky.bottom",glm::vec3(0, 0, 0.0));
+               
+                for (int i = 0 ; i < n;i++){
+                    model.material->shader->set("lights["+std::to_string(i)+"].type", float(lights[i]->lightType));
+                    model.material->shader->set("lights["+std::to_string(i)+"].position", lights[i]->position);
+                    model.material->shader->set("lights["+std::to_string(i)+"].direction", lights[i]->direction);
+                    model.material->shader->set("lights["+std::to_string(i)+"].diffuse", lights[i]->diffuse);
+                    model.material->shader->set("lights["+std::to_string(i)+"].specular", lights[i]->specular);
+                    model.material->shader->set("lights["+std::to_string(i)+"].attenuation", lights[i]->attenuation);
+                    model.material->shader->set("lights["+std::to_string(i)+"].cone_angle", lights[i]->cone_angles);
+                }
+            }
+            else {
+                model.material->shader->set("transform", MVP);
+            }
             model.mesh->draw();
         }
         // If there is a sky material, draw the sky
@@ -243,9 +278,31 @@ namespace our {
         //DONE: (Req 8) Draw all the transparent commands
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
         for(auto& model:transparentCommands){
-            glm::mat4 MVP = VP * model.localToWorld;
+            glm::mat4 M = model.localToWorld;
+            glm::mat4 MVP = VP * M;
+            glm::mat4 M_IT = glm::transpose(glm::inverse(M));
             model.material->setup();
-            model.material->shader->set("transform", MVP);
+            if (model.material->getType()=="lighted"){
+                model.material->shader->set("eye", cameraPos);
+                model.material->shader->set("VP", VP);
+                model.material->shader->set("M", M);
+                model.material->shader->set("M_IT", M_IT);
+
+                int n = lights.size();
+                model.material->shader->set("light_count", n);
+                for (int i = 0 ; i < n;i++){
+                    model.material->shader->set("lights["+std::to_string(i)+"].type", float(lights[i]->lightType));
+                    model.material->shader->set("lights["+std::to_string(i)+"].position", lights[i]->position);
+                    model.material->shader->set("lights["+std::to_string(i)+"].direction", lights[i]->direction);
+                    model.material->shader->set("lights["+std::to_string(i)+"].diffuse", lights[i]->diffuse);
+                    model.material->shader->set("lights["+std::to_string(i)+"].specular", lights[i]->specular);
+                    model.material->shader->set("lights["+std::to_string(i)+"].attenuation", lights[i]->attenuation);
+                    model.material->shader->set("lights["+std::to_string(i)+"].cone_angle", lights[i]->cone_angles);
+                }
+            }
+            else {
+                model.material->shader->set("transform", MVP);
+            }
             model.mesh->draw();
         }
 
