@@ -157,6 +157,10 @@ namespace our
         {
             entity->localTransform.position.x=-32;
         }
+         if(entity->localTransform.position.y!=6)
+         {
+             entity->localTransform.position.y=6;
+         }
 
             for(auto detected : world->getEntities())
                {
