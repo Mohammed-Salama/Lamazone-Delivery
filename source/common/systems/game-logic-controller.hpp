@@ -24,8 +24,8 @@ namespace our
     // For more information, see "common/components/free-camera-cameracontroller.hpp"
     class GameLogicControllerSystem {
         Application* app; // The application in which the state runs
-
     public:
+        bool gameOver = false; // Indicates whether the game is over or not.
         // When a state enters, it should call this function and give it the pointer to the application
         void enter(Application* app){
             this->app = app;
@@ -131,6 +131,7 @@ namespace our
                 if(energy <= 0)
                 {
                     game->lost = true;
+                    gameOver = true;
                     energy = 0.0f;
                     speed = 0.0f;
                     return;
@@ -165,6 +166,7 @@ namespace our
                                     {
                                         energy = 0;
                                         game->lost = true;
+                                        gameOver = true;
                                         return;
                                     }
                                     
