@@ -13,7 +13,7 @@
         "renderer":{
             "sky": "assets/textures/sky.jpg",
             "postprocess": "assets/shaders/postprocess/vignette.frag",
-            "wall" : "assets/textures/wall2.jpg",
+            "wall" : "assets/textures/redBuilding.jpg",
             "wall-mesh" : "assets/models/plane.obj",
             "ground" : "assets/textures/ground.jpg"
         },
