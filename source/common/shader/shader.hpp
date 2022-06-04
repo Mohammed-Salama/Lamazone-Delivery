@@ -58,7 +58,9 @@ namespace our {
         void set(const std::string &uniform, glm::mat4 matrix) {
             glUniformMatrix4fv(getUniformLocation(uniform), 1, false, glm::value_ptr(matrix));
         }
-
+        GLuint getProgram(){
+            return program;
+        } 
         ShaderProgram(ShaderProgram const &) = delete;
         ShaderProgram &operator=(ShaderProgram const &) = delete;
     };

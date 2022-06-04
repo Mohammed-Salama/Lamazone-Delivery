@@ -42,7 +42,8 @@ set(COMMON_SOURCES
         
         source/common/shader/shader.hpp
         source/common/shader/shader.cpp
-
+        source/common/components/light.cpp
+        source/common/components/light.hpp
         source/common/mesh/vertex.hpp
         source/common/mesh/mesh.hpp
         source/common/mesh/mesh-utils.hpp

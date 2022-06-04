@@ -83,7 +83,7 @@ namespace our {
           raduisy =meshy->raduis;
           if(distance <=radiusx+raduisy)
                 std::cout<<"Collision!!";  
-         std::cout<<"radiusx"<<radiusx<<"raduisy"<<raduisy<<"distance"<<distance<<std::endl;
+         //std::cout<<"radiusx"<<radiusx<<"raduisy"<<raduisy<<"distance"<<distance<<std::endl;
           return distance <=radiusx+raduisy;
   
        } 
@@ -103,11 +103,11 @@ namespace our {
                        if((entity->materialName=="battery" && detected->materialName=="box1") || (entity->materialName=="box1" && detected->materialName=="battery" ))
                        {
                 
-                             // check colllsion logic
+                             // check collision logic
                            if(collisionlogic(entity,detected))
                            {
 
-                            std::cout<<"I am here"<<std::endl;
+                            //std::cout<<"I am here"<<std::endl;
                                // add value for energy
                              if(entity->materialName=="battery"){
               

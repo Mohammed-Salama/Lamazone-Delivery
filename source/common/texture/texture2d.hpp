@@ -3,7 +3,7 @@
 #include <glad/gl.h>
 
 namespace our {
-
+    //GLenum TexUnits[5] = {GL_TEXTURE0,GL_TEXTURE1,GL_TEXTURE2,GL_TEXTURE3,GL_TEXTURE4};
     // This class defined an OpenGL texture which will be used as a GL_TEXTURE_2D
     class Texture2D {
         // The OpenGL object name of this texture 
@@ -37,7 +37,9 @@ namespace our {
             //DONE: (Req 4) Complete this function
             glBindTexture(GL_TEXTURE_2D, 0);
         }
-
+        void activeTexture(GLenum texUnit){
+            glActiveTexture(texUnit);
+        }
         Texture2D(const Texture2D&) = delete;
         Texture2D& operator=(const Texture2D&) = delete;
     };
