@@ -39,6 +39,7 @@ namespace our
         //Objects used for rendiering a city
         Mesh* wallPlane;
         TexturedMaterial* wallMaterial;
+        TexturedMaterial* groundMaterial;
         // Objects used for Postprocessing
         GLuint postprocessFrameBuffer, postProcessVertexArray;
         Texture2D *colorTarget, *depthTarget;

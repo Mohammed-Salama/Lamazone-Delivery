@@ -80,10 +80,6 @@ namespace our {
             cityShader->attach("assets/shaders/textured.frag", GL_FRAGMENT_SHADER);
             cityShader->link();
             
-            //DONE: (Req 9) Pick the correct pipeline state to draw the sky.
-            // Hints: the sky will be draw after the opaque objects so we would need depth testing but which depth function should we pick?
-            // We will draw the sphere from the inside, so what options should we pick for the face culling.
-
             PipelineState cityPipelineState{};
             //enabling depth testing
             cityPipelineState.depthTesting.enabled=true;
@@ -115,6 +111,31 @@ namespace our {
             this->wallMaterial->tint = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
             this->wallMaterial->alphaThreshold = 1.0f;
             this->wallMaterial->transparent = false;
+
+
+
+
+
+            // Load the sky texture (note that we don't need mipmaps since we want to avoid any unnecessary blurring while rendering the sky)
+            std::string groundTextureFile = config.value<std::string>("ground", "");
+            Texture2D* groundTexture = texture_utils::loadImage(groundTextureFile, false);
+
+            // Setup a sampler for the sky 
+            Sampler* groundSampler = new Sampler();
+            groundSampler->set(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            groundSampler->set(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            groundSampler->set(GL_TEXTURE_WRAP_S, GL_REPEAT);
+            groundSampler->set(GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+            // Combine all the aforementioned objects (except the mesh) into a material. 
+            this->groundMaterial = new TexturedMaterial();
+            this->groundMaterial->shader = cityShader;
+            this->groundMaterial->texture = groundTexture;
+            this->groundMaterial->sampler = groundSampler;
+            this->groundMaterial->pipelineState = cityPipelineState;
+            this->groundMaterial->tint = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+            this->groundMaterial->alphaThreshold = 1.0f;
+            this->groundMaterial->transparent = false;
         }
 
 
@@ -176,6 +197,14 @@ namespace our {
             delete wallMaterial->texture;
             delete wallMaterial->sampler;
             delete wallMaterial;
+        }
+
+        if(groundMaterial){
+            delete groundMaterial;
+            delete groundMaterial->shader;
+            delete groundMaterial->texture;
+            delete groundMaterial->sampler;
+            delete groundMaterial;
         }
         // Delete all objects related to post processing
         if(postprocessMaterial){
@@ -263,26 +292,85 @@ namespace our {
         //DONE: (Req 8) Clear the color and depth buffers
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-       if(this->wallMaterial){
-        //Draw city:
-        int dist = 100;
-            wallMaterial->setup();
-            glm::mat4 M = camera->getOwner()->getLocalToWorldMatrix();
-        for(int i=0;i<10;i++){
+       if(this->wallMaterial && this->groundMaterial){
 
+        groundMaterial->setup();
+        glm::mat4 M = camera->getOwner()->getLocalToWorldMatrix();
+
+        int dist = 100;
+        
+        for(int i=0;i<30;i++){
+
+            // street model
             glm::mat4 model = toMat4(glm::vec3(50,50,50),glm::vec3(glm::radians(90.0),0,0),glm::vec3(0,0,-1*i*dist));
 
             glm::mat4 VP = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
         
-            wallMaterial->shader->set("transform",  VP  * model );//* model);
+            groundMaterial->shader->set("transform",  VP  * model );//* model);
 
             wallPlane->draw();
         }
 
+ 
+        dist = 30;
+        for(int i=0;i<90;i++){
 
-        for(int i=0;i<10;i++){
+             wallMaterial->setup();
+            if(i%10==0){
 
-            glm::mat4 model = toMat4(glm::vec3(25,50,50),glm::vec3(0,glm::radians(90.0),glm::radians(90.0)),glm::vec3(25,15,-1*i*dist));
+            // model3 : intersection wall (right)
+ 
+            glm::mat4 model3 = toMat4(glm::vec3(50,20,5),glm::vec3(0,glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(95,15,-1*(i*dist+15)));
+
+            glm::mat4 VP3 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+        
+            wallMaterial->shader->set("transform",  VP3  * model3 );//* model);
+
+            wallPlane->draw();
+
+
+            // model4 : intersection wall (left)
+
+            glm::mat4 model4 = toMat4(glm::vec3(50,20,5),glm::vec3(0,glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(-95,15,-1*(i*dist+15)));
+
+            glm::mat4 VP4 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+        
+            wallMaterial->shader->set("transform",  VP4  * model4 );//* model);
+
+            wallPlane->draw();
+
+
+            groundMaterial->setup();
+            // model5 : intersection street (right)
+
+            glm::mat4 model5 = toMat4(glm::vec3(50,20,5),glm::vec3(glm::radians(-90.0),glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(100,0,-1*(i*dist)));
+
+            glm::mat4 VP5 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+        
+            wallMaterial->shader->set("transform",  VP5  * model5 );//* model);
+
+            wallPlane->draw();
+
+
+            // model6 : intersection street (left)
+
+            glm::mat4 model6 = toMat4(glm::vec3(50,20,5),glm::vec3(glm::radians(-90.0),glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(-100,0,-1*(i*dist)));
+
+            glm::mat4 VP6 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+        
+            wallMaterial->shader->set("transform",  VP6  * model6 );//* model);
+
+            wallPlane->draw();
+
+
+
+                continue;
+            }
+
+
+            // street walls (right)
+
+            glm::mat4 model = toMat4(glm::vec3(15,20,5),glm::vec3(0,glm::radians(-90.0),glm::radians(-180.0)),glm::vec3(45,15,-1*i*dist));
 
             glm::mat4 VP = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
         
@@ -290,8 +378,9 @@ namespace our {
 
             wallPlane->draw();
 
+             // street walls (left)
 
-            glm::mat4 model2 = toMat4(glm::vec3(25,50,50),glm::vec3(0,glm::radians(90.0),glm::radians(90.0)),glm::vec3(-25,15,-1*i*dist));
+            glm::mat4 model2 = toMat4(glm::vec3(15,20,5),glm::vec3(0,glm::radians(-90.0),glm::radians(-180.0)),glm::vec3(-45,15,-1*i*dist));
 
             glm::mat4 VP2 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
         
