@@ -295,11 +295,11 @@
                             },
                             {
                                 "type": "Game Logic Controller",
-                                "maxEnergy": 50,
-                                "maxSpeed": 20,
+                                "maxEnergy": 150,
+                                "maxSpeed": 150,
                                 "energyDecrementValue": 1,
                                 "pointsPerPackage": 25,
-                                "energyLostPerHit": 10,
+                                "energyLostPerHit": 5,
                                 "cooldownTime": 5
                             }
                         ]
@@ -307,7 +307,7 @@
                 ]
             },
             {
-                "name" : "box",
+                "name" : "box2",
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -321,8 +321,8 @@
                 ]
             },
             {
-                "name":"box",
-                "position": [10, 10, 10],
+                "name":"box4",
+                "position": [0, 0, 0],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
                 "materialName": "package",
@@ -335,7 +335,7 @@
                 ]
             },
             {
-                "name":"box",
+                "name":"box3",
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -349,7 +349,7 @@
                 ]
             },
             {
-                "name":"box",
+                "name":"box1",
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -370,15 +370,29 @@
                 "materialName":"battery",
                 "components": [
                     {
-                        "type": "Mesh Renderer",
-                        "mesh": "battery",
+                        "type":     "Mesh Renderer",
+                        "mesh":     "battery",
                         "material": "battery"
                     }
                 ]
             },
             
             {
-                "name":"arrow",
+                "name":"pickArrow",
+                "position": [0, 5, 0],
+                "rotation": [0, -180, -90],
+                "scale": [30, 30, 30],
+                "materialName":"car",
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "arrow",
+                        "material": "arrow"
+                    }
+                ]
+            },
+            {
+                "name":"deliveryArrow",
                 "position": [0, 5, 0],
                 "rotation": [0, -180, -90],
                 "scale": [30, 30, 30],

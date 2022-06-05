@@ -307,7 +307,7 @@ namespace our {
 
         int dist = 100;
         
-        for(int i=0;i<30;i++){
+        for(int i=0;i<300;i++){
 
             // street model
             glm::mat4 model = toMat4(glm::vec3(50,50,50),glm::vec3(glm::radians(90.0),0,0),glm::vec3(0,0,-1*i*dist));
@@ -321,7 +321,7 @@ namespace our {
 
  
         dist = 30;
-        for(int i=0;i<90;i++){
+        for(int i=0;i<900;i++){
 
              wallMaterial->setup();
             if(i%10==0){
