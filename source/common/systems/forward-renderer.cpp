@@ -15,22 +15,36 @@ namespace our {
         return tra*rot*sca; // Since the transformation matrix on the right is applied first.
         // i.e. T * R * S 
     }
-
+    glm::vec3 skyTop = glm::vec3(0.1,0.1,0.2);
+    glm::vec3 skyBottom = glm::vec3(0.1,0.1,0.2);
+    glm::vec3 skyMiddle = glm::vec3(0.1,0.1,0.2);
     void ForwardRenderer::initialize(glm::ivec2 windowSize, const nlohmann::json& config){
         // First, we store the window size for later use
         this->windowSize = windowSize;
-
+        if(config.contains("skyTop")){
+            std::vector<float> v = config["skyTop"];
+            skyTop = glm::vec3(v[0],v[1],v[2]);
+        }
+        if(config.contains("skyMiddle")){
+            std::vector<float> v = config["skyMiddle"];
+            skyMiddle = glm::vec3(v[0],v[1],v[2]);
+        }
+        if(config.contains("skyBottom")){
+            std::vector<float> v = config["skyBottom"];
+            skyBottom = glm::vec3(v[0],v[1],v[2]);
+        }
         // Then we check if there is a sky texture in the configuration
-        if(config.contains("sky")){
+        if(config.contains("sky-albedo")){
             // First, we create a sphere which will be used to draw the sky
+            std::cout<<"LOL1\n";
             this->skySphere = mesh_utils::sphere(glm::ivec2(16, 16));
-            
+            std::cout<<"LOL2\n";
             // We can draw the sky using the same shader used to draw textured objects
             ShaderProgram* skyShader = new ShaderProgram();
-            skyShader->attach("assets/shaders/textured.vert", GL_VERTEX_SHADER);
-            skyShader->attach("assets/shaders/textured.frag", GL_FRAGMENT_SHADER);
+            skyShader->attach("assets/shaders/lighted.vert", GL_VERTEX_SHADER);
+            skyShader->attach("assets/shaders/lighted.frag", GL_FRAGMENT_SHADER);
             skyShader->link();
-            
+            std::cout<<"LOL3\n";
             //DONE: (Req 9) Pick the correct pipeline state to draw the sky.
             // Hints: the sky will be draw after the opaque objects so we would need depth testing but which depth function should we pick?
             // We will draw the sphere from the inside, so what options should we pick for the face culling.
@@ -45,10 +59,13 @@ namespace our {
             //face to cull is front because we see the sphere from inside
             skyPipelineState.faceCulling.culledFace = GL_FRONT;
             skyPipelineState.faceCulling.frontFace = GL_CCW;
-            
+            std::cout<<"LOL5\n";
             // Load the sky texture (note that we don't need mipmaps since we want to avoid any unnecessary blurring while rendering the sky)
-            std::string skyTextureFile = config.value<std::string>("sky", "");
+            std::string skyTextureFile = config.value<std::string>("sky-albedo", "");
             Texture2D* skyTexture = texture_utils::loadImage(skyTextureFile, false);
+
+            std::string ambientTextureFile = config.value<std::string>("sky-ambient_occlusion", "");
+            Texture2D* skyAmbTexture = texture_utils::loadImage(ambientTextureFile, false);
 
             // Setup a sampler for the sky 
             Sampler* skySampler = new Sampler();
@@ -56,16 +73,22 @@ namespace our {
             skySampler->set(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             skySampler->set(GL_TEXTURE_WRAP_S, GL_REPEAT);
             skySampler->set(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
+            std::cout<<"LOL6\n";
             // Combine all the aforementioned objects (except the mesh) into a material. 
-            this->skyMaterial = new TexturedMaterial();
+            this->skyMaterial = new LitMaterial();
             this->skyMaterial->shader = skyShader;
-            this->skyMaterial->texture = skyTexture;
-            this->skyMaterial->sampler = skySampler;
+            this->skyMaterial->albedo = skyTexture;
+            std::cout<<"LOL7\n";
+            this->skyMaterial->ambient_occlusion = skyTexture;
+            this->skyMaterial->emissive = skyAmbTexture;
+            this->skyMaterial->roughness = skyTexture;
+            this->skyMaterial->specular = skyTexture;
+            this->skyMaterial->light = skySampler;
             this->skyMaterial->pipelineState = skyPipelineState;
             this->skyMaterial->tint = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-            this->skyMaterial->alphaThreshold = 1.0f;
+            //this->skyMaterial->alphaThreshold = 1.0f;
             this->skyMaterial->transparent = false;
+            std::cout<<"LOL\n";
         }
 
 
@@ -185,11 +208,13 @@ namespace our {
     void ForwardRenderer::destroy(){
         // Delete all objects related to the sky
         if(skyMaterial){
-            delete skySphere;
-            delete skyMaterial->shader;
-            delete skyMaterial->texture;
-            delete skyMaterial->sampler;
-            delete skyMaterial;
+            // delete skySphere;
+            // delete skyMaterial->shader;
+            // delete skyMaterial->albedo;
+            // delete skyMaterial->ambient_occlusion;
+            // delete skyMaterial->specular;
+            // delete skyMaterial->light;
+            // delete skyMaterial;
         }
         if(wallMaterial){
             delete wallPlane;
@@ -417,9 +442,9 @@ namespace our {
                 int n = lights.size();
                 std::cout<<n<<"\n";
                 model.material->shader->set("light_count",n);
-                model.material->shader->set("sky.top",glm::vec3(0, 0, 0));
-                model.material->shader->set("sky.middle",glm::vec3(0, 0, 0));
-                model.material->shader->set("sky.bottom",glm::vec3(0, 0, 0.0));
+                model.material->shader->set("sky.top",skyTop);
+                model.material->shader->set("sky.middle",skyMiddle);
+                model.material->shader->set("sky.bottom",skyBottom);
                
                 for (int i = 0 ; i < n;i++){
                     model.material->shader->set("lights["+std::to_string(i)+"].type", float(lights[i]->lightType));
@@ -439,7 +464,9 @@ namespace our {
         // If there is a sky material, draw the sky
         if(this->skyMaterial){
             //DONE: (Req 9) setup the sky material
+            std::cout<<"LOL174\n";
             skyMaterial->setup();
+            std::cout<<"LOL178\n";
             //DONE: (Req 9) Get the camera position
             glm::mat4 M = camera->getOwner()->getLocalToWorldMatrix();
             
@@ -471,9 +498,37 @@ namespace our {
            
             
             //DONE: (Req 9) set the "transform" uniform
-            skyMaterial->shader->set("transform",    alwaysBehindTransform * VP  * model    );//* model);
+            //skyMaterial->shader->set("transform",    alwaysBehindTransform * VP  * model    );//* model);
+            M = model;
+            //glm::mat4 MVP = VP * M;
+            glm::mat4 M_IT = glm::transpose(glm::inverse(M));
+            skyMaterial->setup();
+            skyMaterial->shader->set("eye", cameraPos);
+            skyMaterial->shader->set("VP", alwaysBehindTransform * VP);
+            skyMaterial->shader->set("M", M);
+            skyMaterial->shader->set("M_IT", M_IT);
+            std::cout<<"LOL14\n";
+            int n = lights.size();
+            skyMaterial->shader->set("light_count", n);
+            std::cout<<"LOL16\n";
+            
+            skyMaterial->shader->set("sky.top",skyTop);
+            skyMaterial->shader->set("sky.middle",skyMiddle);
+            skyMaterial->shader->set("sky.bottom",skyBottom);
+            std::cout<<"LOL19\n";
+            for (int i = 0 ; i < n;i++){
+                skyMaterial->shader->set("lights["+std::to_string(i)+"].type", float(lights[i]->lightType));
+                skyMaterial->shader->set("lights["+std::to_string(i)+"].position", lights[i]->position);
+                skyMaterial->shader->set("lights["+std::to_string(i)+"].direction", lights[i]->direction);
+                skyMaterial->shader->set("lights["+std::to_string(i)+"].diffuse", lights[i]->diffuse);
+                skyMaterial->shader->set("lights["+std::to_string(i)+"].specular", lights[i]->specular);
+                skyMaterial->shader->set("lights["+std::to_string(i)+"].attenuation", lights[i]->attenuation);
+                skyMaterial->shader->set("lights["+std::to_string(i)+"].cone_angle", lights[i]->cone_angles);
+            }
+            std::cout<<"LOLLOL\n";
             //DONE: (Req 9) draw the sky sphere
             skySphere->draw();
+            std::cout<<"LOLLOL2\n";
         }
         //DONE: (Req 8) Draw all the transparent commands
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
