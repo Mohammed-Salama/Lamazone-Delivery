@@ -10,12 +10,14 @@ namespace our {
     // If any of the entities has children, this function will be called recursively for these children
     void World::deserialize(const nlohmann::json& data, Entity* parent){
         if(!data.is_array()) return;
-        std::set<std::string> dynamicObjects = {"box1","box2","box3","box4","battery","deliveryArrow","pickArrow"};
+        std::set<std::string> dynamicObjects = {"box1","box2","box3","box4","battery","deliveryArrow","pickArrow","intersectingCar","neighbourCar"};
         std::set<std::string> boxSet = {"box1","box2","box3","box4"};
         std::map<std::string,nlohmann::json> boxes;
         nlohmann::json deliveryArrow;
         nlohmann::json pickArrow;
         nlohmann::json battery;
+        nlohmann::json intersectingCar;
+        nlohmann::json neighbourCar;
         
         for(const auto& entityData : data){
 
@@ -32,7 +34,10 @@ namespace our {
                     deliveryArrow = tempEntityData;
                 else if(name=="pickArrow")
                     pickArrow = tempEntityData;
-
+                else if(name=="intersectingCar")
+                    intersectingCar = tempEntityData;
+                else if(name=="neighbourCar")
+                    neighbourCar = tempEntityData;
                 continue;
             }
 
@@ -45,10 +50,10 @@ namespace our {
         }
 
         //Assert that all needed components are stored.
-        if(boxes.size()==0 || deliveryArrow.size()==0 || pickArrow.size()==0 || battery.size()==0)
+        if(boxes.size()==0 || deliveryArrow.size()==0 || pickArrow.size()==0 || battery.size()==0 || intersectingCar.size()==0 || neighbourCar.size()==0)
             return;
 
-        // Generate the road objects:
+        // Generate the road objects (boxes,arrows,delivery zone):
         int numberOfmissions = 10;
         int intialPos = 300;
         int distanceIncrement = 200;
@@ -99,6 +104,41 @@ namespace our {
 
         
         }
+
+        // Intersecting cars generation:
+        intialPos = 300;
+        distanceIncrement = 300;
+        for(int i=0,pos=intialPos;i<numberOfmissions;i++,pos+=distanceIncrement){     
+
+                int randomX = minX + ( std::rand() % ( maxX - minX + 1 ) );
+                nlohmann::json entityData;
+                entityData = intersectingCar;
+               
+                entityData.at("position") = {randomX,0,-1*pos};
+                Entity* entity = add();
+                entity->parent = parent;
+                entity->deserialize(entityData);
+
+
+        }
+
+
+        intialPos = 600;
+        distanceIncrement = 1000;
+        for(int i=0,pos=intialPos;i<numberOfmissions;i++,pos+=distanceIncrement){     
+
+                int randomX = minX + ( std::rand() % ( maxX - minX + 1 ) );
+                nlohmann::json entityData;
+                entityData = neighbourCar;
+                entityData.at("position") = {randomX,0,-1*pos};
+                Entity* entity = add();
+                entity->parent = parent;
+                entity->deserialize(entityData);
+
+
+        }
+
+
 
 
     }

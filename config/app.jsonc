@@ -319,7 +319,7 @@
                             {
                                 "type": "Game Logic Controller",
                                 "maxEnergy": 150,
-                                "maxSpeed": 150,
+                                "maxSpeed": 50,
                                 "energyDecrementValue": 1,
                                 "pointsPerPackage": 25,
                                 "energyLostPerHit": 5,
@@ -425,6 +425,44 @@
                         "type": "Mesh Renderer",
                         "mesh": "arrow",
                         "material": "arrow"
+                    }
+                ]
+            }, 
+            {
+                "name":"intersectingCar",
+                "position": [0, -3, -7],
+                "rotation": [0, 90, 0],
+                "scale": [0.025, 0.025, 0.025],
+                "materialName":"car",
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "car",
+                        "material": "monkey"
+                    },
+                    {
+                        "type" : "Movement",
+                        "linearVelocity" : [10,0,0],
+                        "angularVelocity" :[0,0,0]
+                    }
+                ]
+            },
+            {
+                "name":"neighbourCar",
+                "position": [0, -3, -7],
+                "rotation": [0, 180, 0],
+                "scale": [0.025, 0.025, 0.025],
+                "materialName":"car",
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "car",
+                        "material": "monkey"
+                    },
+                    {
+                        "type" : "Movement",
+                        "linearVelocity" : [0,0,-5],
+                        "angularVelocity" :[0,0,0]
                     }
                 ]
             }
