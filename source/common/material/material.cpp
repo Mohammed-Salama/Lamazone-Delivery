@@ -119,7 +119,7 @@ namespace our {
         ambient_occlusion = AssetLoader<Texture2D>::get(data.value("ambient_occlusion", ""));
         light = AssetLoader<Sampler>::get(data.value("sampler", ""));
         albedo = AssetLoader<Texture2D>::get(data.value("albedo", ""));
-       // std::cout<<albedo<<"\n";
+       // //std::cout<<albedo<<"\n";
         specular = AssetLoader<Texture2D>::get(data.value("specular", ""));
         roughness = AssetLoader<Texture2D>::get(data.value("roughness", ""));
         specular = AssetLoader<Texture2D>::get(data.value("specular", ""));
@@ -140,7 +140,7 @@ namespace our {
     }
 
     std::string LitMaterial::getType () {
-        //std::cout<<shader->getProgram()<<"kkkkk\n";
+        ////std::cout<<shader->getProgram()<<"kkkkk\n";
         return "lighted";
     }
 }
