@@ -21,6 +21,17 @@ namespace our {
         return localWorldMat;
     }
 
+    glm::mat4 Entity::getLocalToWorldMatrixScaled(float value, float max) {
+        //DONE: (Req 7) Write this function
+        glm::mat4 localWorldMat = this->localTransform.toMat4Scaled(value,max);
+        Entity* p = this->parent;          
+        while(p){
+            localWorldMat = p->localTransform.toMat4() * localWorldMat;
+            p = p->parent;
+        }
+        return localWorldMat;
+    }
+
     // Deserializes the entity data and components from a json object
     void Entity::deserialize(const nlohmann::json& data){
         if(!data.is_object()) return;

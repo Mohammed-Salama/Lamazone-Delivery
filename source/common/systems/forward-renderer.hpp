@@ -21,6 +21,7 @@ namespace our
         glm::vec3 center;
         Mesh* mesh;
         Material* material;
+        bool twoD;
     };
 
     // A forward renderer is a renderer that draw the object final color directly to the framebuffer

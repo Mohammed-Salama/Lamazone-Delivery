@@ -81,6 +81,19 @@
                 }
             },
             "materials":{
+                "gray":{
+                    "type": "tinted",
+                    "shader": "tinted",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [0.45, 0.4, 0.5, 1]
+                },
                 "metal":{
                     "type": "textured",
                     "shader": "textured",
@@ -318,12 +331,30 @@
                             },
                             {
                                 "type": "Game Logic Controller",
-                                "maxEnergy": 150,
+                                "maxEnergy": 50,
                                 "maxSpeed": 150,
                                 "energyDecrementValue": 1,
                                 "pointsPerPackage": 25,
                                 "energyLostPerHit": 5,
                                 "cooldownTime": 5
+                            }
+                        ]
+                    },
+                    {
+                        "position": [-0.7, 0.8, -1],
+                        "rotation": [0, 0, 0],
+                        "scale": [1, 0.1, 0.01],
+                        "materialName":"energyBar",
+                        "components": [
+                            {
+                                // "type": "Bar Renderer",
+                                "type": "Mesh Renderer",
+                                // "x": 0.1,
+                                // "y": 0.1,
+                                // "maxWidth": 0.5,
+                                // "maxHeight": 0.2,
+                                "material": "gray",
+                                "mesh": "cube"
                             }
                         ]
                     }
