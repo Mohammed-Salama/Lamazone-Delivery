@@ -65,8 +65,8 @@ namespace our {
             std::string skyTextureFile = config.value<std::string>("sky-albedo", "");
             Texture2D* skyTexture = texture_utils::loadImage(skyTextureFile, false);
 
-            std::string ambientTextureFile = config.value<std::string>("sky-ambient_occlusion", "");
-            Texture2D* skyAmbTexture = texture_utils::loadImage(ambientTextureFile, false);
+            std::string emTextureFile = config.value<std::string>("emissive-tex", "");
+            Texture2D* skyEmTexture = texture_utils::loadImage(emTextureFile, false);
 
             // Setup a sampler for the sky 
             Sampler* skySampler = new Sampler();
@@ -74,14 +74,14 @@ namespace our {
             skySampler->set(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
             skySampler->set(GL_TEXTURE_WRAP_S, GL_REPEAT);
             skySampler->set(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            std::cout<<"LOL6\n";
+
             // Combine all the aforementioned objects (except the mesh) into a material. 
             this->skyMaterial = new LitMaterial();
             this->skyMaterial->shader = skyShader;
             this->skyMaterial->albedo = skyTexture;
-            std::cout<<"LOL7\n";
+
             this->skyMaterial->ambient_occlusion = skyTexture;
-            this->skyMaterial->emissive = skyAmbTexture;
+            this->skyMaterial->emissive = skyEmTexture;
             this->skyMaterial->roughness = skyTexture;
             this->skyMaterial->specular = skyTexture;
             this->skyMaterial->light = skySampler;
@@ -89,7 +89,6 @@ namespace our {
             this->skyMaterial->tint = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
             //this->skyMaterial->alphaThreshold = 1.0f;
             this->skyMaterial->transparent = false;
-            std::cout<<"LOL\n";
         }
 
 
@@ -100,8 +99,8 @@ namespace our {
             
             // We can draw the sky using the same shader used to draw textured objects
             ShaderProgram* cityShader = new ShaderProgram();
-            cityShader->attach("assets/shaders/textured.vert", GL_VERTEX_SHADER);
-            cityShader->attach("assets/shaders/textured.frag", GL_FRAGMENT_SHADER);
+            cityShader->attach("assets/shaders/lighted.vert", GL_VERTEX_SHADER);
+            cityShader->attach("assets/shaders/lighted.frag", GL_FRAGMENT_SHADER);
             cityShader->link();
             
             PipelineState cityPipelineState{};
@@ -119,6 +118,9 @@ namespace our {
             std::string wallTextureFile = config.value<std::string>("wall", "");
             Texture2D* wallTexture = texture_utils::loadImage(wallTextureFile, false);
 
+            std::string emTextureFile = config.value<std::string>("emissive-tex", "");
+            Texture2D* wallEmTexture = texture_utils::loadImage(emTextureFile, false);
+
             // Setup a sampler for the sky 
             Sampler* wallSampler = new Sampler();
             wallSampler->set(GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -127,13 +129,17 @@ namespace our {
             wallSampler->set(GL_TEXTURE_WRAP_T, GL_REPEAT);
 
             // Combine all the aforementioned objects (except the mesh) into a material. 
-            this->wallMaterial = new TexturedMaterial();
+            this->wallMaterial = new LitMaterial();
             this->wallMaterial->shader = cityShader;
-            this->wallMaterial->texture = wallTexture;
-            this->wallMaterial->sampler = wallSampler;
+            this->wallMaterial->albedo = wallTexture;
+            this->wallMaterial->specular = wallTexture;
+            this->wallMaterial->ambient_occlusion = wallTexture;
+            this->wallMaterial->roughness = wallTexture;
+            this->wallMaterial->emissive = wallEmTexture;
+            this->wallMaterial->light = wallSampler;
             this->wallMaterial->pipelineState = cityPipelineState;
             this->wallMaterial->tint = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-            this->wallMaterial->alphaThreshold = 1.0f;
+            //this->wallMaterial->alphaThreshold = 1.0f;
             this->wallMaterial->transparent = false;
 
 
@@ -152,13 +158,17 @@ namespace our {
             groundSampler->set(GL_TEXTURE_WRAP_T, GL_REPEAT);
 
             // Combine all the aforementioned objects (except the mesh) into a material. 
-            this->groundMaterial = new TexturedMaterial();
+            this->groundMaterial = new LitMaterial();
             this->groundMaterial->shader = cityShader;
-            this->groundMaterial->texture = groundTexture;
-            this->groundMaterial->sampler = groundSampler;
+            this->groundMaterial->albedo = groundTexture;
+            this->groundMaterial->specular = groundTexture;
+            this->groundMaterial->ambient_occlusion = groundTexture;
+            this->groundMaterial->roughness = groundTexture;
+            this->groundMaterial->emissive = wallEmTexture;
+            this->groundMaterial->light = groundSampler;
             this->groundMaterial->pipelineState = cityPipelineState;
             this->groundMaterial->tint = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-            this->groundMaterial->alphaThreshold = 1.0f;
+            //this->groundMaterial->alphaThreshold = 1.0f;
             this->groundMaterial->transparent = false;
         }
 
@@ -218,19 +228,19 @@ namespace our {
             // delete skyMaterial;
         }
         if(wallMaterial){
-            delete wallPlane;
-            delete wallMaterial->shader;
-            delete wallMaterial->texture;
-            delete wallMaterial->sampler;
-            delete wallMaterial;
+            // delete wallPlane;
+            // delete wallMaterial->shader;
+            // delete wallMaterial->texture;
+            // delete wallMaterial->sampler;
+            // delete wallMaterial;
         }
 
         if(groundMaterial){
-            delete groundMaterial;
-            delete groundMaterial->shader;
-            delete groundMaterial->texture;
-            delete groundMaterial->sampler;
-            delete groundMaterial;
+            // delete groundMaterial;
+            // delete groundMaterial->shader;
+            // delete groundMaterial->texture;
+            // delete groundMaterial->sampler;
+            // delete groundMaterial;
         }
         // Delete all objects related to post processing
         if(postprocessMaterial){
@@ -348,101 +358,291 @@ namespace our {
     
        if(this->wallMaterial && this->groundMaterial){
 
-        groundMaterial->setup();
-        glm::mat4 M = camera->getOwner()->getLocalToWorldMatrix();
-
-        int dist = 100;
-        
-        for(int i=0;i<300;i++){
-
-            // street model
-            glm::mat4 model = toMat4(glm::vec3(50,50,50),glm::vec3(glm::radians(90.0),0,0),glm::vec3(0,0,-1*i*dist));
-
-            glm::mat4 VP = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
-        
-            groundMaterial->shader->set("transform",  VP  * model );//* model);
-
-            wallPlane->draw();
-        }
-
- 
-        dist = 30;
-        for(int i=0;i<900;i++){
-
-             wallMaterial->setup();
-            if(i%10==0){
-
-            // model3 : intersection wall (right)
- 
-            glm::mat4 model3 = toMat4(glm::vec3(50,20,5),glm::vec3(0,glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(95,20,-1*(i*dist+15)));
-
-            glm::mat4 VP3 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
-        
-            wallMaterial->shader->set("transform",  VP3  * model3 );//* model);
-
-            wallPlane->draw();
-
-
-            // model4 : intersection wall (left)
-
-            glm::mat4 model4 = toMat4(glm::vec3(50,20,5),glm::vec3(0,glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(-95,20,-1*(i*dist+15)));
-
-            glm::mat4 VP4 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
-        
-            wallMaterial->shader->set("transform",  VP4  * model4 );//* model);
-
-            wallPlane->draw();
-
-
             groundMaterial->setup();
-            // model5 : intersection street (right)
+            glm::mat4 M = camera->getOwner()->getLocalToWorldMatrix();
 
-            glm::mat4 model5 = toMat4(glm::vec3(50,20,5),glm::vec3(glm::radians(-90.0),glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(100,0,-1*(i*dist)));
+            int dist = 100;
+            
+            for(int i=0;i<30;i++){
 
-            glm::mat4 VP5 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
-        
-            wallMaterial->shader->set("transform",  VP5  * model5 );//* model);
+                // street model
+                glm::mat4 model = toMat4(glm::vec3(50,50,50),glm::vec3(glm::radians(90.0),0,0),glm::vec3(0,0,-1*i*dist));
+                glm::mat4 MM = model;
+                glm::mat4 M_IT = glm::transpose(glm::inverse(MM));
+                glm::mat4 VP = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+            
+                //groundMaterial->shader->set("transform",  VP  * model );//* model);
+                groundMaterial->shader->set("eye", cameraPos);
+                groundMaterial->shader->set("VP", VP);
+                groundMaterial->shader->set("M", MM);
+                groundMaterial->shader->set("M_IT",M_IT);
 
-            wallPlane->draw();
+                int n = lights.size();
+                //std::cout<<n<<"\n";
+                groundMaterial->shader->set("light_count",n);
+                groundMaterial->shader->set("sky.top",skyTop);
+                groundMaterial->shader->set("sky.middle",skyMiddle);
+                groundMaterial->shader->set("sky.bottom",skyBottom);
+               
+                for (int i = 0 ; i < n;i++){
+                    groundMaterial->shader->set("lights["+std::to_string(i)+"].type", float(lights[i]->lightType));
+                    groundMaterial->shader->set("lights["+std::to_string(i)+"].position", lights[i]->position);
+                    groundMaterial->shader->set("lights["+std::to_string(i)+"].direction", lights[i]->direction);
+                    groundMaterial->shader->set("lights["+std::to_string(i)+"].diffuse", lights[i]->diffuse);
+                    groundMaterial->shader->set("lights["+std::to_string(i)+"].specular", lights[i]->specular);
+                    groundMaterial->shader->set("lights["+std::to_string(i)+"].attenuation", lights[i]->attenuation);
+                    groundMaterial->shader->set("lights["+std::to_string(i)+"].cone_angle", lights[i]->cone_angles);
+                }
 
-
-            // model6 : intersection street (left)
-
-            glm::mat4 model6 = toMat4(glm::vec3(50,20,5),glm::vec3(glm::radians(-90.0),glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(-100,0,-1*(i*dist)));
-
-            glm::mat4 VP6 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
-        
-            wallMaterial->shader->set("transform",  VP6  * model6 );//* model);
-
-            wallPlane->draw();
-
-
-
-                continue;
+                wallPlane->draw();
             }
 
+    
+            dist = 30;
+            for(int i=0;i<90;i++){
 
-            // street walls (right)
+                wallMaterial->setup();
+                if(i%10==0){
 
-            glm::mat4 model = toMat4(glm::vec3(15,20,5),glm::vec3(0,glm::radians(-90.0),glm::radians(-180.0)),glm::vec3(45,20,-1*i*dist));
+                // model3 : intersection wall (right)
+    
+                glm::mat4 model3 = toMat4(glm::vec3(50,20,5),glm::vec3(0,glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(95,20,-1*(i*dist+15)));
 
-            glm::mat4 VP = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
-        
-            wallMaterial->shader->set("transform",  VP  * model );//* model);
+                glm::mat4 VP3 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+            
+                //wallMaterial->shader->set("transform",  VP3  * model3 );//* model);
 
-            wallPlane->draw();
 
-             // street walls (left)
+           
+                glm::mat4 MM = model3;
+                glm::mat4 M_IT = glm::transpose(glm::inverse(MM));
+              
+            
+                //groundMaterial->shader->set("transform",  VP  * model );//* model);
+                wallMaterial->shader->set("eye", cameraPos);
+                wallMaterial->shader->set("VP", VP3);
+                wallMaterial->shader->set("M", MM);
+                wallMaterial->shader->set("M_IT",M_IT);
 
-            glm::mat4 model2 = toMat4(glm::vec3(15,20,5),glm::vec3(0,glm::radians(-90.0),glm::radians(-180.0)),glm::vec3(-45,20,-1*i*dist));
+                int n = lights.size();
+                //std::cout<<n<<"\n";
+                wallMaterial->shader->set("light_count",n);
+                wallMaterial->shader->set("sky.top",skyTop);
+                wallMaterial->shader->set("sky.middle",skyMiddle);
+                wallMaterial->shader->set("sky.bottom",skyBottom);
+               
+                for (int i = 0 ; i < n;i++){
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].type", float(lights[i]->lightType));
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].position", lights[i]->position);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].direction", lights[i]->direction);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].diffuse", lights[i]->diffuse);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].specular", lights[i]->specular);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].attenuation", lights[i]->attenuation);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].cone_angle", lights[i]->cone_angles);
+                }
 
-            glm::mat4 VP2 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
-        
-            wallMaterial->shader->set("transform",  VP2  * model2 );//* model);
 
-            wallPlane->draw();
+                wallPlane->draw();
 
-        }
+
+                // model4 : intersection wall (left)
+
+                glm::mat4 model4 = toMat4(glm::vec3(50,20,5),glm::vec3(0,glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(-95,20,-1*(i*dist+15)));
+
+                glm::mat4 VP4 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+            
+                //wallMaterial->shader->set("transform",  VP4  * model4 );//* model);
+
+                MM = model4;
+                M_IT = glm::transpose(glm::inverse(MM));
+              
+            
+                //groundMaterial->shader->set("transform",  VP  * model );//* model);
+                groundMaterial->shader->set("eye", cameraPos);
+                groundMaterial->shader->set("VP", VP4);
+                groundMaterial->shader->set("M", MM);
+                groundMaterial->shader->set("M_IT",M_IT);
+
+                n = lights.size();
+                //std::cout<<n<<"\n";
+                groundMaterial->shader->set("light_count",n);
+                groundMaterial->shader->set("sky.top",skyTop);
+                groundMaterial->shader->set("sky.middle",skyMiddle);
+                groundMaterial->shader->set("sky.bottom",skyBottom);
+               
+                for (int i = 0 ; i < n;i++){
+                    groundMaterial->shader->set("lights["+std::to_string(i)+"].type", float(lights[i]->lightType));
+                    groundMaterial->shader->set("lights["+std::to_string(i)+"].position", lights[i]->position);
+                    groundMaterial->shader->set("lights["+std::to_string(i)+"].direction", lights[i]->direction);
+                    groundMaterial->shader->set("lights["+std::to_string(i)+"].diffuse", lights[i]->diffuse);
+                    groundMaterial->shader->set("lights["+std::to_string(i)+"].specular", lights[i]->specular);
+                    groundMaterial->shader->set("lights["+std::to_string(i)+"].attenuation", lights[i]->attenuation);
+                    groundMaterial->shader->set("lights["+std::to_string(i)+"].cone_angle", lights[i]->cone_angles);
+                }
+
+
+                wallPlane->draw();
+
+
+                groundMaterial->setup();
+                // model5 : intersection street (right)
+
+                glm::mat4 model5 = toMat4(glm::vec3(50,20,5),glm::vec3(glm::radians(-90.0),glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(100,0,-1*(i*dist)));
+
+                glm::mat4 VP5 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+            
+                //wallMaterial->shader->set("transform",  VP5  * model5 );//* model);
+
+                MM = model5;
+                M_IT = glm::transpose(glm::inverse(MM));
+              
+            
+                
+                wallMaterial->shader->set("eye", cameraPos);
+                wallMaterial->shader->set("VP", VP5);
+                wallMaterial->shader->set("M", MM);
+                wallMaterial->shader->set("M_IT",M_IT);
+
+                n = lights.size();
+                //std::cout<<n<<"\n";
+                wallMaterial->shader->set("light_count",n);
+                wallMaterial->shader->set("sky.top",skyTop);
+                wallMaterial->shader->set("sky.middle",skyMiddle);
+                wallMaterial->shader->set("sky.bottom",skyBottom);
+               
+                for (int i = 0 ; i < n;i++){
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].type", float(lights[i]->lightType));
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].position", lights[i]->position);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].direction", lights[i]->direction);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].diffuse", lights[i]->diffuse);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].specular", lights[i]->specular);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].attenuation", lights[i]->attenuation);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].cone_angle", lights[i]->cone_angles);
+                }
+                
+
+                wallPlane->draw();
+
+
+                // model6 : intersection street (left)
+
+                glm::mat4 model6 = toMat4(glm::vec3(50,20,5),glm::vec3(glm::radians(-90.0),glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(-100,0,-1*(i*dist)));
+
+                glm::mat4 VP6 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+            
+                //wallMaterial->shader->set("transform",  VP6  * model6 );//* model);
+
+
+                MM = model6;
+                M_IT = glm::transpose(glm::inverse(MM));
+              
+            
+                
+                wallMaterial->shader->set("eye", cameraPos);
+                wallMaterial->shader->set("VP", VP6);
+                wallMaterial->shader->set("M", MM);
+                wallMaterial->shader->set("M_IT",M_IT);
+
+                n = lights.size();
+                //std::cout<<n<<"\n";
+                wallMaterial->shader->set("light_count",n);
+                wallMaterial->shader->set("sky.top",skyTop);
+                wallMaterial->shader->set("sky.middle",skyMiddle);
+                wallMaterial->shader->set("sky.bottom",skyBottom);
+               
+                for (int i = 0 ; i < n;i++){
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].type", float(lights[i]->lightType));
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].position", lights[i]->position);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].direction", lights[i]->direction);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].diffuse", lights[i]->diffuse);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].specular", lights[i]->specular);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].attenuation", lights[i]->attenuation);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].cone_angle", lights[i]->cone_angles);
+                }
+
+                wallPlane->draw();
+
+
+
+                    continue;
+                }
+
+
+                // street walls (right)
+
+                glm::mat4 model = toMat4(glm::vec3(15,20,5),glm::vec3(0,glm::radians(-90.0),glm::radians(-180.0)),glm::vec3(45,20,-1*i*dist));
+
+                glm::mat4 VP = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+            
+                //wallMaterial->shader->set("transform",  VP  * model );//* model);
+
+                glm::mat4 MM = model;
+                glm::mat4 M_IT = glm::transpose(glm::inverse(MM));
+              
+            
+                
+                wallMaterial->shader->set("eye", cameraPos);
+                wallMaterial->shader->set("VP", VP);
+                wallMaterial->shader->set("M", MM);
+                wallMaterial->shader->set("M_IT",M_IT);
+
+                int n = lights.size();
+                //std::cout<<n<<"\n";
+                wallMaterial->shader->set("light_count",n);
+                wallMaterial->shader->set("sky.top",skyTop);
+                wallMaterial->shader->set("sky.middle",skyMiddle);
+                wallMaterial->shader->set("sky.bottom",skyBottom);
+               
+                for (int i = 0 ; i < n;i++){
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].type", float(lights[i]->lightType));
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].position", lights[i]->position);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].direction", lights[i]->direction);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].diffuse", lights[i]->diffuse);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].specular", lights[i]->specular);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].attenuation", lights[i]->attenuation);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].cone_angle", lights[i]->cone_angles);
+                }
+
+                wallPlane->draw();
+
+                // street walls (left)
+
+                glm::mat4 model2 = toMat4(glm::vec3(15,20,5),glm::vec3(0,glm::radians(-90.0),glm::radians(-180.0)),glm::vec3(-45,20,-1*i*dist));
+
+                glm::mat4 VP2 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
+            
+                //wallMaterial->shader->set("transform",  VP2  * model2 );//* model);
+                
+                MM = model2;
+                M_IT = glm::transpose(glm::inverse(MM));
+              
+            
+                
+                wallMaterial->shader->set("eye", cameraPos);
+                wallMaterial->shader->set("VP", VP2);
+                wallMaterial->shader->set("M", MM);
+                wallMaterial->shader->set("M_IT",M_IT);
+
+                n = lights.size();
+                //std::cout<<n<<"\n";
+                wallMaterial->shader->set("light_count",n);
+                wallMaterial->shader->set("sky.top",skyTop);
+                wallMaterial->shader->set("sky.middle",skyMiddle);
+                wallMaterial->shader->set("sky.bottom",skyBottom);
+               
+                for (int i = 0 ; i < n;i++){
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].type", float(lights[i]->lightType));
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].position", lights[i]->position);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].direction", lights[i]->direction);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].diffuse", lights[i]->diffuse);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].specular", lights[i]->specular);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].attenuation", lights[i]->attenuation);
+                    wallMaterial->shader->set("lights["+std::to_string(i)+"].cone_angle", lights[i]->cone_angles);
+                }
+
+                wallPlane->draw();
+
+            }
         
        
        }

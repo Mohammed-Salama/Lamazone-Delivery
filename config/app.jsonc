@@ -11,14 +11,11 @@
     },
     "play-scene": {
         "renderer":{
-            "skyTop" : [0,0,0],
-            "skyMiddle" :[0,0,0],
-            "skyBottom" : [0,0,0],
+            "skyTop" : [0.1,0.1,0.1],
+            "skyMiddle" :[1,1,1],
+            "skyBottom" : [1,1,1],
             "sky-albedo": "assets/textures/sky.jpg",
-            "sky-specular": "assets/textures/sky.jpg",
-            "sky-ambient_occlusion": "assets/textures/sky-ambient.jpg",
-            "sky-roughness": "assets/textures/roughness.jpg",
-            "sky-emissive": "assets/textures/roughness.jpg",
+            "emissive-tex": "assets/textures/emissive-tex.jpg",
             "postprocess": "assets/shaders/postprocess/vignette.frag",
             "wall" : "assets/textures/redBuilding.jpg",
             "wall-mesh" : "assets/models/plane.obj",
@@ -54,7 +51,7 @@
 
                 "monkey-albedo": "assets/textures/albedo.jpg",
                 "monkey-specular": "assets/textures/specular.jpg",
-                "monkey-ambient_occlusion": "assets/textures/ambient_occlusion.jpg",
+                "monkey-ambient_occlusion": "assets/textures/specular.jpg",
                 "monkey-roughness": "assets/textures/roughness.jpg",
                 "monkey-emissive": "assets/textures/emissive.jpg",
                 "metallic" : "assets/textures/metallic.jpg",
@@ -274,51 +271,67 @@
             }
         },
         "world":[
+            // {
+            //     "name":"back light",
+            //     "position":[0,0,0],
+            //     "components":[
+            //         {
+            //             "type":"Light",
+            //             "lightType": "DIRECTIONAL",
+            //             "diffuse": [1,1,1],
+            //             "specular":[1,1,1],
+            //             "attenuation" :[0,0,0],
+            //             "cone_angles":[0,0],
+            //             "position" : [0,5,2],
+            //             "direction" : [0,0,-1]
+            //         }
+            //     ]
+            // },
+            // {
+            //     "name":"right light",
+            //     "position":[0,0,0],
+            //     "components":[
+            //         {
+            //             "type":"Light",
+            //             "lightType": "DIRECTIONAL",
+            //             "diffuse": [1, 1 , 1],
+            //             "specular": [1,1,1],
+            //             "attenuation" :[0,0,0],
+            //             "cone_angles":[0,0],
+            //             "position" : [2,5,0],
+            //             "direction" : [-1,0,0]
+            //         }
+            //     ]
+            // },
+            // {
+            //     "name":"left light",
+            //     "position":[0,0,0],
+            //     "components":[
+            //         {
+            //             "type":"Light",
+            //             "lightType": "DIRECTIONAL",
+            //             "diffuse": [1, 1 , 1],
+            //             "specular": [1,1,1],
+            //             "attenuation" :[0,0,0],
+            //             "cone_angles":[0,0],
+            //             "position" : [-2,5,0],
+            //             "direction" : [1,0,0]
+            //         }
+            //     ]
+            // },
             {
-                "name":"back light",
+                "name":"up light",
                 "position":[0,0,0],
                 "components":[
                     {
                         "type":"Light",
                         "lightType": "DIRECTIONAL",
-                        "diffuse": [1,1,1],
-                        "specular":[1,1,1],
+                        "diffuse": [0.4, 0.4 , 0.4],
+                        "specular": [0.4, 0.4 , 0.4],
                         "attenuation" :[0,0,0],
                         "cone_angles":[0,0],
-                        "position" : [0,5,2],
-                        "direction" : [0,0,-1]
-                    }
-                ]
-            },
-            {
-                "name":"right light",
-                "position":[0,0,0],
-                "components":[
-                    {
-                        "type":"Light",
-                        "lightType": "DIRECTIONAL",
-                        "diffuse": [1, 1 , 1],
-                        "specular": [1,1,1],
-                        "attenuation" :[0,0,0],
-                        "cone_angles":[0,0],
-                        "position" : [2,5,0],
-                        "direction" : [-1,0,0]
-                    }
-                ]
-            },
-            {
-                "name":"left light",
-                "position":[0,0,0],
-                "components":[
-                    {
-                        "type":"Light",
-                        "lightType": "DIRECTIONAL",
-                        "diffuse": [1, 1 , 1],
-                        "specular": [1,1,1],
-                        "attenuation" :[0,0,0],
-                        "cone_angles":[0,0],
-                        "position" : [-2,5,0],
-                        "direction" : [1,0,0]
+                        "position" : [0,10,0],
+                        "direction" : [0,-1,0]
                     }
                 ]
             },
