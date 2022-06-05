@@ -11,9 +11,9 @@
     },
     "play-scene": {
         "renderer":{
-            "skyTop" : [0.1,0.1,0.1],
-            "skyMiddle" :[1,1,1],
-            "skyBottom" : [1,1,1],
+            "skyTop" : [0.3,0.3,0.3],
+            "skyMiddle" :[0.3,0.3,0.3],
+            "skyBottom" : [0.3,0.3,0.3],
             "sky-albedo": "assets/textures/sky.jpg",
             "emissive-tex": "assets/textures/emissive-tex.jpg",
             "postprocess": "assets/shaders/postprocess/vignette.frag",
@@ -303,38 +303,38 @@
             //         }
             //     ]
             // },
-            // {
-            //     "name":"right light",
-            //     "position":[0,0,0],
-            //     "components":[
-            //         {
-            //             "type":"Light",
-            //             "lightType": "DIRECTIONAL",
-            //             "diffuse": [1, 1 , 1],
-            //             "specular": [1,1,1],
-            //             "attenuation" :[0,0,0],
-            //             "cone_angles":[0,0],
-            //             "position" : [2,5,0],
-            //             "direction" : [-1,0,0]
-            //         }
-            //     ]
-            // },
-            // {
-            //     "name":"left light",
-            //     "position":[0,0,0],
-            //     "components":[
-            //         {
-            //             "type":"Light",
-            //             "lightType": "DIRECTIONAL",
-            //             "diffuse": [1, 1 , 1],
-            //             "specular": [1,1,1],
-            //             "attenuation" :[0,0,0],
-            //             "cone_angles":[0,0],
-            //             "position" : [-2,5,0],
-            //             "direction" : [1,0,0]
-            //         }
-            //     ]
-            // },
+            {
+                "name":"right light",
+                "position":[0,0,0],
+                "components":[
+                    {
+                        "type":"Light",
+                        "lightType": "DIRECTIONAL",
+                        "diffuse": [1, 0,0],
+                        "specular": [1, 0,0],
+                        "attenuation" :[0,0,0],
+                        "cone_angles":[0,0],
+                        "position" : [2,5,0],
+                        "direction" : [-1,0,0]
+                    }
+                ]
+            },
+            {
+                "name":"left light",
+                "position":[0,0,0],
+                "components":[
+                    {
+                        "type":"Light",
+                        "lightType": "DIRECTIONAL",
+                        "diffuse": [0,0, 1],
+                        "specular": [0,0,1],
+                        "attenuation" :[0,0,0],
+                        "cone_angles":[0,0],
+                        "position" : [-2,5,0],
+                        "direction" : [1,0,0]
+                    }
+                ]
+            },
             {
                 "name":"up light",
                 "position":[0,0,0],
@@ -342,8 +342,8 @@
                     {
                         "type":"Light",
                         "lightType": "DIRECTIONAL",
-                        "diffuse": [0.4, 0.4 , 0.4],
-                        "specular": [0.4, 0.4 , 0.4],
+                        "diffuse": [0,0.5,0.5],
+                        "specular": [0,0.5,0.5],
                         "attenuation" :[0,0,0],
                         "cone_angles":[0,0],
                         "position" : [0,10,0],
