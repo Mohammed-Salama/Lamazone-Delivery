@@ -18,7 +18,7 @@ class GameoverState: public our::State {
 
         // First of all, we get the scene configuration from the app config
         auto& config = getApp()->getConfig()["gameover-scene"];
-       //std::cout<<" i am loser";
+    //    std::cout<<" i am loser";
         // If we have assets in the scene config, we deserialize them
         if(config.contains("assets")){
             our::deserializeAllAssets(config["assets"]);

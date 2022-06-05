@@ -230,7 +230,7 @@ namespace our
                                 totalScore += int(pointsPerPackage/5);
                                 if(energy > game->maxEnergy) energy = game->maxEnergy;
                                 //std::cout<<"Energy Boosted by "<<energyBoost<<std::endl;
-                                //std::cout<<"Current Score="<<totalScore<<" deliveryInProgress ="<<deliveryInProgress<<std::endl;
+                                // std::cout<<"Current Score="<<totalScore<<" deliveryInProgress ="<<deliveryInProgress<<std::endl;
                             }   // remove all enities before car
                             else  if(detected->localTransform.position.z >entity->localTransform.position.z)
                             {
@@ -242,7 +242,7 @@ namespace our
                     {
                         if(collision_detection(entity, player, detected))
                         {
-                            //std::cout<<"Package Picked Up!!"<<std::endl;  
+                            std::cout<<"Package Picked Up!!"<<std::endl;  
                             world->markForRemoval(detected);
                             deliveryInProgress = true;
                             //std::cout<<"Current Score="<<totalScore<<" deliveryInProgress ="<<deliveryInProgress<<std::endl;
@@ -255,12 +255,12 @@ namespace our
                     // detect collision with dileveryzone
                     else if(deliveryInProgress && detected->materialName=="deliveryZone")
                     {
-                        if(collision_detection(entity, player, detected,true,true))
+                        if(collision_detection(entity, player, detected))
                         {
-                            //std::cout<<"Package Delivered!!!!"<<std::endl;
+                            std::cout<<"Package Delivered!!!!"<<std::endl;
                             deliveryInProgress = false;
                             totalScore += pointsPerPackage;
-                            //std::cout<<"Current Score="<<totalScore<<" deliveryInProgress ="<<deliveryInProgress<<std::endl;
+                            std::cout<<"Current Score="<<totalScore<<" deliveryInProgress ="<<deliveryInProgress<<std::endl;
                         }   // remove all enities before car
                         else  if(detected->localTransform.position.z >entity->localTransform.position.z)
                         {

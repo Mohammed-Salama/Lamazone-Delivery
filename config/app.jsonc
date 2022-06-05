@@ -364,7 +364,7 @@
                                 "maxSpeed": 50,
                                 "energyDecrementValue": 1,
                                 "pointsPerPackage": 25,
-                                "energyLostPerHit": 5,
+                                "energyLostPerHit": 15,
                                 "cooldownTime": 5
                             }
                         ]
@@ -465,6 +465,7 @@
                 "position": [0, 5, 0],
                 "rotation": [0, -180, -90],
                 "scale": [30, 30, 30],
+                "materialName": "pickArrow",
                 "components": [
                     {
                         "type": "Mesh Renderer",
