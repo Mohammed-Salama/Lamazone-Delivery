@@ -370,7 +370,7 @@
                         ]
                     },
                     {
-                        "position": [-0.7, 0.8, -1],
+                        "position": [-0.75, 0.8, -1],
                         "rotation": [0, 0, 0],
                         "scale": [1, 0.1, 0.01],
                         "materialName":"energyBar",
