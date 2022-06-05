@@ -358,56 +358,6 @@ namespace our {
     
        if(this->wallMaterial && this->groundMaterial){
 
-<<<<<<< HEAD
-        groundMaterial->setup();
-        glm::mat4 M = camera->getOwner()->getLocalToWorldMatrix();
-
-        int dist = 100;
-        
-        int start = 0;
-        for(int i=start;i<start+30;i++){
-
-            // street model
-            glm::mat4 model = toMat4(glm::vec3(50,50,50),glm::vec3(glm::radians(90.0),0,0),glm::vec3(0,0,-1*i*dist));
-
-            glm::mat4 VP = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
-        
-            groundMaterial->shader->set("transform",  VP  * model );//* model);
-
-            wallPlane->draw();
-        }
-
- 
-        dist = 30;
-        for(int i=0;i<900;i++){
-
-            wallMaterial->setup();
-            if(i%10==0){
-
-            // model3 : intersection wall (right)
- 
-            glm::mat4 model3 = toMat4(glm::vec3(50,20,5),glm::vec3(0,glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(95,20,-1*(i*dist+15)));
-
-            glm::mat4 VP3 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
-        
-            wallMaterial->shader->set("transform",  VP3  * model3 );//* model);
-
-            wallPlane->draw();
-
-
-            // model4 : intersection wall (left)
-
-            glm::mat4 model4 = toMat4(glm::vec3(50,20,5),glm::vec3(0,glm::radians(-180.0),glm::radians(-180.0)),glm::vec3(-95,20,-1*(i*dist+15)));
-
-            glm::mat4 VP4 = camera->getProjectionMatrix(this->windowSize) * camera->getViewMatrix();
-        
-            wallMaterial->shader->set("transform",  VP4  * model4 );//* model);
-
-            wallPlane->draw();
-
-
-=======
->>>>>>> d167ad87bd6205e673e8830dcf2adec115e26654
             groundMaterial->setup();
             glm::mat4 M = camera->getOwner()->getLocalToWorldMatrix();
 
@@ -741,7 +691,9 @@ namespace our {
         // If there is a sky material, draw the sky
         if(this->skyMaterial){
             //DONE: (Req 9) setup the sky material
+            std::cout<<"LOL174\n";
             skyMaterial->setup();
+            std::cout<<"LOL178\n";
             //DONE: (Req 9) Get the camera position
             glm::mat4 M = camera->getOwner()->getLocalToWorldMatrix();
             
@@ -782,15 +734,15 @@ namespace our {
             skyMaterial->shader->set("VP", alwaysBehindTransform * VP);
             skyMaterial->shader->set("M", M);
             skyMaterial->shader->set("M_IT", M_IT);
-
+            std::cout<<"LOL14\n";
             int n = lights.size();
             skyMaterial->shader->set("light_count", n);
-
+            std::cout<<"LOL16\n";
             
             skyMaterial->shader->set("sky.top",skyTop);
             skyMaterial->shader->set("sky.middle",skyMiddle);
             skyMaterial->shader->set("sky.bottom",skyBottom);
-
+            std::cout<<"LOL19\n";
             for (int i = 0 ; i < n;i++){
                 skyMaterial->shader->set("lights["+std::to_string(i)+"].type", float(lights[i]->lightType));
                 skyMaterial->shader->set("lights["+std::to_string(i)+"].position", lights[i]->position);
@@ -800,8 +752,10 @@ namespace our {
                 skyMaterial->shader->set("lights["+std::to_string(i)+"].attenuation", lights[i]->attenuation);
                 skyMaterial->shader->set("lights["+std::to_string(i)+"].cone_angle", lights[i]->cone_angles);
             }
+            std::cout<<"LOLLOL\n";
             //DONE: (Req 9) draw the sky sphere
             skySphere->draw();
+            std::cout<<"LOLLOL2\n";
         }
         //DONE: (Req 8) Draw all the transparent commands
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
