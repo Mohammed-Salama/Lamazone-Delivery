@@ -11,9 +11,9 @@
     },
     "play-scene": {
         "renderer":{
-            "skyTop" : [1,1,1],
-            "skyMiddle" :[1,1,1],
-            "skyBottom" : [1,1,1],
+            "skyTop" : [0,0,0],
+            "skyMiddle" :[0,0,0],
+            "skyBottom" : [0,0,0],
             "sky-albedo": "assets/textures/sky.jpg",
             "sky-specular": "assets/textures/sky.jpg",
             "sky-ambient_occlusion": "assets/textures/sky-ambient.jpg",
@@ -262,34 +262,50 @@
         },
         "world":[
             {
-                "name":"first light",
+                "name":"back light",
                 "position":[0,0,0],
                 "components":[
                     {
                         "type":"Light",
                         "lightType": "DIRECTIONAL",
-                        "diffuse": [0.2, 0.2 , 0.2],
-                        "specular": [0.2,0.2,0.2],
+                        "diffuse": [1,1,1],
+                        "specular":[1,1,1],
                         "attenuation" :[0,0,0],
                         "cone_angles":[0,0],
-                        "position" : [0,2,0],
-                        "direction" : [0,-1,0]
+                        "position" : [0,5,2],
+                        "direction" : [0,0,-1]
                     }
                 ]
             },
             {
-                "name":"second light",
+                "name":"right light",
                 "position":[0,0,0],
                 "components":[
                     {
                         "type":"Light",
                         "lightType": "DIRECTIONAL",
-                        "diffuse": [0.2, 0.2 , 0.2],
-                        "specular": [0.2,0.2,0.2],
+                        "diffuse": [1, 1 , 1],
+                        "specular": [1,1,1],
                         "attenuation" :[0,0,0],
                         "cone_angles":[0,0],
-                        "position" : [2,0,0],
+                        "position" : [2,5,0],
                         "direction" : [-1,0,0]
+                    }
+                ]
+            },
+            {
+                "name":"left light",
+                "position":[0,0,0],
+                "components":[
+                    {
+                        "type":"Light",
+                        "lightType": "DIRECTIONAL",
+                        "diffuse": [1, 1 , 1],
+                        "specular": [1,1,1],
+                        "attenuation" :[0,0,0],
+                        "cone_angles":[0,0],
+                        "position" : [-2,5,0],
+                        "direction" : [1,0,0]
                     }
                 ]
             },
@@ -456,6 +472,7 @@
             }
         },
         "world":[
+            
             {
                 "position": [0, 0, 10],
                 "components": [
