@@ -20,8 +20,7 @@ This car game which is reponsible for take packages and delivers them to custome
 - Cmake
 # How to use the project
 To run the project locally on your pc:
-- Start Apache from XAMPP
-- Clone this repositry in any folder and go inside the ```SE-Project-CMP-Back-end\Backend``` folder
+- Clone this repositry in any folder and go inside the ```CmpGL``` folder
 ```
 git clone https://github.com/Mohammed-Salama/CmpGL.git
 ```
