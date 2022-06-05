@@ -70,30 +70,40 @@ namespace our {
      void LitMaterial::setup() const {
         TintedMaterial::setup();
 
-        glActiveTexture(GL_TEXTURE0);
-        albedo->bind();
-        light->bind(0);
-        shader->set("material.albedo",0);
+        if (albedo){
+            glActiveTexture(GL_TEXTURE0);
+            albedo->bind();
+            light->bind(0);
+            shader->set("material.albedo",0);
+        }
         
-        glActiveTexture(GL_TEXTURE1);
-        specular->bind();
-        light->bind(1);
-        shader->set("material.specular",1);
+        if (specular){
+            glActiveTexture(GL_TEXTURE1);
+            specular->bind();
+            light->bind(1);
+            shader->set("material.specular",1);
+        }
         
-        glActiveTexture(GL_TEXTURE2);
-        ambient_occlusion->bind();
-        light->bind(2);
-        shader->set("material.ambient_occlusion",2);
-      
-        glActiveTexture(GL_TEXTURE3);
-        roughness->bind();
-        light->bind(3);
-        shader->set("material.roughness",3);
+        if (ambient_occlusion){
+            glActiveTexture(GL_TEXTURE2);
+            ambient_occlusion->bind();
+            light->bind(2);
+            shader->set("material.ambient_occlusion",2);
+        }
 
-        glActiveTexture(GL_TEXTURE4);
-        emissive->bind();
-        light->bind(4);
-        shader->set("material.emissive",4);
+        if (roughness){
+            glActiveTexture(GL_TEXTURE3);
+            roughness->bind();
+            light->bind(3);
+            shader->set("material.roughness",3);
+        }
+
+        if (emissive){
+            glActiveTexture(GL_TEXTURE4);
+            emissive->bind();
+            light->bind(4);
+            shader->set("material.emissive",4);
+        }
       
         glActiveTexture(GL_TEXTURE0);
 

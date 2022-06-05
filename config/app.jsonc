@@ -11,10 +11,14 @@
     },
     "play-scene": {
         "renderer":{
-            "skyTop" : [1,0,0],
-            "skyMiddle" : [1,0,0],
-            "skyBottom" : [1,0,0],
-            "sky": "assets/textures/sky.jpg",
+            "skyTop" : [1,1,1],
+            "skyMiddle" :[1,1,1],
+            "skyBottom" : [1,1,1],
+            "sky-albedo": "assets/textures/sky.jpg",
+            "sky-specular": "assets/textures/sky.jpg",
+            "sky-ambient_occlusion": "assets/textures/sky-ambient.jpg",
+            "sky-roughness": "assets/textures/roughness.jpg",
+            "sky-emissive": "assets/textures/roughness.jpg",
             "postprocess": "assets/shaders/postprocess/vignette.frag",
             "wall" : "assets/textures/redBuilding.jpg",
             "wall-mesh" : "assets/models/plane.obj",
@@ -281,12 +285,28 @@
                     {
                         "type":"Light",
                         "lightType": "DIRECTIONAL",
-                        "diffuse": [1, 1 , 1],
-                        "specular": [1,1,1],
+                        "diffuse": [0.2, 0.2 , 0.2],
+                        "specular": [0.2,0.2,0.2],
                         "attenuation" :[0,0,0],
                         "cone_angles":[0,0],
                         "position" : [0,2,0],
                         "direction" : [0,-1,0]
+                    }
+                ]
+            },
+            {
+                "name":"second light",
+                "position":[0,0,0],
+                "components":[
+                    {
+                        "type":"Light",
+                        "lightType": "DIRECTIONAL",
+                        "diffuse": [0.2, 0.2 , 0.2],
+                        "specular": [0.2,0.2,0.2],
+                        "attenuation" :[0,0,0],
+                        "cone_angles":[0,0],
+                        "position" : [2,0,0],
+                        "direction" : [-1,0,0]
                     }
                 ]
             },

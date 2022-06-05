@@ -36,7 +36,7 @@ namespace our
         std::vector<RenderCommand> transparentCommands;
         // Objects used for rendering a skybox
         Mesh* skySphere;
-        TexturedMaterial* skyMaterial;
+        LitMaterial* skyMaterial;
         //Objects used for rendiering a city
         Mesh* wallPlane;
         TexturedMaterial* wallMaterial;
