@@ -9,6 +9,9 @@
 #include "states/main-menu.hpp"
 #include "states/intro-state.hpp"
 #include "states/gameover-state.hpp"
+
+#include <windows.h>
+#pragma comment(lib, "Winmm.lib")
 int main(int argc, char** argv) {
     flags::args args(argc, argv); // Parse the command line arguments
     // config_path is the path to the json file containing the application configuration
@@ -32,6 +35,8 @@ int main(int argc, char** argv) {
     // Create the application
     our::Application app(app_config);
     
+    mciSendString("open \"music.mp3\" type mpegvideo alias mp3", NULL, 0, NULL);
+    mciSendString("play mp3 repeat", NULL, 0, NULL);
     // Register all the states of the project in the application
     app.registerState<IntroState>("intro-scene");
     app.registerState<Playstate>("play-scene");
