@@ -15,6 +15,8 @@
 //#include <bits/stdc++.h>
 #include <chrono>
 #include <ctime>
+#include <windows.h>
+#pragma comment(lib, "Winmm.lib")
 
 namespace our
 {
@@ -47,8 +49,15 @@ namespace our
             Mesh *meshy;
             meshx = player->getComponent<MeshRendererComponent>()->mesh;
             meshy = detected->getComponent<MeshRendererComponent>()->mesh;
-            double scale1 = std::max({player->localTransform.scale.x, player->localTransform.scale.y, player->localTransform.scale.z});
-            double scale2 = std::max({detected->localTransform.scale.x, detected->localTransform.scale.y, detected->localTransform.scale.z});
+
+            double scale1 = player->localTransform.scale.x> player->localTransform.scale.y? player->localTransform.scale.x:player->localTransform.scale.y;
+            scale1= scale1> player->localTransform.scale.z? scale1 : player->localTransform.scale.z;
+            //std::max({player->localTransform.scale.x, player->localTransform.scale.y, player->localTransform.scale.z});
+            double scale2 =detected->localTransform.scale.x> detected->localTransform.scale.y?detected->localTransform.scale.x:detected->localTransform.scale.y;
+            scale2= scale2> detected->localTransform.scale.z?scale2:detected->localTransform.scale.z;
+           // scale2= std::max(scale2,detected->localTransform.scale.z);
+
+            // std::max({detected->localTransform.scale.x, detected->localTransform.scale.y, detected->localTransform.scale.z});
             if(ignoreScale)
             {
                 radiusx = meshx->raduis;
