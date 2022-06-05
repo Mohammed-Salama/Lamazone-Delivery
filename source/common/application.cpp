@@ -1,6 +1,7 @@
 #include "application.hpp"
 #include "../states/play-state.hpp"
 #include "../states/intro-state.hpp"
+#include "../states/main-menu.hpp"
 #include "../states/gameover-state.hpp"
 
 #include <iostream>
@@ -310,6 +311,7 @@ int our::Application::run(int run_for_frames) {
              ImGui::SetCursorScreenPos(ImVec2(win_config.size.x/3+50,win_config.size.y/2+80));   
              if(ImGui::Button("Okay",ImVec2(win_config.size.x/6,win_config.size.y/6)))
             {
+                this->registerState<Menustate>("main-menu");
                 this->changeState("main-menu");
             }
             ImGui::PopFont();
@@ -327,6 +329,7 @@ int our::Application::run(int run_for_frames) {
             ImGui::SetCursorScreenPos(ImVec2(win_config.size.x/2,win_config.size.y/2-80));   
             if(ImGui::Button("New Game",ImVec2(win_config.size.x/6,win_config.size.y/6)))
             {
+                this->registerState<Playstate>("play-scene");
                 this->changeState("play-scene");
             }
             ImGui::SetCursorScreenPos(ImVec2(win_config.size.x/2,win_config.size.y/2+80));   
@@ -368,6 +371,7 @@ int our::Application::run(int run_for_frames) {
         // Moving from main menu to game
         if(keyboard.justPressed(GLFW_KEY_F11) && !game_started ){
             //TODO: check that current state is main menu
+            this->registerState<GameoverState>("gameover-scene");
             this->changeState("gameover-scene");
 
         }
