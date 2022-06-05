@@ -11,9 +11,9 @@
     },
     "play-scene": {
         "renderer":{
-            "skyTop" : [1,1,1],
-            "skyMiddle" :[1,1,1],
-            "skyBottom" : [1,1,1],
+            "skyTop" : [0,0,0],
+            "skyMiddle" :[0,0,0],
+            "skyBottom" : [0,0,0],
             "sky-albedo": "assets/textures/sky.jpg",
             "sky-specular": "assets/textures/sky.jpg",
             "sky-ambient_occlusion": "assets/textures/sky-ambient.jpg",
@@ -268,8 +268,8 @@
                     {
                         "type":"Light",
                         "lightType": "DIRECTIONAL",
-                        "diffuse": [0.2, 0.2 , 0.2],
-                        "specular": [0.2,0.2,0.2],
+                        "diffuse": [1,1,1],
+                        "specular":[1,1,1],
                         "attenuation" :[0,0,0],
                         "cone_angles":[0,0],
                         "position" : [0,2,0],
@@ -283,7 +283,7 @@
                 "components":[
                     {
                         "type":"Light",
-                        "lightType": "DIRECTIONAL",
+                        "lightType": "SPOT",
                         "diffuse": [0.2, 0.2 , 0.2],
                         "specular": [0.2,0.2,0.2],
                         "attenuation" :[0,0,0],
