@@ -181,10 +181,10 @@ int our::Application::run(int run_for_frames) {
     gladLoadGL(glfwGetProcAddress);         // Load the OpenGL functions from the driver
 
     // Print information about the OpenGL context
-    std::cout << "VENDOR          : " << glGetString(GL_VENDOR) << std::endl;
-    std::cout << "RENDERER        : " << glGetString(GL_RENDERER) << std::endl;
-    std::cout << "VERSION         : " << glGetString(GL_VERSION) << std::endl;
-    std::cout << "GLSL VERSION    : " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+    //std::cout << "VENDOR          : " << glGetString(GL_VENDOR) << std::endl;
+    //std::cout << "RENDERER        : " << glGetString(GL_RENDERER) << std::endl;
+    //std::cout << "VERSION         : " << glGetString(GL_VERSION) << std::endl;
+    //std::cout << "GLSL VERSION    : " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
 #if defined(ENABLE_OPENGL_DEBUG_MESSAGES)
     // if we have OpenGL debug messages enabled, set the message callback
@@ -271,7 +271,7 @@ int our::Application::run(int run_for_frames) {
 
         // if true , end intro and go the game start menu.
         if(glfwGetTime()-intro_start>intro_time && !entered ){
-            std::cout<<"main menu time has come\n";
+            // std::cout<<"main menu time has come\n";
             changeState("main-menu");
             entered = true;
         }
@@ -379,7 +379,7 @@ int our::Application::run(int run_for_frames) {
             glViewport(0, 0, frame_buffer_size.x, frame_buffer_size.y);
             std::string path = default_screenshot_filepath();
             if(our::screenshot_png(path)){
-                std::cout << "Screenshot saved to: " << path << std::endl;
+                //std::cout << "Screenshot saved to: " << path << std::endl;
             } else {
                 std::cerr << "Failed to save a Screenshot" << std::endl;
             }
@@ -388,7 +388,7 @@ int our::Application::run(int run_for_frames) {
         while(requested_screenshots.size()){ 
             if(const auto& request = requested_screenshots.top(); request.first == current_frame){
                 if(our::screenshot_png(request.second)){
-                    std::cout << "Screenshot saved to: " << request.second << std::endl;
+                    //std::cout << "Screenshot saved to: " << request.second << std::endl;
                 } else {
                     std::cerr << "Failed to save a screenshot to: " << request.second << std::endl;
                 }

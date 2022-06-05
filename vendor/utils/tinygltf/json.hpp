@@ -16631,7 +16631,7 @@ class basic_json
     @code{cpp}
     for (auto it = j_object.begin(); it != j_object.end(); ++it)
     {
-        std::cout << "key: " << it.key() << ", value:" << it.value() << '\n';
+        //std::cout << "key: " << it.key() << ", value:" << it.value() << '\n';
     }
     @endcode
 
@@ -16641,7 +16641,7 @@ class basic_json
     for (auto it : j_object)
     {
         // "it" is of type json::reference and has no key() member
-        std::cout << "value: " << it << '\n';
+        //std::cout << "value: " << it << '\n';
     }
     @endcode
 
@@ -16650,7 +16650,7 @@ class basic_json
     @code{cpp}
     for (auto it : json::iterator_wrapper(j_object))
     {
-        std::cout << "key: " << it.key() << ", value:" << it.value() << '\n';
+        //std::cout << "key: " << it.key() << ", value:" << it.value() << '\n';
     }
     @endcode
 
@@ -16703,7 +16703,7 @@ class basic_json
     @code{cpp}
     for (auto it = j_object.begin(); it != j_object.end(); ++it)
     {
-        std::cout << "key: " << it.key() << ", value:" << it.value() << '\n';
+        //std::cout << "key: " << it.key() << ", value:" << it.value() << '\n';
     }
     @endcode
 
@@ -16713,7 +16713,7 @@ class basic_json
     for (auto it : j_object)
     {
         // "it" is of type json::reference and has no key() member
-        std::cout << "value: " << it << '\n';
+        //std::cout << "value: " << it << '\n';
     }
     @endcode
 
@@ -16722,7 +16722,7 @@ class basic_json
     @code{cpp}
     for (auto& el : j_object.items())
     {
-        std::cout << "key: " << el.key() << ", value:" << el.value() << '\n';
+        //std::cout << "key: " << el.key() << ", value:" << el.value() << '\n';
     }
     @endcode
 
@@ -16733,7 +16733,7 @@ class basic_json
     @code{cpp}
     for (auto& [key, val] : j_object.items())
     {
-        std::cout << "key: " << key << ", value:" << val << '\n';
+        //std::cout << "key: " << key << ", value:" << val << '\n';
     }
     @endcode
 

@@ -64,8 +64,9 @@ namespace our {
             nlohmann::json entityData;
 
             int randomX = minX + ( std::rand() % ( maxX - minX + 1 ) );
-            nlohmann::json newPos =       {randomX,1,-1*pos};
-            nlohmann::json newPosArrows = {randomX,10,-1*pos};
+            nlohmann::json newPos =            {randomX,1,-1*pos};
+            nlohmann::json newPosArrows =      {randomX,10,-1*pos};
+            nlohmann::json newPosArrowsGreen = {randomX,10,-1*pos};
 
             if(i%3==0){                                               //Add pick zone
 
@@ -95,7 +96,7 @@ namespace our {
             else{                                                    //Add delivery zone
 
                 entityData = deliveryArrow;
-                entityData.at("position") = newPosArrows;
+                entityData.at("position") = newPosArrowsGreen;
                 Entity* entity = add();
                 entity->parent = parent;
                 entity->deserialize(entityData);
