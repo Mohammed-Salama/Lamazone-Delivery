@@ -45,7 +45,6 @@ namespace our {
             skyShader->attach("assets/shaders/lighted.vert", GL_VERTEX_SHADER);
             skyShader->attach("assets/shaders/lighted.frag", GL_FRAGMENT_SHADER);
             skyShader->link();
-
             //DONE: (Req 9) Pick the correct pipeline state to draw the sky.
             // Hints: the sky will be draw after the opaque objects so we would need depth testing but which depth function should we pick?
             // We will draw the sphere from the inside, so what options should we pick for the face culling.
@@ -60,7 +59,6 @@ namespace our {
             //face to cull is front because we see the sphere from inside
             skyPipelineState.faceCulling.culledFace = GL_FRONT;
             skyPipelineState.faceCulling.frontFace = GL_CCW;
-
             // Load the sky texture (note that we don't need mipmaps since we want to avoid any unnecessary blurring while rendering the sky)
             std::string skyTextureFile = config.value<std::string>("sky-albedo", "");
             Texture2D* skyTexture = texture_utils::loadImage(skyTextureFile, false);
@@ -378,7 +376,6 @@ namespace our {
                 groundMaterial->shader->set("M_IT",M_IT);
 
                 int n = lights.size();
-
                 groundMaterial->shader->set("light_count",n);
                 groundMaterial->shader->set("sky.top",skyTop);
                 groundMaterial->shader->set("sky.middle",skyMiddle);
@@ -425,7 +422,6 @@ namespace our {
                 wallMaterial->shader->set("M_IT",M_IT);
 
                 int n = lights.size();
-
                 wallMaterial->shader->set("light_count",n);
                 wallMaterial->shader->set("sky.top",skyTop);
                 wallMaterial->shader->set("sky.middle",skyMiddle);
@@ -464,7 +460,6 @@ namespace our {
                 groundMaterial->shader->set("M_IT",M_IT);
 
                 n = lights.size();
-
                 groundMaterial->shader->set("light_count",n);
                 groundMaterial->shader->set("sky.top",skyTop);
                 groundMaterial->shader->set("sky.middle",skyMiddle);
@@ -504,7 +499,6 @@ namespace our {
                 wallMaterial->shader->set("M_IT",M_IT);
 
                 n = lights.size();
-
                 wallMaterial->shader->set("light_count",n);
                 wallMaterial->shader->set("sky.top",skyTop);
                 wallMaterial->shader->set("sky.middle",skyMiddle);
@@ -544,7 +538,6 @@ namespace our {
                 wallMaterial->shader->set("M_IT",M_IT);
 
                 n = lights.size();
-
                 wallMaterial->shader->set("light_count",n);
                 wallMaterial->shader->set("sky.top",skyTop);
                 wallMaterial->shader->set("sky.middle",skyMiddle);
@@ -587,7 +580,6 @@ namespace our {
                 wallMaterial->shader->set("M_IT",M_IT);
 
                 int n = lights.size();
-
                 wallMaterial->shader->set("light_count",n);
                 wallMaterial->shader->set("sky.top",skyTop);
                 wallMaterial->shader->set("sky.middle",skyMiddle);
@@ -624,7 +616,6 @@ namespace our {
                 wallMaterial->shader->set("M_IT",M_IT);
 
                 n = lights.size();
-
                 wallMaterial->shader->set("light_count",n);
                 wallMaterial->shader->set("sky.top",skyTop);
                 wallMaterial->shader->set("sky.middle",skyMiddle);
@@ -667,7 +658,6 @@ namespace our {
                 model.material->shader->set("M_IT",M_IT);
 
                 int n = lights.size();
-
                 model.material->shader->set("light_count",n);
                 model.material->shader->set("sky.top",skyTop);
                 model.material->shader->set("sky.middle",skyMiddle);
@@ -742,7 +732,6 @@ namespace our {
             skyMaterial->shader->set("sky.top",skyTop);
             skyMaterial->shader->set("sky.middle",skyMiddle);
             skyMaterial->shader->set("sky.bottom",skyBottom);
-
             for (int i = 0 ; i < n;i++){
                 skyMaterial->shader->set("lights["+std::to_string(i)+"].type", float(lights[i]->lightType));
                 skyMaterial->shader->set("lights["+std::to_string(i)+"].position", lights[i]->position);

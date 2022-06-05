@@ -39,8 +39,8 @@ namespace our
             if(ignoreZ) dz = 0;
             else
                 dz = player->localTransform.position.z + entity->localTransform.position.z - detected->localTransform.position.z;
-            // std::cout<<player->localTransform.position.x<<" "<<player->localTransform.position.y<<" "<<player->localTransform.position.z<<std::endl;
-            // std::cout<<detected->localTransform.position.x<<" "<<detected->localTransform.position.y<<" "<<detected->localTransform.position.z<<std::endl;
+            // //std::cout<<player->localTransform.position.x<<" "<<player->localTransform.position.y<<" "<<player->localTransform.position.z<<std::endl;
+            // //std::cout<<detected->localTransform.position.x<<" "<<detected->localTransform.position.y<<" "<<detected->localTransform.position.z<<std::endl;
             double distance = sqrt(dx*dx + dy*dy + dz*dz)/2;
             double radiusx=0, raduisy=0;
             Mesh *meshx;
@@ -59,7 +59,7 @@ namespace our
                 radiusx = meshx->raduis * scale1;
                 raduisy = meshy->raduis * scale2;
             }
-            // std::cout<<"radiusx"<<radiusx<<"raduisy"<<raduisy<<"distance"<<distance<<std::endl;
+            // //std::cout<<"radiusx"<<radiusx<<"raduisy"<<raduisy<<"distance"<<distance<<std::endl;
             return distance <=radiusx+raduisy;
         }
 
@@ -117,18 +117,18 @@ namespace our
             if(wasHit)
             {
                 elapsed_seconds_hit = timeNow-lastHitTime;
-                // std::cout<<"Elapsed Time="<<elapsed_seconds_hit.count()<<std::endl;
+                // //std::cout<<"Elapsed Time="<<elapsed_seconds_hit.count()<<std::endl;
                 if(elapsed_seconds_hit.count()> cooldownTime)
                 {
                     wasHit = false;
-                    std::cout<<"Cooldown Finshed!!!"<<std::endl;
+                    //std::cout<<"Cooldown Finshed!!!"<<std::endl;
                 }
             }
 
 
             if(elapsed_seconds_normal.count()> 1)
             {
-                std::cout<<"Current Energy="<<energy<<" Speed ="<<speed<<std::endl;
+                //std::cout<<"Current Energy="<<energy<<" Speed ="<<speed<<std::endl;
                 energy -= decrement;
                 if(energy <= 0)
                 {
@@ -160,8 +160,8 @@ namespace our
                     if(!wasHit){
                            wasHit = true;
                            lastHitTime = std::chrono::system_clock::now();
-                           std::cout<<"Cooldown Started!"<<std::endl;
-                            //  std::cout<<"Hit at time="<<lastHitTime<<std::endl;
+                           //std::cout<<"Cooldown Started!"<<std::endl;
+                            //  //std::cout<<"Hit at time="<<lastHitTime<<std::endl;
                             energy -= energyLostPerHit;
                             if(energy <= 0)
                             {
@@ -171,7 +171,7 @@ namespace our
                                return;
                              }
                                     
-                             std::cout<<"Energy"<<energy<<std::endl;
+                             //std::cout<<"Energy"<<energy<<std::endl;
                                 }
             }
             // limit flying of car
@@ -196,8 +196,8 @@ namespace our
                                 if(!wasHit){
                                     wasHit = true;
                                     lastHitTime = std::chrono::system_clock::now();
-                                     std::cout<<"Cooldown Started!"<<std::endl;
-                                    //  std::cout<<"Hit at time="<<lastHitTime<<std::endl;
+                                     //std::cout<<"Cooldown Started!"<<std::endl;
+                                    //  //std::cout<<"Hit at time="<<lastHitTime<<std::endl;
                                     energy -= energyLostPerHit;
                                     if(energy <= 0)
                                     {
@@ -207,30 +207,30 @@ namespace our
                                         return;
                                     }
                                     
-                                    std::cout<<"Energy"<<energy<<std::endl;
+                                    //std::cout<<"Energy"<<energy<<std::endl;
                                 }
                             }  // remove all enities before car
                             else  if(detected->localTransform.position.z >entity->localTransform.position.z)
                             {
-                            world->markForRemoval(detected);       
+                              world->markForRemoval(detected);       
                             }
                           
                     }
                     //detect collision with battery
                     if(detected->materialName=="battery")
                     {   
-                            // std::cout<<"I am here"<<std::endl;
+                            // //std::cout<<"I am here"<<std::endl;
                             if(collision_detection(entity, player, detected))
                             {
-                                std::cout<<"Collision!!";  
-                                std::cout<<"Max Energy= "<<maxEnergy<<" Max Speed= "<<maxSpeed<<" Energy= "<<energy<<std::endl;
+                                //std::cout<<"Collision!!";  
+                                //std::cout<<"Max Energy= "<<maxEnergy<<" Max Speed= "<<maxSpeed<<" Energy= "<<energy<<std::endl;
                                 world->markForRemoval(detected);
                                 int energyBoost = (10 *(rand() % 10));
                                 energy += energyBoost;
                                 totalScore += int(pointsPerPackage/5);
                                 if(energy > game->maxEnergy) energy = game->maxEnergy;
-                                std::cout<<"Energy Boosted by "<<energyBoost<<std::endl;
-                                std::cout<<"Current Score="<<totalScore<<" deliveryInProgress ="<<deliveryInProgress<<std::endl;
+                                //std::cout<<"Energy Boosted by "<<energyBoost<<std::endl;
+                                //std::cout<<"Current Score="<<totalScore<<" deliveryInProgress ="<<deliveryInProgress<<std::endl;
                             }   // remove all enities before car
                             else  if(detected->localTransform.position.z >entity->localTransform.position.z)
                             {
@@ -242,10 +242,10 @@ namespace our
                     {
                         if(collision_detection(entity, player, detected))
                         {
-                            std::cout<<"Package Picked Up!!"<<std::endl;  
+                            //std::cout<<"Package Picked Up!!"<<std::endl;  
                             world->markForRemoval(detected);
                             deliveryInProgress = true;
-                            std::cout<<"Current Score="<<totalScore<<" deliveryInProgress ="<<deliveryInProgress<<std::endl;
+                            //std::cout<<"Current Score="<<totalScore<<" deliveryInProgress ="<<deliveryInProgress<<std::endl;
                         }  // remove all enities before car
                         else  if(detected->localTransform.position.z >entity->localTransform.position.z)
                         {
@@ -257,10 +257,10 @@ namespace our
                     {
                         if(collision_detection(entity, player, detected,true,true))
                         {
-                            std::cout<<"Package Delivered!!!!"<<std::endl;
+                            //std::cout<<"Package Delivered!!!!"<<std::endl;
                             deliveryInProgress = false;
                             totalScore += pointsPerPackage;
-                            std::cout<<"Current Score="<<totalScore<<" deliveryInProgress ="<<deliveryInProgress<<std::endl;
+                            //std::cout<<"Current Score="<<totalScore<<" deliveryInProgress ="<<deliveryInProgress<<std::endl;
                         }   // remove all enities before car
                         else  if(detected->localTransform.position.z >entity->localTransform.position.z)
                         {

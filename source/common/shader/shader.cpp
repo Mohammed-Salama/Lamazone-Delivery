@@ -17,7 +17,7 @@ bool our::ShaderProgram::attach(const std::string &filename, GLenum type) const 
         return false;
     }
     std::string sourceString = std::string(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
-    //std::cout<<sourceString<<"\n";
+    ////std::cout<<sourceString<<"\n";
     const char* sourceCStr = sourceString.c_str();
     file.close();
 
