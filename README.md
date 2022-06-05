@@ -7,11 +7,12 @@
 - [Technologies and Tools used](#Technologies-and-Tools-used)
 - [How to use the project](#How-to-use-the-project)
 - [Functionalities Implemented](#Functionalities-Implemented)
+- [Tips](#Tips)
 - [Contributors](#Contributors)
 
 
 ## About
-This car game which is reponsible for take packages and delivers them to customers.
+This is a simple delivery game where the player acts as a car reponsible for picking up packages and delivering them to the delivery zones. Steer left and right to avoid hitting buildings and moving cars and collect batteries on the road to recharge your energy. Beware, the more energy you have, the faster you’ll move. Try to get the highest score. The more packages you deliver before you're out of energy, the higher the score.
 
 ## Technologies and Tools used
 - OpenGL
@@ -41,6 +42,8 @@ cd CmpGL
 - Energy module
 - Score module
 - Rendering module
+## Tips
+- For best results, build with _GCC 9.2.0 mingw32_ on Windows usign VS Code.
 ## Contributors
 ### This masterpiece was designed, and implemented by
 <table align="center">
