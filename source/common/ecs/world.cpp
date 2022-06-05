@@ -66,7 +66,7 @@ namespace our {
             int randomX = minX + ( std::rand() % ( maxX - minX + 1 ) );
             nlohmann::json newPos =            {randomX,1,-1*pos};
             nlohmann::json newPosArrows =      {randomX,10,-1*pos};
-            nlohmann::json newPosArrowsGreen = {randomX,7,-1*pos};
+            nlohmann::json newPosArrowsGreen = {randomX,10,-1*pos};
 
             if(i%3==0){                                               //Add pick zone
 

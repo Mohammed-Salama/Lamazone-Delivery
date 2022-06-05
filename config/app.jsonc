@@ -495,7 +495,7 @@
                 "position": [0, 5, 0],
                 "rotation": [0, -180, -90],
                 "scale": [30, 30, 30],
-                "materialName":"deliveryArrow",
+                "materialName":"deliveryZone",
                 "components": [
                     {
                         "type": "Mesh Renderer",
