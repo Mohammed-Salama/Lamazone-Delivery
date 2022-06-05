@@ -23,10 +23,12 @@ To run the project locally on your pc:
 - Start Apache from XAMPP
 - Clone this repositry in any folder and go inside the ```SE-Project-CMP-Back-end\Backend``` folder
 ```
-git clon[e https://github.com/SE-Project-CMP-Tumbler/SE-Project-CMP-Back-end.git](https://github.com/Mohammed-Salama/CmpGL.git
+git clone https://github.com/Mohammed-Salama/CmpGL.git
+
+```
+```
 cd CmpGL
 ```
-
 ## Functionalities Implemented
 ### Graphics Modules
 - Texture
