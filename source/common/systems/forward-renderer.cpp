@@ -1,4 +1,5 @@
 #include "forward-renderer.hpp"
+#include "game-logic-controller.hpp"
 #include "../mesh/mesh-utils.hpp"
 #include "../texture/texture-utils.hpp"
 #include<iostream>
@@ -249,6 +250,17 @@ namespace our {
         std::vector<LightComponent*> lights;
         opaqueCommands.clear();
         transparentCommands.clear();
+
+        Entity* player = nullptr;
+        GameLogicControllerComponent *game = nullptr;
+        for(auto detected : world->getEntities()){
+            if(detected->materialName == "player"){
+                player = detected;
+                game = player->getComponent<GameLogicControllerComponent>();
+                break;
+            }
+        }    
+
         for(auto entity : world->getEntities()){
             // If we hadn't found a camera yet, we look for a camera in this entity
             if(!camera) camera = entity->getComponent<CameraComponent>();
@@ -261,7 +273,16 @@ namespace our {
             if(auto meshRenderer = entity->getComponent<MeshRendererComponent>(); meshRenderer){
                 // We construct a command from it
                 RenderCommand command;
-                command.localToWorld = meshRenderer->getOwner()->getLocalToWorldMatrix();
+                if(entity->materialName == "energyBar")
+                {
+                    command.twoD = true;
+                    command.localToWorld = meshRenderer->getOwner()->getLocalToWorldMatrixScaled(game->energy,game->maxEnergy);
+                }
+                else
+                {
+                    command.twoD = false;
+                    command.localToWorld = meshRenderer->getOwner()->getLocalToWorldMatrix();
+                }
                 command.center = glm::vec3(command.localToWorld * glm::vec4(0, 0, 0, 1));
                 command.mesh = meshRenderer->mesh;
                 command.material = meshRenderer->material;
@@ -332,7 +353,7 @@ namespace our {
 
         int dist = 100;
         
-        for(int i=0;i<30;i++){
+        for(int i=0;i<300;i++){
 
             // street model
             glm::mat4 model = toMat4(glm::vec3(50,50,50),glm::vec3(glm::radians(90.0),0,0),glm::vec3(0,0,-1*i*dist));
@@ -346,7 +367,7 @@ namespace our {
 
  
         dist = 30;
-        for(int i=0;i<90;i++){
+        for(int i=0;i<900;i++){
 
              wallMaterial->setup();
             if(i%10==0){
@@ -432,6 +453,12 @@ namespace our {
             glm::mat4 M = model.localToWorld;
             glm::mat4 MVP = VP * M;
             glm::mat4 M_IT = glm::transpose(glm::inverse(M));
+            if(model.twoD)
+                {
+                    TintedMaterial* mate = dynamic_cast<TintedMaterial*>(model.material);
+                    float color = game->energy/game->maxEnergy;
+                    mate->tint = glm::vec4(1.0-color,color,0.0,1.0);
+                }
             model.material->setup();
             if (model.material->getType()=="lighted"){
                 model.material->shader->set("eye", cameraPos);

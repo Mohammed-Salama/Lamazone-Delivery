@@ -81,6 +81,19 @@
                 }
             },
             "materials":{
+                "gray":{
+                    "type": "tinted",
+                    "shader": "tinted",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [0.45, 0.4, 0.5, 1]
+                },
                 "metal":{
                     "type": "textured",
                     "shader": "textured",
@@ -335,18 +348,36 @@
                             {
                                 "type": "Game Logic Controller",
                                 "maxEnergy": 50,
-                                "maxSpeed": 20,
+                                "maxSpeed": 150,
                                 "energyDecrementValue": 1,
                                 "pointsPerPackage": 25,
-                                "energyLostPerHit": 10,
+                                "energyLostPerHit": 5,
                                 "cooldownTime": 5
+                            }
+                        ]
+                    },
+                    {
+                        "position": [-0.7, 0.8, -1],
+                        "rotation": [0, 0, 0],
+                        "scale": [1, 0.1, 0.01],
+                        "materialName":"energyBar",
+                        "components": [
+                            {
+                                // "type": "Bar Renderer",
+                                "type": "Mesh Renderer",
+                                // "x": 0.1,
+                                // "y": 0.1,
+                                // "maxWidth": 0.5,
+                                // "maxHeight": 0.2,
+                                "material": "gray",
+                                "mesh": "cube"
                             }
                         ]
                     }
                 ]
             },
             {
-                "name" : "box",
+                "name" : "box2",
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -360,8 +391,8 @@
                 ]
             },
             {
-                "name":"box",
-                "position": [10, 10, 10],
+                "name":"box4",
+                "position": [0, 0, 0],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
                 "materialName": "package",
@@ -374,7 +405,7 @@
                 ]
             },
             {
-                "name":"box",
+                "name":"box3",
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -388,7 +419,7 @@
                 ]
             },
             {
-                "name":"box",
+                "name":"box1",
                 "position": [10, 10, 10],
                 "rotation": [0, 0, 0],
                 "scale": [2, 2, 2],
@@ -409,19 +440,32 @@
                 "materialName":"battery",
                 "components": [
                     {
-                        "type": "Mesh Renderer",
-                        "mesh": "battery",
+                        "type":     "Mesh Renderer",
+                        "mesh":     "battery",
                         "material": "battery"
                     }
                 ]
             },
             
             {
-                "name":"arrow",
+                "name":"pickArrow",
                 "position": [0, 5, 0],
                 "rotation": [0, -180, -90],
                 "scale": [30, 30, 30],
-                "materialName":"car",
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "arrow",
+                        "material": "arrow"
+                    }
+                ]
+            },
+            {
+                "name":"deliveryArrow",
+                "position": [0, 5, 0],
+                "rotation": [0, -180, -90],
+                "scale": [30, 30, 30],
+                "materialName":"deliveryZone",
                 "components": [
                     {
                         "type": "Mesh Renderer",
