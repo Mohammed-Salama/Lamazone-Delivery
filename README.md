@@ -1,7 +1,7 @@
 # <h1 align="center"> Lamazone Delivery </h1>
 
 
-![peugeot-504-taxi-3d-model-max](https://user-images.githubusercontent.com/62077516/171753189-fd97681b-36b2-4096-a6ea-879fa17563cb.jpg)
+![peugeot-504-taxi-3d-model-max](https://github.com/Mohammed-Salama/CmpGL/blob/main/screenshots/Capture.PNG)
 ## Table Content
 - [About](#About)
 - [Technologies and Tools used](#Technologies-and-Tools-used)
@@ -24,7 +24,6 @@ To run the project locally on your pc:
 - Clone this repositry in any folder and go inside the ```SE-Project-CMP-Back-end\Backend``` folder
 ```
 git clone https://github.com/Mohammed-Salama/CmpGL.git
-
 ```
 ```
 cd CmpGL
