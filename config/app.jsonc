@@ -48,6 +48,7 @@
                 "package4": "assets/textures/Box04.png",
                 "battery": "assets/textures/battery.jpg",
                 "arrow": "assets/textures/arrowAlbedo.png",
+                "greenArrow" : "assets/textures/greenArrow.jpg",
 
                 "monkey-albedo": "assets/textures/albedo.jpg",
                 "monkey-specular": "assets/textures/specular.jpg",
@@ -267,6 +268,21 @@
                     "tint": [1, 1, 1, 1],
                     "texture": "arrow",
                     "sampler": "default"
+                },
+                "greenArrow":{
+                    "type": "textured",
+                    "shader": "textured",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [1, 1, 1, 1],
+                    "texture": "greenArrow",
+                    "sampler": "default"
                 }
             }
         },
@@ -478,12 +494,12 @@
                 "position": [0, 5, 0],
                 "rotation": [0, -180, -90],
                 "scale": [30, 30, 30],
-                "materialName":"deliveryZone",
+                "materialName":"deliveryArrow",
                 "components": [
                     {
                         "type": "Mesh Renderer",
                         "mesh": "arrow",
-                        "material": "arrow"
+                        "material": "greenArrow"
                     }
                 ]
             }, 

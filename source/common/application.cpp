@@ -97,8 +97,8 @@ void GLAPIENTRY opengl_callback(GLenum source, GLenum type, GLuint id, GLenum se
             _severity = "UNKNOWN"; break;
     }
 
-    std::cout << "OpenGL Debug Message " << id << " (type: " << _type << ") of " << _severity
-    << " raised from " << _source << ": " << message << std::endl;
+    // std::cout << "OpenGL Debug Message " << id << " (type: " << _type << ") of " << _severity
+    // << " raised from " << _source << ": " << message << std::endl;
 }
 
 void our::Application::configureOpenGL() {

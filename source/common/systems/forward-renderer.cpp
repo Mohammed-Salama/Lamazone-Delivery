@@ -37,15 +37,15 @@ namespace our {
         // Then we check if there is a sky texture in the configuration
         if(config.contains("sky-albedo")){
             // First, we create a sphere which will be used to draw the sky
-            std::cout<<"LOL1\n";
+
             this->skySphere = mesh_utils::sphere(glm::ivec2(16, 16));
-            std::cout<<"LOL2\n";
+
             // We can draw the sky using the same shader used to draw textured objects
             ShaderProgram* skyShader = new ShaderProgram();
             skyShader->attach("assets/shaders/lighted.vert", GL_VERTEX_SHADER);
             skyShader->attach("assets/shaders/lighted.frag", GL_FRAGMENT_SHADER);
             skyShader->link();
-            std::cout<<"LOL3\n";
+
             //DONE: (Req 9) Pick the correct pipeline state to draw the sky.
             // Hints: the sky will be draw after the opaque objects so we would need depth testing but which depth function should we pick?
             // We will draw the sphere from the inside, so what options should we pick for the face culling.
@@ -60,7 +60,7 @@ namespace our {
             //face to cull is front because we see the sphere from inside
             skyPipelineState.faceCulling.culledFace = GL_FRONT;
             skyPipelineState.faceCulling.frontFace = GL_CCW;
-            std::cout<<"LOL5\n";
+
             // Load the sky texture (note that we don't need mipmaps since we want to avoid any unnecessary blurring while rendering the sky)
             std::string skyTextureFile = config.value<std::string>("sky-albedo", "");
             Texture2D* skyTexture = texture_utils::loadImage(skyTextureFile, false);
@@ -378,7 +378,7 @@ namespace our {
                 groundMaterial->shader->set("M_IT",M_IT);
 
                 int n = lights.size();
-                //std::cout<<n<<"\n";
+
                 groundMaterial->shader->set("light_count",n);
                 groundMaterial->shader->set("sky.top",skyTop);
                 groundMaterial->shader->set("sky.middle",skyMiddle);
@@ -425,7 +425,7 @@ namespace our {
                 wallMaterial->shader->set("M_IT",M_IT);
 
                 int n = lights.size();
-                //std::cout<<n<<"\n";
+
                 wallMaterial->shader->set("light_count",n);
                 wallMaterial->shader->set("sky.top",skyTop);
                 wallMaterial->shader->set("sky.middle",skyMiddle);
@@ -464,7 +464,7 @@ namespace our {
                 groundMaterial->shader->set("M_IT",M_IT);
 
                 n = lights.size();
-                //std::cout<<n<<"\n";
+
                 groundMaterial->shader->set("light_count",n);
                 groundMaterial->shader->set("sky.top",skyTop);
                 groundMaterial->shader->set("sky.middle",skyMiddle);
@@ -504,7 +504,7 @@ namespace our {
                 wallMaterial->shader->set("M_IT",M_IT);
 
                 n = lights.size();
-                //std::cout<<n<<"\n";
+
                 wallMaterial->shader->set("light_count",n);
                 wallMaterial->shader->set("sky.top",skyTop);
                 wallMaterial->shader->set("sky.middle",skyMiddle);
@@ -544,7 +544,7 @@ namespace our {
                 wallMaterial->shader->set("M_IT",M_IT);
 
                 n = lights.size();
-                //std::cout<<n<<"\n";
+
                 wallMaterial->shader->set("light_count",n);
                 wallMaterial->shader->set("sky.top",skyTop);
                 wallMaterial->shader->set("sky.middle",skyMiddle);
@@ -587,7 +587,7 @@ namespace our {
                 wallMaterial->shader->set("M_IT",M_IT);
 
                 int n = lights.size();
-                //std::cout<<n<<"\n";
+
                 wallMaterial->shader->set("light_count",n);
                 wallMaterial->shader->set("sky.top",skyTop);
                 wallMaterial->shader->set("sky.middle",skyMiddle);
@@ -624,7 +624,7 @@ namespace our {
                 wallMaterial->shader->set("M_IT",M_IT);
 
                 n = lights.size();
-                //std::cout<<n<<"\n";
+
                 wallMaterial->shader->set("light_count",n);
                 wallMaterial->shader->set("sky.top",skyTop);
                 wallMaterial->shader->set("sky.middle",skyMiddle);
@@ -667,7 +667,7 @@ namespace our {
                 model.material->shader->set("M_IT",M_IT);
 
                 int n = lights.size();
-                std::cout<<n<<"\n";
+
                 model.material->shader->set("light_count",n);
                 model.material->shader->set("sky.top",skyTop);
                 model.material->shader->set("sky.middle",skyMiddle);
@@ -691,9 +691,9 @@ namespace our {
         // If there is a sky material, draw the sky
         if(this->skyMaterial){
             //DONE: (Req 9) setup the sky material
-            std::cout<<"LOL174\n";
+
             skyMaterial->setup();
-            std::cout<<"LOL178\n";
+
             //DONE: (Req 9) Get the camera position
             glm::mat4 M = camera->getOwner()->getLocalToWorldMatrix();
             
@@ -734,15 +734,15 @@ namespace our {
             skyMaterial->shader->set("VP", alwaysBehindTransform * VP);
             skyMaterial->shader->set("M", M);
             skyMaterial->shader->set("M_IT", M_IT);
-            std::cout<<"LOL14\n";
+
             int n = lights.size();
             skyMaterial->shader->set("light_count", n);
-            std::cout<<"LOL16\n";
+
             
             skyMaterial->shader->set("sky.top",skyTop);
             skyMaterial->shader->set("sky.middle",skyMiddle);
             skyMaterial->shader->set("sky.bottom",skyBottom);
-            std::cout<<"LOL19\n";
+
             for (int i = 0 ; i < n;i++){
                 skyMaterial->shader->set("lights["+std::to_string(i)+"].type", float(lights[i]->lightType));
                 skyMaterial->shader->set("lights["+std::to_string(i)+"].position", lights[i]->position);
@@ -752,10 +752,10 @@ namespace our {
                 skyMaterial->shader->set("lights["+std::to_string(i)+"].attenuation", lights[i]->attenuation);
                 skyMaterial->shader->set("lights["+std::to_string(i)+"].cone_angle", lights[i]->cone_angles);
             }
-            std::cout<<"LOLLOL\n";
+
             //DONE: (Req 9) draw the sky sphere
             skySphere->draw();
-            std::cout<<"LOLLOL2\n";
+
         }
         //DONE: (Req 8) Draw all the transparent commands
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
