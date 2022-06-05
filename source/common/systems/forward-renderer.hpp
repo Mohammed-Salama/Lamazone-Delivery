@@ -21,6 +21,7 @@ namespace our
         glm::vec3 center;
         Mesh* mesh;
         Material* material;
+        bool twoD;
     };
 
     // A forward renderer is a renderer that draw the object final color directly to the framebuffer
@@ -39,8 +40,8 @@ namespace our
         LitMaterial* skyMaterial;
         //Objects used for rendiering a city
         Mesh* wallPlane;
-        TexturedMaterial* wallMaterial;
-        TexturedMaterial* groundMaterial;
+        LitMaterial* wallMaterial;
+        LitMaterial* groundMaterial;
         // Objects used for Postprocessing
         GLuint postprocessFrameBuffer, postProcessVertexArray;
         Texture2D *colorTarget, *depthTarget;

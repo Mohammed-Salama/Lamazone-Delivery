@@ -11,14 +11,11 @@
     },
     "play-scene": {
         "renderer":{
-            "skyTop" : [0,0,0],
-            "skyMiddle" :[0,0,0],
-            "skyBottom" : [0,0,0],
+            "skyTop" : [0.1,0.1,0.1],
+            "skyMiddle" :[1,1,1],
+            "skyBottom" : [1,1,1],
             "sky-albedo": "assets/textures/sky.jpg",
-            "sky-specular": "assets/textures/sky.jpg",
-            "sky-ambient_occlusion": "assets/textures/sky-ambient.jpg",
-            "sky-roughness": "assets/textures/roughness.jpg",
-            "sky-emissive": "assets/textures/roughness.jpg",
+            "emissive-tex": "assets/textures/emissive-tex.jpg",
             "postprocess": "assets/shaders/postprocess/vignette.frag",
             "wall" : "assets/textures/redBuilding.jpg",
             "wall-mesh" : "assets/models/plane.obj",
@@ -54,7 +51,7 @@
 
                 "monkey-albedo": "assets/textures/albedo.jpg",
                 "monkey-specular": "assets/textures/specular.jpg",
-                "monkey-ambient_occlusion": "assets/textures/ambient_occlusion.jpg",
+                "monkey-ambient_occlusion": "assets/textures/specular.jpg",
                 "monkey-roughness": "assets/textures/roughness.jpg",
                 "monkey-emissive": "assets/textures/emissive.jpg",
                 "metallic" : "assets/textures/metallic.jpg",
@@ -81,6 +78,19 @@
                 }
             },
             "materials":{
+                "gray":{
+                    "type": "tinted",
+                    "shader": "tinted",
+                    "pipelineState": {
+                        "faceCulling":{
+                            "enabled": false
+                        },
+                        "depthTesting":{
+                            "enabled": true
+                        }
+                    },
+                    "tint": [0.45, 0.4, 0.5, 1]
+                },
                 "metal":{
                     "type": "textured",
                     "shader": "textured",
@@ -261,35 +271,67 @@
             }
         },
         "world":[
+            // {
+            //     "name":"back light",
+            //     "position":[0,0,0],
+            //     "components":[
+            //         {
+            //             "type":"Light",
+            //             "lightType": "DIRECTIONAL",
+            //             "diffuse": [1,1,1],
+            //             "specular":[1,1,1],
+            //             "attenuation" :[0,0,0],
+            //             "cone_angles":[0,0],
+            //             "position" : [0,5,2],
+            //             "direction" : [0,0,-1]
+            //         }
+            //     ]
+            // },
+            // {
+            //     "name":"right light",
+            //     "position":[0,0,0],
+            //     "components":[
+            //         {
+            //             "type":"Light",
+            //             "lightType": "DIRECTIONAL",
+            //             "diffuse": [1, 1 , 1],
+            //             "specular": [1,1,1],
+            //             "attenuation" :[0,0,0],
+            //             "cone_angles":[0,0],
+            //             "position" : [2,5,0],
+            //             "direction" : [-1,0,0]
+            //         }
+            //     ]
+            // },
+            // {
+            //     "name":"left light",
+            //     "position":[0,0,0],
+            //     "components":[
+            //         {
+            //             "type":"Light",
+            //             "lightType": "DIRECTIONAL",
+            //             "diffuse": [1, 1 , 1],
+            //             "specular": [1,1,1],
+            //             "attenuation" :[0,0,0],
+            //             "cone_angles":[0,0],
+            //             "position" : [-2,5,0],
+            //             "direction" : [1,0,0]
+            //         }
+            //     ]
+            // },
             {
-                "name":"first light",
+                "name":"up light",
                 "position":[0,0,0],
                 "components":[
                     {
                         "type":"Light",
                         "lightType": "DIRECTIONAL",
-                        "diffuse": [1,1,1],
-                        "specular":[1,1,1],
+                        "diffuse": [0.4, 0.4 , 0.4],
+                        "specular": [0.4, 0.4 , 0.4],
                         "attenuation" :[0,0,0],
                         "cone_angles":[0,0],
-                        "position" : [0,2,0],
+                        "position" : [0,10,0],
                         "direction" : [0,-1,0]
-                    }
-                ]
-            },
-            {
-                "name":"second light",
-                "position":[0,0,0],
-                "components":[
-                    {
-                        "type":"Light",
-                        "lightType": "SPOT",
-                        "diffuse": [0.2, 0.2 , 0.2],
-                        "specular": [0.2,0.2,0.2],
-                        "attenuation" :[0,0,0],
-                        "cone_angles":[0,0],
-                        "position" : [2,0,0],
-                        "direction" : [-1,0,0]
                     }
                 ]
             },
@@ -324,6 +366,24 @@
                                 "pointsPerPackage": 25,
                                 "energyLostPerHit": 5,
                                 "cooldownTime": 5
+                            }
+                        ]
+                    },
+                    {
+                        "position": [-0.75, 0.8, -1],
+                        "rotation": [0, 0, 0],
+                        "scale": [1, 0.1, 0.01],
+                        "materialName":"energyBar",
+                        "components": [
+                            {
+                                // "type": "Bar Renderer",
+                                "type": "Mesh Renderer",
+                                // "x": 0.1,
+                                // "y": 0.1,
+                                // "maxWidth": 0.5,
+                                // "maxHeight": 0.2,
+                                "material": "gray",
+                                "mesh": "cube"
                             }
                         ]
                     }
@@ -405,7 +465,6 @@
                 "position": [0, 5, 0],
                 "rotation": [0, -180, -90],
                 "scale": [30, 30, 30],
-                "materialName":"car",
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -419,7 +478,7 @@
                 "position": [0, 5, 0],
                 "rotation": [0, -180, -90],
                 "scale": [30, 30, 30],
-                "materialName":"car",
+                "materialName":"deliveryZone",
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -508,6 +567,7 @@
             }
         },
         "world":[
+            
             {
                 "position": [0, 0, 10],
                 "components": [
