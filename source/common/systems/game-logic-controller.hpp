@@ -26,6 +26,7 @@ namespace our
         Application* app; // The application in which the state runs
     public:
         bool gameOver = false; // Indicates whether the game is over or not.
+        double previousz=0;
         // When a state enters, it should call this function and give it the pointer to the application
         void enter(Application* app){
             this->app = app;
@@ -77,6 +78,7 @@ namespace our
             if(!(camera && controller)) return;
             // Get the entity that we found via getOwner of camera (we could use controller->getOwner())
             Entity* entity = camera->getOwner();
+            previousz = entity->localTransform.position.z;
 
             // NOT Assume that the first child in the player entity is the car/truck.
             Entity* player = nullptr;
@@ -148,23 +150,46 @@ namespace our
             glm::vec3 front = glm::vec3(matrix * glm::vec4(0, 0, -1, 0));
             glm::vec3 current_sensitivity = controller->positionSensitivity;
             entity->localTransform.position += front * (deltaTime * speed);
-            std::cout<<"y"<<entity->localTransform.position .y<<std::endl;
-            //std::cout<<"entity->localTransform.y"<<entity->localTransform.position.y <<std::endl;
-               if(entity->localTransform.position.x>32){
+             // detect collision with buildings
+            if(entity->localTransform.position.x>32  || entity->localTransform.position.x<-32 )
+            {
+                if(entity->localTransform.position.x>32)
                   entity->localTransform.position.x=32;
+                  else
+                   entity->localTransform.position.x=-32;
+                    if(!wasHit){
+                           wasHit = true;
+                           lastHitTime = std::chrono::system_clock::now();
+                           std::cout<<"Cooldown Started!"<<std::endl;
+                            //  std::cout<<"Hit at time="<<lastHitTime<<std::endl;
+                            energy -= energyLostPerHit;
+                            if(energy <= 0)
+                            {
+                                  energy = 0;
+                                  game->lost = true;
+                                 gameOver = true;
+                               return;
+                             }
+                                    
+                             std::cout<<"Energy"<<energy<<std::endl;
+                                }
             }
-            else if(entity->localTransform.position.x<-32)
-        {
-            entity->localTransform.position.x=-32;
-        }
-         if(entity->localTransform.position.y!=6)
-         {
-             entity->localTransform.position.y=6;
-         }
+            // limit flying of car
+    
+            if(entity->localTransform.position.y!=6)
+            {
+                entity->localTransform.position.y=6;
+            }
+            // car can't back
+            if(entity->localTransform.position.z>previousz)
+            {
+                entity->localTransform.position.z=previousz;
+            }
 
             for(auto detected : world->getEntities())
                {
-                    if(detected->materialName=="building" || detected->materialName=="car")
+                   // detect collision with cars
+                    if(detected->materialName=="car")
                     {   
                             if(collision_detection(entity, player, detected))
                             {
@@ -184,9 +209,14 @@ namespace our
                                     
                                     std::cout<<"Energy"<<energy<<std::endl;
                                 }
+                            }  // remove all enities before car
+                            else  if(detected->localTransform.position.z >entity->localTransform.position.z)
+                            {
+                            world->markForRemoval(detected);       
                             }
+                          
                     }
-
+                    //detect collision with battery
                     if(detected->materialName=="battery")
                     {   
                             // std::cout<<"I am here"<<std::endl;
@@ -201,8 +231,13 @@ namespace our
                                 if(energy > game->maxEnergy) energy = game->maxEnergy;
                                 std::cout<<"Energy Boosted by "<<energyBoost<<std::endl;
                                 std::cout<<"Current Score="<<totalScore<<" deliveryInProgress ="<<deliveryInProgress<<std::endl;
+                            }   // remove all enities before car
+                            else  if(detected->localTransform.position.z >entity->localTransform.position.z)
+                            {
+                            world->markForRemoval(detected);       
                             }
                     }
+                    // detect collion with packages
                     else if((!deliveryInProgress) && detected->materialName=="package")
                     {
                         if(collision_detection(entity, player, detected))
@@ -211,8 +246,13 @@ namespace our
                             world->markForRemoval(detected);
                             deliveryInProgress = true;
                             std::cout<<"Current Score="<<totalScore<<" deliveryInProgress ="<<deliveryInProgress<<std::endl;
+                        }  // remove all enities before car
+                        else  if(detected->localTransform.position.z >entity->localTransform.position.z)
+                        {
+                         world->markForRemoval(detected);       
                         }
                     }
+                    // detect collision with dileveryzone
                     else if(deliveryInProgress && detected->materialName=="deliveryZone")
                     {
                         if(collision_detection(entity, player, detected,true,true))
@@ -221,10 +261,16 @@ namespace our
                             deliveryInProgress = false;
                             totalScore += pointsPerPackage;
                             std::cout<<"Current Score="<<totalScore<<" deliveryInProgress ="<<deliveryInProgress<<std::endl;
+                        }   // remove all enities before car
+                        else  if(detected->localTransform.position.z >entity->localTransform.position.z)
+                        {
+                         world->markForRemoval(detected);       
                         }
                     }
+                  
+                  
                 }
-                world->deleteMarkedEntities();
+              
         }
 
         // // When the state exits, it should call this function to ensure the mouse is unlocked

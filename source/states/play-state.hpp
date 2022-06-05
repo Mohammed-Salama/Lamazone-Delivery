@@ -49,6 +49,8 @@ class Playstate: public our::State {
         cameraController.update(&world, (float)deltaTime);
 
         gameController.update(&world, (float)deltaTime);
+        // remove unnecessary entities before renendering
+        world.deleteMarkedEntities();
 
         // And finally we use the renderer system to draw the scene
         renderer.render(&world);
