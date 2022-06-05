@@ -1,7 +1,7 @@
 # <h1 align="center"> Lamazone Delivery </h1>
 
 
-![peugeot-504-taxi-3d-model-max](https://github.com/Mohammed-Salama/CmpGL/blob/main/screenshots/Capture.PNG)
+![peugeot-504-taxi-3d-model-max](https://github.com/Mohammed-Salama/CmpGL/blob/main/screenshots/Capture2.png)
 ## Table Content
 - [About](#About)
 - [Technologies and Tools used](#Technologies-and-Tools-used)
