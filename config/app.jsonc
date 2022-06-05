@@ -16,7 +16,7 @@
             "skyBottom" : [0.3,0.3,0.3],
             "sky-albedo": "assets/textures/sky.jpg",
             "emissive-tex": "assets/textures/emissive-tex.jpg",
-            "postprocess": "assets/shaders/postprocess/vignette.frag",
+            "postprocess": "assets/shaders/postprocess/invert-color.frag",
             "wall" : "assets/textures/redBuilding.jpg",
             "wall-mesh" : "assets/models/plane.obj",
             "ground" : "assets/textures/ground.jpg"

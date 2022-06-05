@@ -260,7 +260,7 @@ namespace our {
         transparentCommands.clear();
 
         Entity* player = nullptr;
-        GameLogicControllerComponent *game = nullptr;
+        game = nullptr;
         for(auto detected : world->getEntities()){
             if(detected->materialName == "player"){
                 player = detected;
@@ -345,7 +345,7 @@ namespace our {
         
 
         // If there is a postprocess material, bind the framebuffer
-        if(postprocessMaterial){
+        if(game != nullptr && game->wasHit && postprocessMaterial){
             //DONE: (Req 10) bind the framebuffer
             glBindFramebuffer(GL_DRAW_FRAMEBUFFER, postprocessFrameBuffer);
             
@@ -778,7 +778,7 @@ namespace our {
         }
 
         // If there is a postprocess material, apply postprocessing
-        if(postprocessMaterial){
+        if(game != nullptr && game->wasHit && postprocessMaterial){
             //DONE: (Req 10) Return to the default framebuffer
             glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
             

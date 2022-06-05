@@ -119,10 +119,12 @@ namespace our
 
             std::chrono::time_point<std::chrono::system_clock> &lastDecrementTime = game->lastDecrementTime;
             std::chrono::time_point<std::chrono::system_clock> &lastHitTime = game->lastHitTime;
+            std::chrono::time_point<std::chrono::system_clock> startTime = game->startTime;
 
             std::chrono::time_point<std::chrono::system_clock> timeNow = std::chrono::system_clock::now();
             std::chrono::duration<double> elapsed_seconds_normal = timeNow-lastDecrementTime;
             std::chrono::duration<double> elapsed_seconds_hit;
+            std::chrono::duration<double> elapsed_seconds_start = timeNow - startTime;
             if(wasHit)
             {
                 elapsed_seconds_hit = timeNow-lastHitTime;
@@ -166,7 +168,7 @@ namespace our
                   entity->localTransform.position.x=32;
                   else
                    entity->localTransform.position.x=-32;
-                    if(!wasHit){
+                    if(!wasHit && (elapsed_seconds_start.count() > cooldownTime)){
                            wasHit = true;
                            lastHitTime = std::chrono::system_clock::now();
                            //std::cout<<"Cooldown Started!"<<std::endl;
@@ -202,7 +204,7 @@ namespace our
                     {   
                             if(collision_detection(entity, player, detected))
                             {
-                                if(!wasHit){
+                                if(!wasHit && (elapsed_seconds_start.count() > cooldownTime)){
                                     wasHit = true;
                                     lastHitTime = std::chrono::system_clock::now();
                                      //std::cout<<"Cooldown Started!"<<std::endl;

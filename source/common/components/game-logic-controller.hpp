@@ -29,6 +29,8 @@ namespace our {
         std::chrono::time_point<std::chrono::system_clock> lastDecrementTime;
         // The last time the player hit a car or a building. Used in hit cooldown logic.
         std::chrono::time_point<std::chrono::system_clock> lastHitTime;
+        // The start cooldown since a player can't hit something at the beginning of the turn.
+        std::chrono::time_point<std::chrono::system_clock> startTime;
 
         bool lost = false;                  // Indicates whether a player has lost or not.
 

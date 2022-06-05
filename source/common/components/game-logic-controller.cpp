@@ -19,6 +19,7 @@ namespace our {
         cooldownTime = data.value("cooldownTime", cooldownTime);
         totalScore = 0.0f;
         lastDecrementTime = std::chrono::system_clock::now();
+        startTime = std::chrono::system_clock::now();
         wasHit = false;
     }
 }
