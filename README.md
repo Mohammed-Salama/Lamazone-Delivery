@@ -12,7 +12,7 @@
 
 
 ## About
-This is a simple delivery game where the player acts as a car reponsible for picking up packages and delivering them to the delivery zones. Steer left and right to avoid hitting buildings and moving cars and collect batteries on the road to recharge your energy. Beware, the more energy you have, the faster you’ll move. Try to get the highest score. The more packages you deliver before you're out of energy, the higher the score.
+This is a simple delivery game where the player acts as a car responsible for picking up packages and delivering them to the delivery zones. Steer left and right to avoid hitting buildings and moving cars and collect batteries on the road to recharge your energy. Beware, the more energy you have, the faster you’ll move. Try to get the highest score. The more packages you deliver before you're out of energy, the higher the score.
 
 ## Technologies and Tools used
 - OpenGL
